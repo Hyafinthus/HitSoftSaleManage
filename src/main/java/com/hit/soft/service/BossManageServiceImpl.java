@@ -18,5 +18,20 @@ public class BossManageServiceImpl implements BossManageService {
 	public List<Staff> queryStaff() {
 		return bossManageMapper.queryStaff();
 	}
+
+	@Override
+	public void addStaff(Staff staff) {
+		bossManageMapper.addStaff(staff);
+	}
+
+	@Override
+	public void deleteStaff(String staffId) {
+		bossManageMapper.deleteStaff(staffId);
+	}
+
+	@Override
+	public void updateStaff(Staff staff) {
+		bossManageMapper.updateStaff(staff);
+	}
 	
 }

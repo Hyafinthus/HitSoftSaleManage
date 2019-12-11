@@ -10,5 +10,11 @@ import com.hit.soft.domain.Staff;
 public interface BossManageMapper {
 	
 	public List<Staff> queryStaff();
+
+	public void addStaff(Staff staff);
+
+	public void deleteStaff(String staffId);
+
+	public void updateStaff(Staff staff);
 	
 }
