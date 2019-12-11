@@ -8,11 +8,13 @@ public class Product {
 	private double purchase_price;
 	private double wholesale_price;
 	private double retail_price;
+	private int count;
 	
 	public Product() {
 		super();
 	}
 
+	// 档案时
 	public Product(int product_id, String product_name, String type, String unit, double purchase_price,
 			double wholesale_price, double retail_price) {
 		super();
@@ -23,6 +25,19 @@ public class Product {
 		this.purchase_price = purchase_price;
 		this.wholesale_price = wholesale_price;
 		this.retail_price = retail_price;
+	}
+
+	// 订单时
+	public Product(int product_id, String product_name, String type, String unit, double purchase_price,
+			double wholesale_price, int count) {
+		super();
+		this.product_id = product_id;
+		this.product_name = product_name;
+		this.type = type;
+		this.unit = unit;
+		this.purchase_price = purchase_price;
+		this.wholesale_price = wholesale_price;
+		this.setCount(count);
 	}
 
 	public int getProduct_id() {
@@ -81,11 +96,19 @@ public class Product {
 		this.retail_price = retail_price;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [product_id=" + product_id + ", product_name=" + product_name + ", type=" + type + ", unit="
 				+ unit + ", purchase_price=" + purchase_price + ", wholesale_price=" + wholesale_price
-				+ ", retail_price=" + retail_price + "]";
+				+ ", retail_price=" + retail_price + ", count=" + count + "]";
 	}
 
 }

@@ -60,10 +60,7 @@ CREATE TABLE `order_prod_table` (
   `order_prod_pri` int(8) NOT NULL AUTO_INCREMENT,
   `order_id` int(8) NOT NULL,
   `product_id` int(8) NOT NULL,
-  `count` int(8) DEFAULT NULL COMMENT '数量',
-  `sale_price` double DEFAULT NULL COMMENT '售价',
-  `purchase_price` double DEFAULT NULL COMMENT '进价',
-  `prod_profit` double DEFAULT NULL COMMENT '毛利=数量*(售价-进价)',
+  `count` int(8) DEFAULT NULL,
   PRIMARY KEY (`order_prod_pri`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -75,12 +72,12 @@ DROP TABLE IF EXISTS `order_table`;
 
 CREATE TABLE `order_table` (
   `order_id` int(8) NOT NULL AUTO_INCREMENT,
-  `create_datetime` datetime DEFAULT NULL,
-  `pay_datetime` datetime DEFAULT NULL,
-  `return_datetime` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `pay_time` datetime DEFAULT NULL,
+  `return_time` datetime DEFAULT NULL,
   `client_id` int(8) DEFAULT NULL,
-  `sale_price` double DEFAULT NULL COMMENT '售价',
-  `purchase_price` double DEFAULT NULL COMMENT '进价',
+  `order_sale_price` double DEFAULT NULL COMMENT '售价',
+  `order_purchase_price` double DEFAULT NULL COMMENT '进价',
   `order_profit` double DEFAULT NULL COMMENT '毛利',
   `state` varchar(20) NOT NULL,
   `wholesale_order` tinyint(1) NOT NULL,

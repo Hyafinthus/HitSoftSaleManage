@@ -1,20 +1,19 @@
 package com.hit.soft.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class OrderProduct {
 	private String create_time;
 	private int client_id;
 	private String client_name;
-	private Map<Product, Integer> products = new HashMap<Product, Integer>();
+	private List<Product> products;
 	
 	public OrderProduct() {
 		super();
 	}
 
 	// 开单时
-	public OrderProduct(String create_time, int client_id, Map<Product, Integer> products) {
+	public OrderProduct(String create_time, int client_id, List<Product> products) {
 		super();
 		this.create_time = create_time;
 		this.client_id = client_id;
@@ -22,7 +21,7 @@ public class OrderProduct {
 	}
 
 	// 审核时
-	public OrderProduct(String create_time, String client_name, Map<Product, Integer> products) {
+	public OrderProduct(String create_time, String client_name, List<Product> products) {
 		super();
 		this.create_time = create_time;
 		this.client_name = client_name;
@@ -53,11 +52,11 @@ public class OrderProduct {
 		this.client_name = client_name;
 	}
 
-	public Map<Product, Integer> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Map<Product, Integer> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 
