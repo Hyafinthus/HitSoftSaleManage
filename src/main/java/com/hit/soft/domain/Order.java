@@ -13,6 +13,28 @@ public class Order {
 	private String state;
 	private int wholesale_order;
 	
+	public Order(int order_id, String create_datatime, String pay_datetime, String return_datetime, int client_id,
+			float mark_price, float sale_price, float purchase_price, float order_profit, String state,
+			int wholesale_order) {
+		super();
+		this.order_id = order_id;
+		this.create_datatime = create_datatime;
+		this.pay_datetime = pay_datetime;
+		this.return_datetime = return_datetime;
+		this.client_id = client_id;
+		this.mark_price = mark_price;
+		this.sale_price = sale_price;
+		this.purchase_price = purchase_price;
+		this.order_profit = order_profit;
+		this.state = state;
+		this.wholesale_order = wholesale_order;
+	}
+
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public int getOrder_id() {
 		return order_id;
 	}
@@ -101,31 +123,14 @@ public class Order {
 		this.wholesale_order = wholesale_order;
 	}
 
-	public Order(int order_id, String create_datatime, String pay_datetime, String return_datetime, int client_id,
-			float mark_price, float sale_price, float purchase_price, float order_profit, String state,
-			int wholesale_order) {
-		super();
-		this.order_id = order_id;
-		this.create_datatime = create_datatime;
-		this.pay_datetime = pay_datetime;
-		this.return_datetime = return_datetime;
-		this.client_id = client_id;
-		this.mark_price = mark_price;
-		this.sale_price = sale_price;
-		this.purchase_price = purchase_price;
-		this.order_profit = order_profit;
-		this.state = state;
-		this.wholesale_order = wholesale_order;
+	@Override
+	public String toString() {
+		return "Order [order_id=" + order_id + ", create_datatime=" + create_datatime + ", pay_datetime=" + pay_datetime
+				+ ", return_datetime=" + return_datetime + ", client_id=" + client_id + ", mark_price=" + mark_price
+				+ ", sale_price=" + sale_price + ", purchase_price=" + purchase_price + ", order_profit=" + order_profit
+				+ ", state=" + state + ", wholesale_order=" + wholesale_order + "]";
 	}
 
-	public Order() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	
-	
 	
 	
 }

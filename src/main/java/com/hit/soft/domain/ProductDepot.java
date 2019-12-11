@@ -70,5 +70,13 @@ public class ProductDepot {
 	public void setCount(int count) {
 		this.count = count;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductDepot [product_id=" + product_id + ", product_name=" + product_name + ", type=" + type
+				+ ", unit=" + unit + ", depot_name=" + depot_name + ", count=" + count + "]";
+	}
+	
+	
 	
 }
