@@ -10,7 +10,6 @@ public class OrderProduct {
 	
 	public OrderProduct() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public OrderProduct(String create_time, int client_id, Map<Product, Integer> products) {
@@ -48,7 +47,6 @@ public class OrderProduct {
 	public String toString() {
 		return "OrderProduct [create_time=" + create_time + ", client_id=" + client_id + ", products=" + products + "]";
 	}
-	
 	
 	
 }

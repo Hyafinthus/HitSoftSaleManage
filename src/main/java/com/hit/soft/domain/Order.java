@@ -6,15 +6,19 @@ public class Order {
 	private String pay_datetime;
 	private String return_datetime;
 	private int client_id;
-	private float mark_price;
-	private float sale_price;
-	private float purchase_price;
-	private float order_profit;
+	private double mark_price;
+	private double sale_price;
+	private double purchase_price;
+	private double order_profit;
 	private String state;
 	private int wholesale_order;
 	
+	public Order() {
+		super();
+	}
+
 	public Order(int order_id, String create_datatime, String pay_datetime, String return_datetime, int client_id,
-			float mark_price, float sale_price, float purchase_price, float order_profit, String state,
+			double mark_price, double sale_price, double purchase_price, double order_profit, String state,
 			int wholesale_order) {
 		super();
 		this.order_id = order_id;
@@ -30,11 +34,6 @@ public class Order {
 		this.wholesale_order = wholesale_order;
 	}
 
-	public Order() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
 	public int getOrder_id() {
 		return order_id;
 	}
@@ -75,35 +74,35 @@ public class Order {
 		this.client_id = client_id;
 	}
 
-	public float getMark_price() {
+	public double getMark_price() {
 		return mark_price;
 	}
 
-	public void setMark_price(float mark_price) {
+	public void setMark_price(double mark_price) {
 		this.mark_price = mark_price;
 	}
 
-	public float getSale_price() {
+	public double getSale_price() {
 		return sale_price;
 	}
 
-	public void setSale_price(float sale_price) {
+	public void setSale_price(double sale_price) {
 		this.sale_price = sale_price;
 	}
 
-	public float getPurchase_price() {
+	public double getPurchase_price() {
 		return purchase_price;
 	}
 
-	public void setPurchase_price(float purchase_price) {
+	public void setPurchase_price(double purchase_price) {
 		this.purchase_price = purchase_price;
 	}
 
-	public float getOrder_profit() {
+	public double getOrder_profit() {
 		return order_profit;
 	}
 
-	public void setOrder_profit(float order_profit) {
+	public void setOrder_profit(double order_profit) {
 		this.order_profit = order_profit;
 	}
 
@@ -130,7 +129,6 @@ public class Order {
 				+ ", sale_price=" + sale_price + ", purchase_price=" + purchase_price + ", order_profit=" + order_profit
 				+ ", state=" + state + ", wholesale_order=" + wholesale_order + "]";
 	}
-
 	
 	
 }

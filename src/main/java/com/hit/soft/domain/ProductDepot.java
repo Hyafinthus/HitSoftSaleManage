@@ -10,7 +10,6 @@ public class ProductDepot {
 	
 	public ProductDepot() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ProductDepot(int product_id, String product_name, String type, String unit, String depot_name, int count) {
@@ -76,7 +75,6 @@ public class ProductDepot {
 		return "ProductDepot [product_id=" + product_id + ", product_name=" + product_name + ", type=" + type
 				+ ", unit=" + unit + ", depot_name=" + depot_name + ", count=" + count + "]";
 	}
-	
 	
 	
 }
