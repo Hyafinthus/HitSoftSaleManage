@@ -61,9 +61,7 @@ CREATE TABLE `order_prod_table` (
   `order_id` int(8) NOT NULL,
   `product_id` int(8) NOT NULL,
   `count` int(8) DEFAULT NULL COMMENT '数量',
-  `discount` double DEFAULT '1' COMMENT '折扣',
-  `mark_price` double DEFAULT NULL COMMENT '标价',
-  `sale_price` double DEFAULT NULL COMMENT '售价=标价*折扣',
+  `sale_price` double DEFAULT NULL COMMENT '售价',
   `purchase_price` double DEFAULT NULL COMMENT '进价',
   `prod_profit` double DEFAULT NULL COMMENT '毛利=数量*(售价-进价)',
   PRIMARY KEY (`order_prod_pri`)
@@ -81,7 +79,6 @@ CREATE TABLE `order_table` (
   `pay_datetime` datetime DEFAULT NULL,
   `return_datetime` datetime DEFAULT NULL,
   `client_id` int(8) DEFAULT NULL,
-  `mark_price` double DEFAULT NULL COMMENT '标价',
   `sale_price` double DEFAULT NULL COMMENT '售价',
   `purchase_price` double DEFAULT NULL COMMENT '进价',
   `order_profit` double DEFAULT NULL COMMENT '毛利',
@@ -120,12 +117,13 @@ CREATE TABLE `staff_table` (
   `staff_name` varchar(20) NOT NULL,
   `role` varchar(20) NOT NULL,
   `pass` varchar(20) NOT NULL,
+  `dismiss` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`staff_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `staff_table` */
 
-insert  into `staff_table`(`staff_id`,`staff_name`,`role`,`pass`) values (1,'fan','boss','fan'),(2,'jingli','manager','123'),(3,'dianyuan','staff','123');
+insert  into `staff_table`(`staff_id`,`staff_name`,`role`,`pass`,`dismiss`) values (1,'fan','boss','fan',0),(2,'jingli','manager','123',0),(3,'dianyuan','staff','123',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
