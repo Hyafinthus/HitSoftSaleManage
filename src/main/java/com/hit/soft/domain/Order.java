@@ -6,9 +6,8 @@ public class Order {
 	private String pay_datetime;
 	private String return_datetime;
 	private int client_id;
-	private double mark_price;
-	private double sale_price;
-	private double purchase_price;
+	private double order_sale_price;
+	private double order_purchase_price;
 	private double order_profit;
 	private String state;
 	private int wholesale_order;
@@ -18,7 +17,7 @@ public class Order {
 	}
 
 	public Order(int order_id, String create_datatime, String pay_datetime, String return_datetime, int client_id,
-			double mark_price, double sale_price, double purchase_price, double order_profit, String state,
+			double order_sale_price, double order_purchase_price, double order_profit, String state,
 			int wholesale_order) {
 		super();
 		this.order_id = order_id;
@@ -26,9 +25,8 @@ public class Order {
 		this.pay_datetime = pay_datetime;
 		this.return_datetime = return_datetime;
 		this.client_id = client_id;
-		this.mark_price = mark_price;
-		this.sale_price = sale_price;
-		this.purchase_price = purchase_price;
+		this.order_sale_price = order_sale_price;
+		this.order_purchase_price = order_purchase_price;
 		this.order_profit = order_profit;
 		this.state = state;
 		this.wholesale_order = wholesale_order;
@@ -74,28 +72,20 @@ public class Order {
 		this.client_id = client_id;
 	}
 
-	public double getMark_price() {
-		return mark_price;
+	public double getOrder_sale_price() {
+		return order_sale_price;
 	}
 
-	public void setMark_price(double mark_price) {
-		this.mark_price = mark_price;
+	public void setOrder_sale_price(double order_sale_price) {
+		this.order_sale_price = order_sale_price;
 	}
 
-	public double getSale_price() {
-		return sale_price;
+	public double getOrder_purchase_price() {
+		return order_purchase_price;
 	}
 
-	public void setSale_price(double sale_price) {
-		this.sale_price = sale_price;
-	}
-
-	public double getPurchase_price() {
-		return purchase_price;
-	}
-
-	public void setPurchase_price(double purchase_price) {
-		this.purchase_price = purchase_price;
+	public void setOrder_purchase_price(double order_purchase_price) {
+		this.order_purchase_price = order_purchase_price;
 	}
 
 	public double getOrder_profit() {
@@ -125,10 +115,9 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [order_id=" + order_id + ", create_datatime=" + create_datatime + ", pay_datetime=" + pay_datetime
-				+ ", return_datetime=" + return_datetime + ", client_id=" + client_id + ", mark_price=" + mark_price
-				+ ", sale_price=" + sale_price + ", purchase_price=" + purchase_price + ", order_profit=" + order_profit
+				+ ", return_datetime=" + return_datetime + ", client_id=" + client_id + ", order_sale_price="
+				+ order_sale_price + ", order_purchase_price=" + order_purchase_price + ", order_profit=" + order_profit
 				+ ", state=" + state + ", wholesale_order=" + wholesale_order + "]";
 	}
-	
 	
 }

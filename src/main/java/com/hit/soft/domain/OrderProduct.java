@@ -6,16 +6,26 @@ import java.util.Map;
 public class OrderProduct {
 	private String create_time;
 	private int client_id;
+	private String client_name;
 	private Map<Product, Integer> products = new HashMap<Product, Integer>();
 	
 	public OrderProduct() {
 		super();
 	}
 
+	// 开单时
 	public OrderProduct(String create_time, int client_id, Map<Product, Integer> products) {
 		super();
 		this.create_time = create_time;
 		this.client_id = client_id;
+		this.products = products;
+	}
+
+	// 审核时
+	public OrderProduct(String create_time, String client_name, Map<Product, Integer> products) {
+		super();
+		this.create_time = create_time;
+		this.client_name = client_name;
 		this.products = products;
 	}
 
@@ -35,6 +45,14 @@ public class OrderProduct {
 		this.client_id = client_id;
 	}
 
+	public String getClient_name() {
+		return client_name;
+	}
+
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
+	}
+
 	public Map<Product, Integer> getProducts() {
 		return products;
 	}
@@ -45,8 +63,8 @@ public class OrderProduct {
 
 	@Override
 	public String toString() {
-		return "OrderProduct [create_time=" + create_time + ", client_id=" + client_id + ", products=" + products + "]";
+		return "OrderProduct [create_time=" + create_time + ", client_id=" + client_id + ", client_name=" + client_name
+				+ ", products=" + products + "]";
 	}
-	
 	
 }

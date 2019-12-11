@@ -76,5 +76,4 @@ public class ProductDepot {
 				+ ", unit=" + unit + ", depot_name=" + depot_name + ", count=" + count + "]";
 	}
 	
-	
 }

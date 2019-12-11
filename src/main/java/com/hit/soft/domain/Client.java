@@ -12,7 +12,6 @@ public class Client {
 	
 	public Client() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Client(int client_id, String client_name, String sex, String phone, String address, int points,
@@ -98,6 +97,5 @@ public class Client {
 				+ ", address=" + address + ", points=" + points + ", wholesale_client=" + wholesale_client
 				+ ", retail_client=" + retail_client + "]";
 	}
-	
 	
 }

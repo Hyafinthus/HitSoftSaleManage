@@ -88,5 +88,4 @@ public class Product {
 				+ ", retail_price=" + retail_price + "]";
 	}
 
-
 }
