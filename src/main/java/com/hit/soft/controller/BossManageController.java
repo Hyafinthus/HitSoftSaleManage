@@ -36,10 +36,10 @@ public class BossManageController {
 		return "success";
 	}
 	
-	@RequestMapping(value="/delete/{staffId}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/delete/{staff_id}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteStaffs(@PathVariable String staffId){
-		bossManageService.deleteStaff(staffId);
+	public String deleteStaffs(@PathVariable String staff_id){
+		bossManageService.deleteStaff(staff_id);
 		return "success";
 	}
 	

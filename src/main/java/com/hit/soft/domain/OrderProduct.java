@@ -3,6 +3,7 @@ package com.hit.soft.domain;
 import java.util.List;
 
 public class OrderProduct {
+	private int order_id;
 	private String create_time;
 	private int client_id;
 	private String client_name;
@@ -21,11 +22,20 @@ public class OrderProduct {
 	}
 
 	// 审核时
-	public OrderProduct(String create_time, String client_name, List<Product> products) {
+	public OrderProduct(int order_id, String create_time, String client_name, List<Product> products) {
 		super();
+		this.order_id = order_id;
 		this.create_time = create_time;
 		this.client_name = client_name;
 		this.products = products;
+	}
+	
+	public int getOrder_id() {
+		return order_id;
+	}
+
+	public void setOrder_id(int order_id) {
+		this.order_id = order_id;
 	}
 
 	public String getCreate_time() {
@@ -62,8 +72,10 @@ public class OrderProduct {
 
 	@Override
 	public String toString() {
-		return "OrderProduct [create_time=" + create_time + ", client_id=" + client_id + ", client_name=" + client_name
-				+ ", products=" + products + "]";
+		return "OrderProduct [order_id=" + order_id + ", create_time=" + create_time + ", client_id=" + client_id
+				+ ", client_name=" + client_name + ", products=" + products + "]";
 	}
+
+	
 	
 }
