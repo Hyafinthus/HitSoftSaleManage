@@ -2,6 +2,8 @@ package com.hit.soft.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +27,16 @@ public class ManagerOrderController {
 	@Autowired
 	private ManagerOrderService managerOrderService;
 	
-	@RequestMapping(value="/order/{page}/{limit}",method=RequestMethod.GET)
+	@RequestMapping(value="/order",method=RequestMethod.GET)
 	@ResponseBody
-	public String queryOrders(@PathVariable String page, @PathVariable String limit) {
+	public String queryOrders(HttpServletRequest req) {
 		int count = managerOrderService.countQueryOrders();
-		int pageInt = Integer.parseInt(page);
-		int limitInt = Integer.parseInt(limit);
+		int pageInt = 0;
+		System.out.print("limit:"+req.getParameter("limit")+"\n");
+		System.out.print("page:"+req.getParameter("page")+"\n");
+		pageInt = Integer.parseInt(req.getParameter("page"));
+		int limitInt = 0;
+		limitInt = Integer.parseInt(req.getParameter("limit"));
 		List<Order> data = managerOrderService.queryOrders((pageInt - 1) * limitInt, limitInt);
 		JsonOrder jsonOrder = new JsonOrder(count, data);
 		
