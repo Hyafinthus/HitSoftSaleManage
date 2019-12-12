@@ -82,9 +82,11 @@ CREATE TABLE `order_table` (
   `state` varchar(20) NOT NULL,
   `wholesale_order` tinyint(1) NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_table` */
+
+insert  into `order_table`(`order_id`,`create_time`,`pay_time`,`return_time`,`client_id`,`order_sale_price`,`order_purchase_price`,`order_profit`,`state`,`wholesale_order`) values (1,'2015-12-08 14:34:46',NULL,NULL,1,12,10,2,'published',1),(2,'2015-12-09 14:34:46',NULL,NULL,2,33,14,19,'published',1),(3,'2015-12-10 14:34:46',NULL,NULL,1,23,20,3,'published',1),(4,'2015-12-11 14:34:46',NULL,NULL,2,34,33,1,'published',1),(5,'2015-12-12 14:34:46',NULL,NULL,1,25,20,5,'published',1),(6,'2015-12-13 14:34:46',NULL,NULL,1,26,20,6,'published',1),(7,'2015-12-14 14:34:46',NULL,NULL,2,56,50,6,'published',1),(8,'2015-12-15 14:34:46',NULL,NULL,2,16,8,8,'published',1),(9,'2015-12-16 14:34:46',NULL,NULL,2,16,9,7,'published',1),(10,'2015-12-16 14:34:46',NULL,NULL,1,46,39,7,'published',1),(11,'2015-12-17 14:34:46',NULL,NULL,1,67,56,11,'published',1),(12,'0000-00-00 00:00:00',NULL,NULL,1,68,56,12,'published',1);
 
 /*Table structure for table `product_table` */
 
