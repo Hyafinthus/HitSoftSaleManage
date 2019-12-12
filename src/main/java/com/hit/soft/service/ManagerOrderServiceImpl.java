@@ -17,12 +17,12 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 	private ManagerOrderMapper managerOrderMapper;
 
 	@Override
-	public int countQueryOrders() {
+	public Integer countQueryOrders() {
 		return managerOrderMapper.countQueryOrders();
 	}
 	
 	@Override
-	public List<Order> queryOrders(String page, String limit) {
+	public List<Order> queryOrders(Integer page, Integer limit) {
 		return managerOrderMapper.queryOrders(page, limit);
 	}
 

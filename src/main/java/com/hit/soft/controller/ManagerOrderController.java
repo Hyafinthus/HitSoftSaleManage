@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import com.hit.soft.domain.JsonOrder;
 import com.hit.soft.domain.Order;
@@ -27,9 +29,12 @@ public class ManagerOrderController {
 	@ResponseBody
 	public String queryOrders(@PathVariable String page, @PathVariable String limit) {
 		int count = managerOrderService.countQueryOrders();
-		List<Order> data = managerOrderService.queryOrders(page, limit);
+		int pageInt = Integer.parseInt(page);
+		int limitInt = Integer.parseInt(limit);
+		List<Order> data = managerOrderService.queryOrders((pageInt - 1) * limitInt, limitInt);
 		JsonOrder jsonOrder = new JsonOrder(count, data);
-		return JSONArray.fromObject(jsonOrder).toString();
+		
+		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
 	@RequestMapping(value="/order/review/{order_id}", method=RequestMethod.GET)
