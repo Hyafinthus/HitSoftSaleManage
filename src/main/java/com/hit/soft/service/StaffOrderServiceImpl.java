@@ -1,6 +1,8 @@
 package com.hit.soft.service;
 
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,13 +101,19 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	public void payOrder(int orderId) {
 		Order order = searchOrder(orderId);
 		order.setState("paid");
+		order.setOrder_profit(order.getOrder_sale_price()-order.getOrder_purchase_price());
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        order.setPay_datetime(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);
 	}
 
 	@Override
 	public void returnOrder(int orderId) {
 		Order order = searchOrder(orderId);
+		order.setOrder_profit(0);
 		order.setState("returned");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        order.setReturn_datetime(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);
 	}
 

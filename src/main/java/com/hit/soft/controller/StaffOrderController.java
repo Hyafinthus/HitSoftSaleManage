@@ -27,11 +27,6 @@ public class StaffOrderController {
 	@ResponseBody
 	public String createOrder(@RequestBody OrderProduct orderProduct){
 		staffOrderService.createOrder(orderProduct);
-		
-		String order_id = orderProduct.getOrder_id();
-		
-		
-		
 		//System.out.println(staffs);
 		return "success";
 	}
