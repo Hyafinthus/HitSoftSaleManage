@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.sf.json.JSONArray;
+
+import com.hit.soft.domain.JsonOrder;
 import com.hit.soft.domain.Order;
 import com.hit.soft.domain.OrderProduct;
 import com.hit.soft.service.ManagerOrderService;
@@ -20,10 +23,13 @@ public class ManagerOrderController {
 	@Autowired
 	private ManagerOrderService managerOrderService;
 	
-	@RequestMapping(value="/order",method=RequestMethod.GET)
+	@RequestMapping(value="/order/{page}/{limit}",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Order> queryOrders() {
-		return managerOrderService.queryOrders();
+	public String queryOrders(@PathVariable String page, @PathVariable String limit) {
+		int count = managerOrderService.countQueryOrders();
+		List<Order> data = managerOrderService.queryOrders(page, limit);
+		JsonOrder jsonOrder = new JsonOrder(count, data);
+		return JSONArray.fromObject(jsonOrder).toString();
 	}
 	
 	@RequestMapping(value="/order/review/{order_id}", method=RequestMethod.GET)

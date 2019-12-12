@@ -5,9 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hit.soft.dao.BossManageMapper">
 	
+	<select id="countQueryOrders" resultType="int">
+		SELECT COUNT(*) FROM order_table WHERE state = "published"
+	</select>
+	
 	<select id="queryOrders" resultType="Order">
 		SELECT order_id, create_time, client_id, order_sale_price, order_purchase_price, order_profit
 		FROM order_table
+		WHERE state = "published"
+		LIMIT ((#{page} - 1) * #{limit}), #{limit}
 	</select>
 	
 	<select id="showProducts" parameterType="String" resultMap="productsList">
