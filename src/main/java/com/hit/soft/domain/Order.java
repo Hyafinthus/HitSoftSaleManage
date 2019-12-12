@@ -2,9 +2,9 @@ package com.hit.soft.domain;
 
 public class Order {
 	private int order_id;
-	private String create_datatime;
-	private String pay_datetime;
-	private String return_datetime;
+	private String create_time;
+	private String pay_time;
+	private String return_time;
 	private int client_id;
 	private double order_sale_price;
 	private double order_purchase_price;
@@ -21,9 +21,9 @@ public class Order {
 			int wholesale_order) {
 		super();
 		this.order_id = order_id;
-		this.create_datatime = create_datatime;
-		this.pay_datetime = pay_datetime;
-		this.return_datetime = return_datetime;
+		this.create_time = create_datatime;
+		this.pay_time = pay_datetime;
+		this.return_time = return_datetime;
 		this.client_id = client_id;
 		this.order_sale_price = order_sale_price;
 		this.order_purchase_price = order_purchase_price;
@@ -41,27 +41,27 @@ public class Order {
 	}
 
 	public String getCreate_datatime() {
-		return create_datatime;
+		return create_time;
 	}
 
 	public void setCreate_datatime(String create_datatime) {
-		this.create_datatime = create_datatime;
+		this.create_time = create_datatime;
 	}
 
 	public String getPay_datetime() {
-		return pay_datetime;
+		return pay_time;
 	}
 
 	public void setPay_datetime(String pay_datetime) {
-		this.pay_datetime = pay_datetime;
+		this.pay_time = pay_datetime;
 	}
 
 	public String getReturn_datetime() {
-		return return_datetime;
+		return return_time;
 	}
 
 	public void setReturn_datetime(String return_datetime) {
-		this.return_datetime = return_datetime;
+		this.return_time = return_datetime;
 	}
 
 	public int getClient_id() {
@@ -114,8 +114,8 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [order_id=" + order_id + ", create_datatime=" + create_datatime + ", pay_datetime=" + pay_datetime
-				+ ", return_datetime=" + return_datetime + ", client_id=" + client_id + ", order_sale_price="
+		return "Order [order_id=" + order_id + ", create_datatime=" + create_time + ", pay_datetime=" + pay_time
+				+ ", return_datetime=" + return_time + ", client_id=" + client_id + ", order_sale_price="
 				+ order_sale_price + ", order_purchase_price=" + order_purchase_price + ", order_profit=" + order_profit
 				+ ", state=" + state + ", wholesale_order=" + wholesale_order + "]";
 	}

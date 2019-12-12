@@ -13,7 +13,7 @@ public class OrderProduct {
 		super();
 	}
 
-	// 开单时
+	// 开单时 前端返回后端
 	public OrderProduct(String create_time, int client_id, List<Product> products) {
 		super();
 		this.create_time = create_time;
@@ -21,7 +21,7 @@ public class OrderProduct {
 		this.products = products;
 	}
 
-	// 审核时
+	// 审核时 后端显示前端
 	public OrderProduct(int order_id, String create_time, String client_name, List<Product> products) {
 		super();
 		this.order_id = order_id;

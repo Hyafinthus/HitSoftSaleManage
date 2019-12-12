@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.hit.soft.dao.BossManageMapper">
 	
 	<select id="queryOrders" resultType="Order">
-		SELECT order_id, create_datetime, client_id, order_sale_price, order_purchase_price, order_profit
+		SELECT order_id, create_time, client_id, order_sale_price, order_purchase_price, order_profit
 		FROM order_table
 	</select>
 	

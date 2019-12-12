@@ -8,7 +8,10 @@ public class Product {
 	private double purchase_price;
 	private double wholesale_price;
 	private double retail_price;
+	
+	// 针对某一单
 	private int count;
+	private int order_id;
 	
 	public Product() {
 		super();
@@ -28,8 +31,9 @@ public class Product {
 	}
 
 	// 订单时
+	// 注意零售订单里价格的填充的字段也是 wholesale_price
 	public Product(int product_id, String product_name, String type, String unit, double purchase_price,
-			double wholesale_price, int count) {
+			double wholesale_price, int count, int order_id) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
@@ -37,8 +41,9 @@ public class Product {
 		this.unit = unit;
 		this.purchase_price = purchase_price;
 		this.wholesale_price = wholesale_price;
-		this.setCount(count);
-	}
+		this.count = count;
+		this.setOrder_id(order_id);
+	}	
 
 	public int getProduct_id() {
 		return product_id;
@@ -104,11 +109,19 @@ public class Product {
 		this.count = count;
 	}
 
+	public int getOrder_id() {
+		return order_id;
+	}
+
+	public void setOrder_id(int order_id) {
+		this.order_id = order_id;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [product_id=" + product_id + ", product_name=" + product_name + ", type=" + type + ", unit="
 				+ unit + ", purchase_price=" + purchase_price + ", wholesale_price=" + wholesale_price
-				+ ", retail_price=" + retail_price + ", count=" + count + "]";
+				+ ", retail_price=" + retail_price + ", count=" + count + ", order_id=" + order_id + "]";
 	}
 
 }
