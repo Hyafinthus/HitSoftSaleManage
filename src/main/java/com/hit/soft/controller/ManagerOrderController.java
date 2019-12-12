@@ -29,14 +29,10 @@ public class ManagerOrderController {
 	
 	@RequestMapping(value="/order",method=RequestMethod.GET)
 	@ResponseBody
-	public String queryOrders(HttpServletRequest req) {
+	public String queryOrders(HttpServletRequest request) {
 		int count = managerOrderService.countQueryOrders();
-		int pageInt = 0;
-		System.out.print("limit:"+req.getParameter("limit")+"\n");
-		System.out.print("page:"+req.getParameter("page")+"\n");
-		pageInt = Integer.parseInt(req.getParameter("page"));
-		int limitInt = 0;
-		limitInt = Integer.parseInt(req.getParameter("limit"));
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
 		List<Order> data = managerOrderService.queryOrders((pageInt - 1) * limitInt, limitInt);
 		JsonOrder jsonOrder = new JsonOrder(count, data);
 		

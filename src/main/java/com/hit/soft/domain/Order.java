@@ -16,14 +16,14 @@ public class Order {
 		super();
 	}
 
-	public Order(int order_id, String create_datatime, String pay_datetime, String return_datetime, int client_id,
+	public Order(int order_id, String create_time, String pay_time, String return_time, int client_id,
 			double order_sale_price, double order_purchase_price, double order_profit, String state,
 			int wholesale_order) {
 		super();
 		this.order_id = order_id;
-		this.create_time = create_datatime;
-		this.pay_time = pay_datetime;
-		this.return_time = return_datetime;
+		this.create_time = create_time;
+		this.pay_time = pay_time;
+		this.return_time = return_time;
 		this.client_id = client_id;
 		this.order_sale_price = order_sale_price;
 		this.order_purchase_price = order_purchase_price;
@@ -40,28 +40,28 @@ public class Order {
 		this.order_id = order_id;
 	}
 
-	public String getCreate_datatime() {
+	public String getCreate_time() {
 		return create_time;
 	}
 
-	public void setCreate_datatime(String create_datatime) {
-		this.create_time = create_datatime;
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
 	}
 
-	public String getPay_datetime() {
+	public String getPay_time() {
 		return pay_time;
 	}
 
-	public void setPay_datetime(String pay_datetime) {
-		this.pay_time = pay_datetime;
+	public void setPay_time(String pay_time) {
+		this.pay_time = pay_time;
 	}
 
-	public String getReturn_datetime() {
+	public String getReturn_time() {
 		return return_time;
 	}
 
-	public void setReturn_datetime(String return_datetime) {
-		this.return_time = return_datetime;
+	public void setReturn_time(String return_time) {
+		this.return_time = return_time;
 	}
 
 	public int getClient_id() {
@@ -114,10 +114,10 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [order_id=" + order_id + ", create_datatime=" + create_time + ", pay_datetime=" + pay_time
-				+ ", return_datetime=" + return_time + ", client_id=" + client_id + ", order_sale_price="
-				+ order_sale_price + ", order_purchase_price=" + order_purchase_price + ", order_profit=" + order_profit
-				+ ", state=" + state + ", wholesale_order=" + wholesale_order + "]";
+		return "Order [order_id=" + order_id + ", create_time=" + create_time + ", pay_time=" + pay_time
+				+ ", return_time=" + return_time + ", client_id=" + client_id + ", order_sale_price=" + order_sale_price
+				+ ", order_purchase_price=" + order_purchase_price + ", order_profit=" + order_profit + ", state="
+				+ state + ", wholesale_order=" + wholesale_order + "]";
 	}
 	
 }
