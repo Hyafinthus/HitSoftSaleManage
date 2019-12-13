@@ -10,11 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE dismiss = 0
 	</select>
 	
-	<delete id="deleteStaff" parameterType="String">
+	<update id="deleteStaff" parameterType="String">
 		UPDATE staff_table
 		set dismiss = 1
 		WHERE staff_id = #{staffId}
-	</delete>
+	</update>
 	
 	<update id="updateStaff" parameterType="Staff">
 		UPDATE staff_table
