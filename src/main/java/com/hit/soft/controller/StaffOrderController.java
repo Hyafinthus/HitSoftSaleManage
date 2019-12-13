@@ -2,6 +2,8 @@ package com.hit.soft.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hit.soft.domain.Client;
+import com.hit.soft.domain.JsonClient;
+import com.hit.soft.domain.JsonOrder;
+import com.hit.soft.domain.JsonProduct;
 import com.hit.soft.domain.Order;
 import com.hit.soft.domain.OrderProduct;
 import com.hit.soft.domain.Product;
 import com.hit.soft.service.StaffOrderService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/staff/order")
@@ -25,8 +32,8 @@ public class StaffOrderController {
 	
 	@RequestMapping(value="/create",method=RequestMethod.GET)
 	@ResponseBody
-	public Order createOrder(){
-		Order draft = staffOrderService.getDraft();
+	public OrderProduct createOrder(){
+		OrderProduct draft = staffOrderService.getDraft();
 		if(draft != null){
 			return draft;
 		}else{
@@ -51,35 +58,73 @@ public class StaffOrderController {
 	}
 	
 	//查询批发用户
-	@RequestMapping(value="/search/whosale_client",method=RequestMethod.GET)
+	@RequestMapping(value="/search/whosale_clients",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Client> searchClient(){
-		List<Client> clients = staffOrderService.searchClient();
-		return clients;
+	public String searchClients(HttpServletRequest request){
+		int count = staffOrderService.countClients();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Client> data = staffOrderService.searchClients((pageInt - 1) * limitInt, limitInt);
+		JsonClient jsonClient = new JsonClient(count, data);
+		return JSONObject.fromObject(jsonClient).toString();
+	}
+	
+	@RequestMapping(value="/search/whosale_clients/{condition}",method=RequestMethod.GET)
+	@ResponseBody
+	public String searchClientsByCondition(@PathVariable String condition, HttpServletRequest request){
+		int count = staffOrderService.countClientsByCondition(condition);
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Client> data = staffOrderService.searchClientsByCondition(condition, (pageInt - 1) * limitInt, limitInt);
+		JsonClient jsonClient = new JsonClient(count, data);
+		return JSONObject.fromObject(jsonClient).toString();
 	}
 	
 	//查询产品
-	@RequestMapping(value="/search/product",method=RequestMethod.GET)
+	@RequestMapping(value="/search/products",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Product> searchProduct(){
-		List<Product> products = staffOrderService.searchProduct();
-		return products;
+	public String searchProducts(HttpServletRequest request){
+		int count = staffOrderService.countProducts();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Product> data = staffOrderService.searchProducts((pageInt - 1) * limitInt, limitInt);
+		JsonProduct jsonProduct = new JsonProduct(count, data);
+		return JSONObject.fromObject(jsonProduct).toString();
+	}
+	
+	@RequestMapping(value="/search/products/{condition}",method=RequestMethod.GET)
+	@ResponseBody
+	public String searchProductsByCondition(@PathVariable String condition, HttpServletRequest request){
+		int count = staffOrderService.countProductsByCondition(condition);
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Product> data = staffOrderService.searchProductsByCondition(condition, (pageInt - 1) * limitInt, limitInt);
+		JsonProduct jsonProduct = new JsonProduct(count, data);
+		return JSONObject.fromObject(jsonProduct).toString();
 	}
 	
 	//查询所有已审核通过未付款的订单
 	@RequestMapping(value="/search/unpaidOrder",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Order> searchUnpaidOrder(){
-		List<Order> orders = staffOrderService.searchUnpaidOrder();
-		return orders;
+	public String searchUnpaidOrder(HttpServletRequest request){
+		int count = staffOrderService.countUnpaidOrder();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Order> data = staffOrderService.searchUnpaidOrder((pageInt - 1) * limitInt, limitInt);
+		JsonOrder jsonOrder = new JsonOrder(count, data);
+		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
 	//查询已付款的订单用来退款
 	@RequestMapping(value="/search/paidOrder",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Order> searchPaidOrder(){
-		List<Order> orders = staffOrderService.searchPaidOrder();
-		return orders;
+	public String searchPaidOrder(HttpServletRequest request){
+		int count = staffOrderService.countPaidOrder();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Order> data = staffOrderService.searchPaidOrder((pageInt - 1) * limitInt, limitInt);
+		JsonOrder jsonOrder = new JsonOrder(count, data);
+		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
 	//查询订单详情

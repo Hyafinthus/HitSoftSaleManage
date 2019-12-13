@@ -13,25 +13,38 @@ public interface StaffOrderService {
 	
 	void submitOrder(OrderProduct orderProduct);
 
-	List<Client> searchClient();
+	int countClients();
+	
+	List<Client> searchClients(Integer offset, Integer limit);
+	
+	int countClientsByCondition(String condition);
+	
+	List<Client> searchClientsByCondition(String condition, Integer offset, Integer limit);
+	
+	int countProducts();
 
-	List<Product> searchProduct();
+	List<Product> searchProducts(Integer offset, Integer limit);
+	
+	int countProductsByCondition(String condition);
+	
+	List<Product> searchProductsByCondition(String condition, Integer offset, Integer limit);
+	
+	int countUnpaidOrder();
 
-	List<Order> searchUnpaidOrder();
+	List<Order> searchUnpaidOrder(Integer offset, Integer limit);
+	
+	int countPaidOrder();
 
-	List<Order> searchPaidOrder();
+	List<Order> searchPaidOrder(Integer offset, Integer limit);
 
 	OrderProduct searchOrderProduct(int orderId);
-	
-	Order searchOrder(int orderId);
 
 	void payOrder(int orderId);
 
 	void returnOrder(int orderId);
 
-	Order orderProductToOrder(OrderProduct orderProduct, boolean isdraft);
+	OrderProduct getDraft();
 
-	Order getDraft();
 
 	
 

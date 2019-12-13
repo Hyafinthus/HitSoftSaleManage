@@ -15,10 +15,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{order_id}, #{product_id}, #{count})
 	</insert>
 	
-	<select id="getDraft" resultType="Order">
-		SELECT order_id, client_id, order_sale_price, order_purchase_price FROM order_table
-		WHERE state = "draft"
+	<select id="getDraft" resultMap="mymap">
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id. p.count
+		FROM order_table o, order_prod_table p, client_table c
+		WHERE o.state = "draft" AND o.order_id = p.order_id AND o.client_id = c.client_id
 	</select>
+	<resultMap type="OrderProduct" id="mymap">
+		<id column="order_id" property="order_id"/>
+		<result column="create_time" property="create_time"/>
+		<result column="client_id" property="client_id"/>
+		<result column="client_name" property="client_name"/>
+		<collection property="products" ofType="Product" column="class_id">
+			<id column="product_id" property="product_id"/>
+			<result column="count" property="count"/>
+			<result column="order_id" property="orderId"/>
+		</collection>
+	</resultMap>
 	
 	<delete id="deleteDraft">
 		DELETE order_table,order_prod_table
@@ -26,28 +38,123 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE order_table.state = "draft"
 	</delete>
 	
-	<select id="searchClient" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, points FROM client_table
+	<select id="countClients" resultType="Integer">
+		SELECT COUNT(*)
+		FROM client_table
 		WHERE wholesale_client = 1
 	</select>
 	
-	<select id="searchProduct" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price FROM product_table
+	<select id="searchClients" resultType="Client">
+		SELECT client_id, client_name, sex, phone, address, points 
+		FROM client_table
+		WHERE wholesale_client = 1
+		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="searchUnpaidOrder" resultType="Order">
-		SELECT order_id, create_name, client_id, order_sale_price, order_purchase_price FROM order_table
+	<select id="countClientsById" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM client_table
+		WHERE wholesale_client = 1 AND client_id LIKE '%#{clientId}%'
+	</select>
+	
+	<select id="countClientsByName" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM client_table
+		WHERE wholesale_client = 1 AND client_name LIKE CONCAT("%", #{clientName}, "%")
+	</select>
+	
+	<select id="searchClientsById" parameterType="Integer" resultType="Client">
+		SELECT client_id, client_name, sex, phone, address, points FROM client_table
+		WHERE wholesale_client = 1 AND client_id LIKE '%#{clientId}%'
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="searchClientsByName" parameterType="String" resultType="Client">
+		SELECT client_id, client_name, sex, phone, address, points FROM client_table
+		WHERE wholesale_client = 1 AND client_name LIKE CONCAT("%", #{clientName}, "%")
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countProducts" resultType="Integer">
+		SELECT COUNT(*)
+		FROM product_table
+	</select>
+	
+	<select id="searchProducts" resultType="Product">
+		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		FROM product_table
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countProductsById" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM product_table
+		WHERE client_id LIKE '%#{clientId}%'
+	</select>
+	
+	<select id="countProductsByName" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM product_table
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+	</select>
+	
+	<select id="searchProductsById" parameterType="Integer" resultType="Product">
+		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		FROM product_table
+		WHERE product_id LIKE '%#{productId}%'
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="searchProductsByName" parameterType="String" resultType="Product">
+		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		FROM product_table
+		WHERE product_id LIKE CONCAT("%", #{clientName}, "%")
+		LIMIT #{offset}, #{limit}
+	</select>
+
+	<select id="countUnpaidOrder" resultType="Integer">
+		SELECT COUNT(*)
+		FROM order_table
 		WHERE state = "approved"
 	</select>
 	
-	<select id="searchPaidOrder" resultType="Order">
-		SELECT order_id, create_name, pay_time, client_id, order_sale_price, order_purchase_price FROM order_table
+	<select id="searchUnpaidOrder" resultType="Order">
+		SELECT order_id, create_name, client_id, order_sale_price, order_purchase_price
+		FROM order_table
+		WHERE state = "approved"
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countpaidOrder" resultType="Integer">
+		SELECT COUNT(*)
+		FROM order_table
 		WHERE state = "paid" and wholesale_order = 1
+	</select>
+	
+	<select id="searchPaidOrder" resultType="Order">
+		SELECT order_id, create_name, pay_time, client_id, order_sale_price, order_purchase_price
+		FROM order_table
+		WHERE state = "paid" and wholesale_order = 1
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="searchOrderProduct" resultType="OrderProduct" parameterType="Integer">
+		SELECT order_id, product_id, count
+		FROM order_prod_table
+		WHERE order_id = #{orderId}
 	</select>
 	
 	<select id="searchOrder" resultType="Order" parameterType="Integer">
 		SELECT order_id, create_name, pay_time, return_time, client_id, order_sale_price,
-		 order_purchase_price, order_profit, state, wholesale_order FROM order_table
+		 order_purchase_price, order_profit, state, wholesale_order
+		FROM order_table
+		WHERE order_id = #{orderId}
+	</select>
+	
+	<select id="tsearchProductsById" resultType="Product" parameterType="Integer">
+		SELECT order_id, product_id, count
+		FROM order_prod_table
+		WHERE order_id = #{orderId}
 	</select>
 	
 	<update id="updateOrder" parameterType="Order">
