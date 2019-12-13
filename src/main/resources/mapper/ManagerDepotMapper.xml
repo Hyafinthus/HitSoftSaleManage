@@ -20,4 +20,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{page}, #{limit}
 	</select>
 	
+	<update id="turnoverDepot">
+		UPDATE depot_prod_table
+		SET count = count + #{number}
+		WHERE product_id = #{product_id} AND depot_name = #{depot_name}
+	</update>
+	
+	<update id="transferDepot">
+		UPDATE depot_prod_table
+		SET count = count - #{number}
+		WHERE product_id = #{product_id} AND depot_name = #{old_depot};
+		UPDATE depot_prod_table
+		SET count = count + #{number}
+		WHERE product_id = #{product_id} AND depot_name = #{new_depot}
+	</update>
+	
 </mapper>
