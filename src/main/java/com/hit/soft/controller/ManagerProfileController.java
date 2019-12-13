@@ -51,28 +51,28 @@ public class ManagerProfileController {
 		return JSONObject.fromObject(jsonClient).toString();
 	}
 	
-	@RequestMapping(value="/product/add", method=RequestMethod.GET)
+	@RequestMapping(value="/product/add", method=RequestMethod.POST)
 	@ResponseBody
 	public String addProduct(@RequestBody Product product) {
-		managerProfileService.addProduct(product);
+		managerProfileService.addProduct(product);	
 		return "success";
 	}
 	
-	@RequestMapping(value="/client/add", method=RequestMethod.GET)
+	@RequestMapping(value="/client/add", method=RequestMethod.POST)
 	@ResponseBody
 	public String addClient(@RequestBody Client client) {
 		managerProfileService.addClient(client);
 		return "success";
 	}
 	
-	@RequestMapping(value="/product/update", method=RequestMethod.GET)
+	@RequestMapping(value="/product/update", method=RequestMethod.POST)
 	@ResponseBody
 	public String updateProduct(@RequestBody Product product) {
 		managerProfileService.updateProduct(product);
 		return "success";
 	}
 	
-	@RequestMapping(value="/client/update", method=RequestMethod.GET)
+	@RequestMapping(value="/client/update", method=RequestMethod.POST)
 	@ResponseBody
 	public String updateClient(@RequestBody Client client) {
 		managerProfileService.updateClient(client);
