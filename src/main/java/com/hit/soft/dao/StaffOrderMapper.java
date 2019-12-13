@@ -56,8 +56,6 @@ public interface StaffOrderMapper {
 	OrderProduct searchOrderProduct(int orderId);
 	
 	Order searchOrder(int orderId);
-	
-	List<Product> tsearchProductsById(int orderId);
 
 	void updateOrder(Order order);
 

@@ -20,17 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM order_table o, order_prod_table p, client_table c
 		WHERE o.state = "draft" AND o.order_id = p.order_id AND o.client_id = c.client_id
 	</select>
-	<resultMap type="OrderProduct" id="mymap">
-		<id column="order_id" property="order_id"/>
-		<result column="create_time" property="create_time"/>
-		<result column="client_id" property="client_id"/>
-		<result column="client_name" property="client_name"/>
-		<collection property="products" ofType="Product" column="class_id">
-			<id column="product_id" property="product_id"/>
-			<result column="count" property="count"/>
-			<result column="order_id" property="orderId"/>
-		</collection>
-	</resultMap>
 	
 	<delete id="deleteDraft">
 		DELETE order_table,order_prod_table
@@ -138,22 +127,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="searchOrderProduct" resultType="OrderProduct" parameterType="Integer">
-		SELECT order_id, product_id, count
-		FROM order_prod_table
-		WHERE order_id = #{orderId}
+	<select id="searchOrderProduct" resultMap="mymap" parameterType="Integer">
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id. p.count
+		FROM order_table o, order_prod_table p, client_table c
+		WHERE o.order_id = #{orderId} AND o.order_id = p.order_id AND o.client_id = c.client_id
 	</select>
+	<resultMap type="OrderProduct" id="mymap">
+		<id column="order_id" property="order_id"/>
+		<result column="create_time" property="create_time"/>
+		<result column="client_id" property="client_id"/>
+		<result column="client_name" property="client_name"/>
+		<collection property="products" ofType="Product" column="class_id">
+			<id column="product_id" property="product_id"/>
+			<result column="count" property="count"/>
+			<result column="order_id" property="orderId"/>
+		</collection>
+	</resultMap>
 	
 	<select id="searchOrder" resultType="Order" parameterType="Integer">
 		SELECT order_id, create_name, pay_time, return_time, client_id, order_sale_price,
 		 order_purchase_price, order_profit, state, wholesale_order
 		FROM order_table
-		WHERE order_id = #{orderId}
-	</select>
-	
-	<select id="tsearchProductsById" resultType="Product" parameterType="Integer">
-		SELECT order_id, product_id, count
-		FROM order_prod_table
 		WHERE order_id = #{orderId}
 	</select>
 	

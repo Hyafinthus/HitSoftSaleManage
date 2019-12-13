@@ -132,9 +132,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 
 	@Override
 	public OrderProduct searchOrderProduct(int orderId) {
-		Order order = staffOrderMapper.searchOrder(orderId);
-		List<Product> products = staffOrderMapper.tsearchProductsById(orderId);
-		OrderProduct orderProduct = new OrderProduct(order.getCreate_time(), order.getClient_id(), products);
+		OrderProduct orderProduct = staffOrderMapper.searchOrderProduct(orderId);
 		return orderProduct;
 	}
 
