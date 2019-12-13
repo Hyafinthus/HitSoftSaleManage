@@ -14,8 +14,14 @@ public interface ManagerDepotMapper {
 	
 	public List<ProductDepot> queryProducts(@Param("query") String query, @Param("page") Integer page, @Param("limit") Integer limit);
 	
-	public void turnoverDepot(@Param("depot_name") String depot_name, @Param("product_id") String product_id, @Param("number") String number);
+	public void turnoverDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id, @Param("number") Integer number);
 
-	public void transferDepot(@Param("old_depot") String old_depot, @Param("new_depot") String new_depot, @Param("product_id") String product_id, @Param("number") String number);
+	public void transferDepot(@Param("old_depot") String old_depot, @Param("new_depot") String new_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);
 
+	public Integer countQueryDepot(String depot_name);
+	
+	public List<ProductDepot> queryDepot(@Param("depot_name") String depot_name, @Param("page") Integer page, @Param("limit") Integer limit);
+
+	public void confirmDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id, @Param("number") Integer number);
+	
 }

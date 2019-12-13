@@ -35,4 +35,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE product_id = #{product_id} AND depot_name = #{new_depot}
 	</update>
 	
+	<select id="countQueryDepot" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM depot_prod_table d, product_table p
+		WHERE d.depot_name = #{depot_name}
+		AND p.product_id = d.product_id
+	</select>
+	
+	<select id="queryDepot" resultType="ProductDepot">
+		SELECT p.product_id, p.product_name, p.type, p.unit, d.depot_name, d.count
+		FROM depot_prod_table d, product_table p
+		WHERE d.depot_name = #{depot_name}
+		AND p.product_id = d.product_id
+		LIMIT #{page}, #{limit}
+	</select>
+	
+	<update id="confirmDepot">
+		UPDATE depot_prod_table
+		SET count = #{number}
+		WHERE product_id = #{product_id} AND depot_name = #{depot_name}
+	</update>
+	
 </mapper>

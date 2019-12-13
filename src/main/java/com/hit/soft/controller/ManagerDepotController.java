@@ -39,7 +39,7 @@ public class ManagerDepotController {
 	@RequestMapping(value="/turnover/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
 	@ResponseBody
 	public String turnoverDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) {
-		managerDepotService.turnoverDepot(depot_name, product_id, number);		
+		managerDepotService.turnoverDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));		
 		return "success";
 	}
 	
@@ -53,7 +53,27 @@ public class ManagerDepotController {
 		} else {
 			newDepot = "仓库";
 		}
-		managerDepotService.transferDepot(oldDepot, newDepot, product_id, number);
+		managerDepotService.transferDepot(oldDepot, newDepot, Integer.parseInt(product_id), Integer.parseInt(number));
 		return "success";
 	}
+	
+	@RequestMapping(value="/inventory/{depot_name}", method=RequestMethod.GET)
+	@ResponseBody
+	public String queryDepot(@PathVariable String depot_name, HttpServletRequest request) {
+		int count = managerDepotService.countQueryDepot(depot_name);
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<ProductDepot> data = managerDepotService.queryDepot(depot_name, (pageInt - 1) * limitInt, limitInt);
+		JsonProductDepot jsonProductDepot = new JsonProductDepot(count, data);
+		
+		return JSONObject.fromObject(jsonProductDepot).toString();
+	}
+	
+	@RequestMapping(value="/inventory/confirm/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
+	@ResponseBody
+	public String confirmDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) {
+		managerDepotService.confirmDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));
+		return "success";
+	}
+	
 }

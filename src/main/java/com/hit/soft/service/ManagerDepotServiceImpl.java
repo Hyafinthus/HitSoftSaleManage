@@ -25,13 +25,28 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 	}
 
 	@Override
-	public void turnoverDepot(String depot_name, String product_id, String number) {
+	public void turnoverDepot(String depot_name, Integer product_id, Integer number) {
 		managerDepotMapper.turnoverDepot(depot_name, product_id, number);;
 	}
 
 	@Override
-	public void transferDepot(String old_depot, String new_depot, String product_id, String number) {
+	public void transferDepot(String old_depot, String new_depot, Integer product_id, Integer number) {
 		managerDepotMapper.transferDepot(old_depot, new_depot, product_id, number);
+	}
+
+	@Override
+	public Integer countQueryDepot(String depot_name) {
+		return managerDepotMapper.countQueryDepot(depot_name);
+	}
+
+	@Override
+	public List<ProductDepot> queryDepot(String depot_name, Integer page, Integer limit) {
+		return managerDepotMapper.queryDepot(depot_name, page, limit);
+	}
+
+	@Override
+	public void confirmDepot(String depot_name, Integer product_id, Integer number) {
+		managerDepotMapper.confirmDepot(depot_name, product_id, number);
 	}
 
 }
