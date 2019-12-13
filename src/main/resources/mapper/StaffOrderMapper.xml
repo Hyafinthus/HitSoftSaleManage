@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hit.soft.dao.StaffOrderMapper">
+	
+	<insert id="addOrder" parameterType="Order">
+		INSERT INTO order_table(create_time, client_id, order_sale_price, order_purchase_price, state, wholesale_order)
+		 VALUES(#{create_id}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{state}, #{wholesale_order})
+	</insert>
+	
+	<insert id="addProduct" parameterType="Product">
+		INSERT INTO order_prod_table(order_id, product_id, count)
+		VALUES(#{order_id}, #{product_id}, #{count})
+	</insert>
+	
+	<select id="getDraft" resultType="Order">
+		SELECT order_id, client_id, order_sale_price, order_purchase_price FROM order_table
+		WHERE state = "draft"
+	</select>
+	
+	<delete id="deleteDraft">
+		DELETE order_table,order_prod_table
+		FROM order_table AS o1 LEFT JOIN order_prod_table AS o2 on o1.order_id = o2.order_id
+		WHERE order_table.state = "draft"
+	</delete>
+	
+	<select id="searchClient" resultType="Client">
+		SELECT client_id, client_name, sex, phone, address, points FROM client_table
+		WHERE wholesale_client = 1
+	</select>
+	
+	<select id="searchProduct" resultType="Product">
+		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price FROM product_table
+	</select>
+	
+	<select id="searchUnpaidOrder" resultType="Order">
+		SELECT order_id, create_name, client_id, order_sale_price, order_purchase_price FROM order_table
+		WHERE state = "approved"
+	</select>
+	
+	<select id="searchPaidOrder" resultType="Order">
+		SELECT order_id, create_name, pay_time, client_id, order_sale_price, order_purchase_price FROM order_table
+		WHERE state = "paid" and wholesale_order = 1
+	</select>
+	
+	<select id="searchOrder" resultType="Order" parameterType="Integer">
+		SELECT order_id, create_name, pay_time, return_time, client_id, order_sale_price,
+		 order_purchase_price, order_profit, state, wholesale_order FROM order_table
+	</select>
+	
+	<update id="updateOrder" parameterType="Order">
+		UPDATE order_table
+		SET create_time = #{create_time}, pay_time = #{pay_time}, return_time = #{return_time},
+		order_sale_price = #{order_sale_price}, order_purchase_price = #{order_purchase_price},
+		order_profit = #{order_profit}, state = #{state}
+		WHERE order_id = #{order_id}
+	</update>
+	
+</mapper>
