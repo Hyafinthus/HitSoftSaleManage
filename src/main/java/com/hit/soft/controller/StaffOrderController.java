@@ -75,10 +75,8 @@ public class StaffOrderController {
 		System.out.println(condition);
 		int count = staffOrderService.countClientsByCondition(condition);
 		System.err.println(count);
-		//int pageInt = Integer.parseInt(request.getParameter("page"));
-		//int limitInt = Integer.parseInt(request.getParameter("limit"));
-		int pageInt = 10;
-		int limitInt = 10;
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
 		List<Client> data = staffOrderService.searchClientsByCondition(condition, (pageInt - 1) * limitInt, limitInt);
 		JsonClient jsonClient = new JsonClient(count, data);
 		return JSONObject.fromObject(jsonClient).toString();
