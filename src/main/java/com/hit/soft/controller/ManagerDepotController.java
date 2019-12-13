@@ -36,4 +36,24 @@ public class ManagerDepotController {
 		return JSONObject.fromObject(jsonProductDepot).toString();
 	}
 	
+	@RequestMapping(value="/turnover/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
+	@ResponseBody
+	public String turnoverDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) {
+		managerDepotService.turnoverDepot(depot_name, product_id, number);		
+		return "success";
+	}
+	
+	@RequestMapping(value="/transfer/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
+	@ResponseBody
+	public String transferDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) {
+		String oldDepot = depot_name;
+		String newDepot = "";
+		if(oldDepot.equals("仓库")) {
+			newDepot = "门店";
+		} else {
+			newDepot = "仓库";
+		}
+		managerDepotService.transferDepot(oldDepot, newDepot, product_id, number);
+		return "success";
+	}
 }

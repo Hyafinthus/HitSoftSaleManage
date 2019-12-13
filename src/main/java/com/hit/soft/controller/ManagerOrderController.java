@@ -45,14 +45,14 @@ public class ManagerOrderController {
 		return orderProduct;
 	}
 	
-	@RequestMapping(value="/approve/{order_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/review/approve/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String approveOrder(@PathVariable String order_id) {
 		managerOrderService.approveOrder(order_id);
 		return "success";
 	}
 	
-	@RequestMapping(value="/reject/{order_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/review/reject/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String rejectOrder(@PathVariable String order_id) {
 		managerOrderService.rejectOrder(order_id);
