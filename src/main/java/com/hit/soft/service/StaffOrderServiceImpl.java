@@ -164,8 +164,6 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	}
 
 	private Order orderProductToOrder(OrderProduct orderProduct, boolean isdraft){
-		double purchase_price=0,sale_price=0;
-		List<Product> products = orderProduct.getProducts();
 		Order order = new Order();
 		order.setClient_id(orderProduct.getClient_id());
 		order.setCreate_time(orderProduct.getCreate_time());
@@ -178,17 +176,9 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 			order.setState("published");//提交审核
 		}
 		order.setWholesale_order(1);//1表示是批发单
-		for(int i=0; i<products.size(); i++){
-			Product temp = products.get(i);
-			purchase_price += temp.getPurchase_price()*temp.getCount();
-		}
-		for(int i=0; i<products.size(); i++){
-			Product temp = products.get(i);
-			sale_price += temp.getWholesale_price()*temp.getCount();
-		}
-		order.setOrder_purchase_price(purchase_price);
-		order.setOrder_sale_price(sale_price);
-		order.setOrder_profit(sale_price-purchase_price);
+		order.setOrder_purchase_price(orderProduct.getOrder_purchase_price());
+		order.setOrder_sale_price(orderProduct.getOrder_sale_price());
+		order.setOrder_profit(orderProduct.getOrder_profit());
 		return order;
 	}
 

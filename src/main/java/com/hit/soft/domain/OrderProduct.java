@@ -7,6 +7,9 @@ public class OrderProduct {
 	private String create_time;
 	private int client_id;
 	private String client_name;
+	private double order_sale_price;
+	private double order_purchase_price;
+	private double order_profit;
 	private List<Product> products;
 	
 	public OrderProduct() {
@@ -62,6 +65,30 @@ public class OrderProduct {
 		this.client_name = client_name;
 	}
 
+	public double getOrder_sale_price() {
+		return order_sale_price;
+	}
+
+	public void setOrder_sale_price(double order_sale_price) {
+		this.order_sale_price = order_sale_price;
+	}
+
+	public double getOrder_purchase_price() {
+		return order_purchase_price;
+	}
+
+	public void setOrder_purchase_price(double order_purchase_price) {
+		this.order_purchase_price = order_purchase_price;
+	}
+
+	public double getOrder_profit() {
+		return order_profit;
+	}
+
+	public void setOrder_profit(double order_profit) {
+		this.order_profit = order_profit;
+	}
+
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -73,8 +100,11 @@ public class OrderProduct {
 	@Override
 	public String toString() {
 		return "OrderProduct [order_id=" + order_id + ", create_time=" + create_time + ", client_id=" + client_id
-				+ ", client_name=" + client_name + ", products=" + products + "]";
+				+ ", client_name=" + client_name + ", order_sale_price=" + order_sale_price + ", order_purchase_price="
+				+ order_purchase_price + ", order_profit=" + order_profit + ", products=" + products + "]";
 	}
+
+	
 
 	
 	

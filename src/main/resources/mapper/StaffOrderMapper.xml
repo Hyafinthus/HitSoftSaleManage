@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.hit.soft.dao.StaffOrderMapper">
 	
 	<insert id="addOrder" parameterType="Order">
-		INSERT INTO order_table(create_time, client_id, order_sale_price, order_purchase_price, state, wholesale_order)
-		 VALUES(#{create_id}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{state}, #{wholesale_order})
+		INSERT INTO order_table(create_time, client_id, order_sale_price, order_purchase_price, order_profit, state, wholesale_order)
+		 VALUES(#{create_id}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{order_profit}, #{state}, #{wholesale_order})
 	</insert>
 	
 	<insert id="addProduct" parameterType="Product">
@@ -16,15 +16,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getDraft" resultMap="mymap">
-		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id. p.count
-		FROM order_table o, order_prod_table p, client_table c
-		WHERE o.state = "draft" AND o.order_id = p.order_id AND o.client_id = c.client_id
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
+		FROM order_table o, order_prod_table p, client_table c, product_table pd
+		WHERE o.state = "draft" AND o.order_id = p.order_id AND o.client_id = c.client_id AND p.product_id = pd.product_id
 	</select>
 	
 	<delete id="deleteDraft">
-		DELETE order_table,order_prod_table
-		FROM order_table AS o1 LEFT JOIN order_prod_table AS o2 on o1.order_id = o2.order_id
-		WHERE order_table.state = "draft"
+		DELETE order_table, order_prod_table
+		FROM order_table LEFT JOIN order_prod_table ON order_table.order_id = order_prod_table.order_id
+		WHERE order_table.state = "published"
 	</delete>
 	
 	<select id="countClients" resultType="Integer">
@@ -109,7 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchUnpaidOrder" resultType="Order">
-		SELECT order_id, create_name, client_id, order_sale_price, order_purchase_price
+		SELECT order_id, client_id, order_sale_price, order_purchase_price, order_profit
 		FROM order_table
 		WHERE state = "approved"
 		LIMIT #{offset}, #{limit}
@@ -122,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchPaidOrder" resultType="Order">
-		SELECT order_id, create_name, pay_time, client_id, order_sale_price, order_purchase_price
+		SELECT order_id, pay_time, client_id, order_sale_price, order_purchase_price, order_profit
 		FROM order_table
 		WHERE state = "paid" and wholesale_order = 1
 		LIMIT #{offset}, #{limit}
