@@ -129,9 +129,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchOrderProduct" resultMap="mymap" >
-		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id. p.count
-		FROM order_table o, order_prod_table p, client_table c
-		WHERE o.order_id = #{orderId} AND o.order_id = p.order_id AND o.client_id = c.client_id
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
+		FROM order_table o, order_prod_table p, client_table c, product_table pd
+		WHERE o.order_id = #{orderId} AND o.order_id = p.order_id AND o.client_id = c.client_id AND p.product_id = pd.product_id
 	</select>
 	<resultMap type="OrderProduct" id="mymap">
 		<id column="order_id" property="order_id"/>
@@ -140,6 +140,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="client_name" property="client_name"/>
 		<collection property="products" ofType="Product" column="class_id">
 			<id column="product_id" property="product_id"/>
+			<result column="product_name" property="product_name"/>
+			<result column="type" property="type"/>
+			<result column="unit" property="unit"/>
+			<result column="purchase_price" property="purchase_price"/>
+			<result column="wholesale_price" property="wholesale_price"/>
 			<result column="count" property="count"/>
 			<result column="order_id" property="orderId"/>
 		</collection>
