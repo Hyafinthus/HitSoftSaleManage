@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateProduct" parameterType="Product">
 		UPDATE product_table
 		SET product_name = #{product_name}, type = #{type}, unit = #{unit},
-		purchase_price = #{purchase_type}, wholesale_price = #{wholesale_price}, retail_price = #{retail_price}
+		purchase_price = #{purchase_price}, wholesale_price = #{wholesale_price}, retail_price = #{retail_price}
 		WHERE product_id = #{product_id}
 	</update>
 	
