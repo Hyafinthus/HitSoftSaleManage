@@ -47,7 +47,7 @@ public class BossManageController {
 		return "success";
 	}
 	
-	@RequestMapping(value="/update",method=RequestMethod.PUT)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateStaffs(@RequestBody Staff staff){
 		/*Staff staff1=new Staff();
