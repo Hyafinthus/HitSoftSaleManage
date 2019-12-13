@@ -60,7 +60,6 @@
                         var product_id = getUrlParam("product_id");
                         var number = $("#amount").val();
                         var inputURL = "/sale/manager/depot/turnover/" + depot_name+"/" + product_id +"/"+number;
-                        console.log(inputURL)
                         $.ajax({
                             url: inputURL,
                             type: "GET",

@@ -99,11 +99,11 @@
         var data = obj.data;
         var layEvent = obj.event;
         if (layEvent === 'input') {
-          xadmin.open('入库', '/sale/depot-input.html?depot_name=' + data.depot_name + '&product_id='+data.product_id, 300, 180);
+          xadmin.open('入库', '/sale/depot-input.html?depot_name=' + encodeURI(encodeURI(data.depot_name)) + '&product_id='+data.product_id, 300, 180);
         }else if(layEvent === 'output'){
-          xadmin.open('出库', '/sale/depot-output.html?depot_name=' + data.depot_name + '&product_id='+data.product_id, 300, 180);
+          xadmin.open('出库', '/sale/depot-output.html?depot_name=' + encodeURI(encodeURI(data.depot_name)) + '&product_id='+data.product_id, 300, 180);
         }else if(layEvent === 'transfer'){
-          xadmin.open('调拨', '/sale/depot-transfer.html?depot_name=' + data.depot_name + '&product_id='+data.product_id, 300, 180);
+          xadmin.open('调拨', '/sale/depot-transfer.html?depot_name=' + encodeURI(encodeURI(data.depot_name)) + '&product_id='+data.product_id, 300, 180);
         }
       })
       var form = layui.form,
