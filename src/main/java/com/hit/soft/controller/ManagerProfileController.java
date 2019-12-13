@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hit.soft.domain.Client;
+import com.hit.soft.domain.JsonClient;
 import com.hit.soft.domain.JsonProduct;
 import com.hit.soft.domain.Product;
 import com.hit.soft.service.ManagerProfileService;
@@ -34,5 +37,24 @@ public class ManagerProfileController {
 		JsonProduct jsonProduct = new JsonProduct(count, data);
 		
 		return JSONObject.fromObject(jsonProduct).toString();
+	}
+	
+	@RequestMapping(value="/client/search/{query}", method=RequestMethod.GET)
+	@ResponseBody
+	public String queryClients(@PathVariable String query, HttpServletRequest request) {
+		int count = managerProfileService.countQueryClients(query);
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Client> data = managerProfileService.queryClients(query.replaceAll(" ", ""), (pageInt - 1) * limitInt, limitInt);
+		JsonClient jsonClient = new JsonClient(count, data);
+		
+		return JSONObject.fromObject(jsonClient).toString();
+	}
+	
+	@RequestMapping(value="/product/add", method=RequestMethod.GET)
+	@ResponseBody
+	public String addProduct(@RequestBody Product product) {
+		
+		return "success";
 	}
 }
