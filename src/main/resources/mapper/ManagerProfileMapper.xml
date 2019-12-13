@@ -37,8 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addClient" parameterType="Client">
-		INSERT INTO product_table(client_id, client_name, sex, phone, address, wholesale_client, retail_client)
-		VALUES(0, #{client_name}, #{sex}, #{phone}, #{address}, #{wholesale_client}, #{retail_client})
+		INSERT INTO product_table(client_id, client_name, sex, phone, address, points, wholesale_client, retail_client)
+		VALUES(0, #{client_name}, #{sex}, #{phone}, #{address}, 0, #{wholesale_client}, #{retail_client})
 	</insert>
 	
 	<update id="updateProduct" parameterType="Product">
@@ -50,13 +50,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateClient" parameterType="Client">
 		UPDATE client_table
-		SET client_name = #{client_name}, sex = #{sex}, phone = #{phone},
-		address = #{address}, wholesale_client = #{wholesale_client}, retail_client = #{retail_client}
+		SET client_name = #{client_name}, sex = #{sex}, phone = #{phone}, address = #{address},
+		points = #{points}, wholesale_client = #{wholesale_client}, retail_client = #{retail_client}
 		WHERE client_id = #{client_id}
 	</update>
 	
 	<insert id="addDepot">
-		INSERT INTO depot_product_table(depot_prod_pri, depot_name, product_id, count)
+		INSERT INTO depot_prod_table(depot_prod_pri, depot_name, product_id, count)
 		VALUES(0, "仓库", (SELECT LAST_INSERT_ID()), 0), (0, "门店", (SELECT LAST_INSERT_ID()), 0)
 	</insert>
 	
