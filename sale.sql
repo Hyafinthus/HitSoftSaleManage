@@ -46,11 +46,11 @@ CREATE TABLE `depot_prod_table` (
   `product_id` int(8) NOT NULL,
   `count` int(8) unsigned NOT NULL,
   PRIMARY KEY (`depot_prod_pri`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `depot_prod_table` */
 
-insert  into `depot_prod_table`(`depot_prod_pri`,`depot_name`,`product_id`,`count`) values (1,'zong',1,50),(2,'men',1,20),(3,'zong',2,20),(4,'men',3,5);
+insert  into `depot_prod_table`(`depot_prod_pri`,`depot_name`,`product_id`,`count`) values (1,'仓库',1,40),(2,'门店',1,31),(3,'仓库',2,20),(4,'门店',3,5),(5,'仓库',3,0),(6,'门店',2,0);
 
 /*Table structure for table `order_prod_table` */
 
@@ -62,9 +62,11 @@ CREATE TABLE `order_prod_table` (
   `product_id` int(8) NOT NULL,
   `count` int(8) DEFAULT NULL,
   PRIMARY KEY (`order_prod_pri`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_prod_table` */
+
+insert  into `order_prod_table`(`order_prod_pri`,`order_id`,`product_id`,`count`) values (1,1,1,3),(2,1,2,4),(3,1,3,2);
 
 /*Table structure for table `order_table` */
 
