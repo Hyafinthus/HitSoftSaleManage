@@ -54,7 +54,29 @@ public class ManagerProfileController {
 	@RequestMapping(value="/product/add", method=RequestMethod.GET)
 	@ResponseBody
 	public String addProduct(@RequestBody Product product) {
-		
+		managerProfileService.addProduct(product);
 		return "success";
 	}
+	
+	@RequestMapping(value="/client/add", method=RequestMethod.GET)
+	@ResponseBody
+	public String addClient(@RequestBody Client client) {
+		managerProfileService.addClient(client);
+		return "success";
+	}
+	
+	@RequestMapping(value="/product/update", method=RequestMethod.GET)
+	@ResponseBody
+	public String updateProduct(@RequestBody Product product) {
+		managerProfileService.updateProduct(product);
+		return "success";
+	}
+	
+	@RequestMapping(value="/client/update", method=RequestMethod.GET)
+	@ResponseBody
+	public String updateClient(@RequestBody Client client) {
+		managerProfileService.updateClient(client);
+		return "success";
+	}
+	
 }
