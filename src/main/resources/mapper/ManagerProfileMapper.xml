@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addClient" parameterType="Client">
-		INSERT INTO product_table(client_id, client_name, sex, phone, address, points, wholesale_client, retail_client)
+		INSERT INTO client_table(client_id, client_name, sex, phone, address, points, wholesale_client, retail_client)
 		VALUES(0, #{client_name}, #{sex}, #{phone}, #{address}, 0, #{wholesale_client}, #{retail_client})
 	</insert>
 	
