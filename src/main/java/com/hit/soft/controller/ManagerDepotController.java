@@ -30,7 +30,7 @@ public class ManagerDepotController {
 		int count = managerDepotService.countQueryProducts(query);
 		int pageInt = Integer.parseInt(request.getParameter("page"));
 		int limitInt = Integer.parseInt(request.getParameter("limit"));
-		List<ProductDepot> data = managerDepotService.queryProducts(query, (pageInt - 1) * limitInt, limitInt);
+		List<ProductDepot> data = managerDepotService.queryProducts(query.replaceAll(" ", ""), (pageInt - 1) * limitInt, limitInt);
 		JsonProductDepot jsonProductDepot = new JsonProductDepot(count, data);
 		
 		return JSONObject.fromObject(jsonProductDepot).toString();
