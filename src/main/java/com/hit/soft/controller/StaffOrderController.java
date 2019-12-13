@@ -72,9 +72,13 @@ public class StaffOrderController {
 	@RequestMapping(value="/search/whosale_clients/{condition}",method=RequestMethod.GET)
 	@ResponseBody
 	public String searchClientsByCondition(@PathVariable String condition, HttpServletRequest request){
+		System.out.println(condition);
 		int count = staffOrderService.countClientsByCondition(condition);
-		int pageInt = Integer.parseInt(request.getParameter("page"));
-		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		System.err.println(count);
+		//int pageInt = Integer.parseInt(request.getParameter("page"));
+		//int limitInt = Integer.parseInt(request.getParameter("limit"));
+		int pageInt = 10;
+		int limitInt = 10;
 		List<Client> data = staffOrderService.searchClientsByCondition(condition, (pageInt - 1) * limitInt, limitInt);
 		JsonClient jsonClient = new JsonClient(count, data);
 		return JSONObject.fromObject(jsonClient).toString();

@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countClientsById" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE wholesale_client = 1 AND client_id LIKE '%#{clientId}%'
+		WHERE wholesale_client = 1 AND client_id LIKE CONCAT("%", #{clientId}, "%")
 	</select>
 	
 	<select id="countClientsByName" parameterType="String" resultType="Integer">
@@ -52,13 +52,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE wholesale_client = 1 AND client_name LIKE CONCAT("%", #{clientName}, "%")
 	</select>
 	
-	<select id="searchClientsById" parameterType="Integer" resultType="Client">
+	<select id="searchClientsById" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, points FROM client_table
-		WHERE wholesale_client = 1 AND client_id LIKE '%#{clientId}%'
+		WHERE wholesale_client = 1 AND client_id LIKE CONCAT("%", #{clientId}, "%")
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="searchClientsByName" parameterType="String" resultType="Client">
+	<select id="searchClientsByName" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, points FROM client_table
 		WHERE wholesale_client = 1 AND client_name LIKE CONCAT("%", #{clientName}, "%")
 		LIMIT #{offset}, #{limit}
@@ -75,29 +75,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="countProductsById" parameterType="Integer" resultType="Integer">
+	<select id="countProductsById" resultType="Integer">
 		SELECT COUNT(*)
 		FROM product_table
-		WHERE client_id LIKE '%#{clientId}%'
+		WHERE product_id LIKE CONCAT("%", #{productId}, "%")
 	</select>
 	
-	<select id="countProductsByName" parameterType="String" resultType="Integer">
+	<select id="countProductsByName" resultType="Integer">
 		SELECT COUNT(*)
 		FROM product_table
-		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+		WHERE product_name LIKE CONCAT("%", #{productName}, "%")
 	</select>
 	
-	<select id="searchProductsById" parameterType="Integer" resultType="Product">
+	<select id="searchProductsById" resultType="Product">
 		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
 		FROM product_table
-		WHERE product_id LIKE '%#{productId}%'
+		WHERE product_id LIKE CONCAT("%", #{productId}, "%")
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="searchProductsByName" parameterType="String" resultType="Product">
+	<select id="searchProductsByName" resultType="Product">
 		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
 		FROM product_table
-		WHERE product_id LIKE CONCAT("%", #{clientName}, "%")
+		WHERE product_name LIKE CONCAT("%", #{productName}, "%")
 		LIMIT #{offset}, #{limit}
 	</select>
 
@@ -127,7 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="searchOrderProduct" resultMap="mymap" parameterType="Integer">
+	<select id="searchOrderProduct" resultMap="mymap" >
 		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id. p.count
 		FROM order_table o, order_prod_table p, client_table c
 		WHERE o.order_id = #{orderId} AND o.order_id = p.order_id AND o.client_id = c.client_id
@@ -144,7 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 	</resultMap>
 	
-	<select id="searchOrder" resultType="Order" parameterType="Integer">
+	<select id="searchOrder" resultType="Order" >
 		SELECT order_id, create_name, pay_time, return_time, client_id, order_sale_price,
 		 order_purchase_price, order_profit, state, wholesale_order
 		FROM order_table

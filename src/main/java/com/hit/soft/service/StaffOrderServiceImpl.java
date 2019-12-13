@@ -70,8 +70,10 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	public List<Client> searchClientsByCondition(String condition, Integer offset, Integer limit) {
 		List<Client> clients = new ArrayList<Client>();
 		if(isInteger(condition)){
+			System.out.println("444--------------------------------------");
 			clients = staffOrderMapper.searchClientsById(Integer.parseInt(condition), offset, limit);
 		}else{
+			System.out.println("555--------------------------------------");
 			clients = staffOrderMapper.searchClientsByName(condition, offset, limit);
 		}
 		return clients;
