@@ -16,7 +16,9 @@ public interface ManagerDepotMapper {
 	
 	public void turnoverDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id, @Param("number") Integer number);
 
-	public void transferDepot(@Param("old_depot") String old_depot, @Param("new_depot") String new_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);
+	public void transferOldDepot(@Param("old_depot") String old_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);
+
+	public void transferNewDepot(@Param("new_depot") String new_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);
 
 	public Integer countQueryDepot(String depot_name);
 	

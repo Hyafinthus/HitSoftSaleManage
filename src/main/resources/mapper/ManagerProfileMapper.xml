@@ -18,4 +18,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{page}, #{limit}
 	</select>
 	
+	<select id="countQueryClients" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM client_table
+		WHERE client_name LIKE CONCAT("%", #{query}, "%") OR phone = #{query}
+	</select>
+	
+	<select id="queryClients" resultType="Client">
+		SELECT client_id, client_name, sex, phone, address, points, wholesale_client, retail_client
+		FROM client_table
+		WHERE client_name LIKE CONCAT("%", #{query}, "%") OR phone = #{query}
+		LIMIT #{page}, #{limit}
+	</select>
+	
+	
+	
 </mapper>

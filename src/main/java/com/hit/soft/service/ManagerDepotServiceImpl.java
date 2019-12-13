@@ -31,7 +31,8 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 
 	@Override
 	public void transferDepot(String old_depot, String new_depot, Integer product_id, Integer number) {
-		managerDepotMapper.transferDepot(old_depot, new_depot, product_id, number);
+		managerDepotMapper.transferOldDepot(old_depot, product_id, number);
+		managerDepotMapper.transferNewDepot(new_depot, product_id, number);
 	}
 
 	@Override

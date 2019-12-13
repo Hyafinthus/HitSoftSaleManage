@@ -26,10 +26,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE product_id = #{product_id} AND depot_name = #{depot_name}
 	</update>
 	
-	<update id="transferDepot">
+	<update id="transferOldDepot">
 		UPDATE depot_prod_table
 		SET count = count - #{number}
-		WHERE product_id = #{product_id} AND depot_name = #{old_depot};
+		WHERE product_id = #{product_id} AND depot_name = #{old_depot}
+	</update>
+	
+	<update id="transferNewDepot">
 		UPDATE depot_prod_table
 		SET count = count + #{number}
 		WHERE product_id = #{product_id} AND depot_name = #{new_depot}
