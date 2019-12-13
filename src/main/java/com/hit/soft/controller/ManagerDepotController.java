@@ -40,8 +40,7 @@ public class ManagerDepotController {
 	@RequestMapping(value="/turnover/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
 	@ResponseBody
 	public String turnoverDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) throws NumberFormatException, UnsupportedEncodingException {
-		managerDepotService.turnoverDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));		
-		System.out.print(depot_name);
+		managerDepotService.turnoverDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));
 		return "success";
 	}
 	
