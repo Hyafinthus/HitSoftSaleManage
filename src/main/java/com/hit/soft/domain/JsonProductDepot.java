@@ -2,13 +2,13 @@ package com.hit.soft.domain;
 
 import java.util.List;
 
-public class JsonProducePepot {
+public class JsonProductDepot {
 	private int code = 0;
 	private String msg = "";
 	private int count;
 	private List<ProductDepot> data;
 	
-	public JsonProducePepot(int count, List<ProductDepot> data) {
+	public JsonProductDepot(int count, List<ProductDepot> data) {
 		super();
 		this.count = count;
 		this.data = data;
@@ -48,7 +48,7 @@ public class JsonProducePepot {
 
 	@Override
 	public String toString() {
-		return "JsonProducePepot [code=" + code + ", msg=" + msg + ", count=" + count + ", data=" + data + "]";
+		return "JsonProductDepot [code=" + code + ", msg=" + msg + ", count=" + count + ", data=" + data + "]";
 	}
 	
 }

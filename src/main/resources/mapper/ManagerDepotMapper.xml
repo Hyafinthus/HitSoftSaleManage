@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hit.soft.dao.ManagerDepotMapper">
+	
+	<select id="countQueryProducts" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM depot_prod_table d, product_table p
+		WHERE p.product_name LIKE CONCAT("%", #{query}, "%")
+		AND p.product_id = d.product_id
+	</select>
+	
+	<select id="queryProducts" resultType="ProductDepot">
+		SELECT p.product_id, p.product_name, p.type, p.unit, d.depot_name, d.count
+		FROM depot_prod_table d, product_table p
+		WHERE p.product_name LIKE CONCAT("%", #{query}, "%")
+		AND p.product_id = d.product_id
+		LIMIT #{page}, #{limit}
+	</select>
+	
+</mapper>

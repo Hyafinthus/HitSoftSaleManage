@@ -11,23 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import com.hit.soft.domain.JsonOrder;
 import com.hit.soft.domain.Order;
 import com.hit.soft.domain.OrderProduct;
 import com.hit.soft.service.ManagerOrderService;
 
+import net.sf.json.JSONObject;
+
 @Controller
-@RequestMapping("/manager")
+@RequestMapping("/manager/order")
 public class ManagerOrderController {
 
 	@Autowired
 	private ManagerOrderService managerOrderService;
 	
-	@RequestMapping(value="/order",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
 	public String queryOrders(HttpServletRequest request) {
 		int count = managerOrderService.countQueryOrders();
@@ -39,7 +37,7 @@ public class ManagerOrderController {
 		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
-	@RequestMapping(value="/order/review/{order_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/review/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public OrderProduct reviewOrder(@PathVariable String order_id) {
 		OrderProduct orderProduct = managerOrderService.showOrder(order_id);
@@ -47,14 +45,14 @@ public class ManagerOrderController {
 		return orderProduct;
 	}
 	
-	@RequestMapping(value="/order/approve/{order_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/approve/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String approveOrder(@PathVariable String order_id) {
 		managerOrderService.approveOrder(order_id);
 		return "success";
 	}
 	
-	@RequestMapping(value="/order/reject/{order_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/reject/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String rejectOrder(@PathVariable String order_id) {
 		managerOrderService.rejectOrder(order_id);

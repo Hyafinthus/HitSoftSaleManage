@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hit.soft.domain.JsonStaff;
 import com.hit.soft.domain.Staff;
 import com.hit.soft.service.BossManageService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/boss/manage")
@@ -22,10 +25,11 @@ public class BossManageController {
 	
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Staff> queryAllStaffs(){
+	public String queryAllStaffs(){
+		int count = 100;
 		List<Staff> staffs = bossManageService.queryStaff();
-		//System.out.println(staffs);
-		return staffs;
+		JsonStaff jsonStaff = new JsonStaff(count, staffs);
+		return JSONObject.fromObject(jsonStaff).toString();
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)

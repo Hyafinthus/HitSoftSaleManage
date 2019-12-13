@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hit.soft.dao.ManagerOrderMapper">
 	
-	<select id="countQueryOrders" resultType="java.lang.Integer">
+	<select id="countQueryOrders" resultType="Integer">
 		SELECT COUNT(*) FROM order_table WHERE state = "published"
 	</select>
 	
