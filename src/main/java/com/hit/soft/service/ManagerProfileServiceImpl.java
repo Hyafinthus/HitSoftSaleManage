@@ -38,6 +38,7 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	@Override
 	public void addProduct(Product product) {
 		managerProfileMapper.addProduct(product);
+		managerProfileMapper.addDepot();
 	}
 
 	@Override

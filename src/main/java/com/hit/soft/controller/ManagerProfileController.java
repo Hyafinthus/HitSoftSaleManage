@@ -54,7 +54,7 @@ public class ManagerProfileController {
 	@RequestMapping(value="/product/add", method=RequestMethod.POST)
 	@ResponseBody
 	public String addProduct(@RequestBody Product product) {
-		managerProfileService.addProduct(product);
+		managerProfileService.addProduct(product);	
 		return "success";
 	}
 	

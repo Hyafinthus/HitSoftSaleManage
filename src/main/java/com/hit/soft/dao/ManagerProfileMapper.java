@@ -27,4 +27,6 @@ public interface ManagerProfileMapper {
 	
 	public void updateClient(Client client);
 	
+	public void addDepot();
+	
 }
