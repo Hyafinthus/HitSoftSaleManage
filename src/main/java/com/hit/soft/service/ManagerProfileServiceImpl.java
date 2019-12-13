@@ -40,4 +40,19 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 		managerProfileMapper.addProduct(product);
 	}
 
+	@Override
+	public void addClient(Client client) {
+		managerProfileMapper.addClient(client);
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		managerProfileMapper.updateProduct(product);
+	}
+
+	@Override
+	public void updateClient(Client client) {
+		managerProfileMapper.updateClient(client);
+	}
+
 }

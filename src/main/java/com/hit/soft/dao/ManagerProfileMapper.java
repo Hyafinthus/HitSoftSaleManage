@@ -21,4 +21,10 @@ public interface ManagerProfileMapper {
 	
 	public void addProduct(Product product);
 	
+	public void addClient(Client client);
+	
+	public void updateProduct(Product product);
+	
+	public void updateClient(Client client);
+	
 }
