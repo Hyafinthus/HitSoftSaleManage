@@ -28,7 +28,7 @@
         <cite>导航元素</cite></a>
     </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-      onclick="location.reload()" title="刷新">
+      onclick="location.reload()" title="刷新" id = "refresh">
       <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
   </div>
   <div class="layui-fluid">
@@ -77,7 +77,6 @@
       $(document).on('click','#search',function(){
         var depot_table_url = '';
         if($("#product_name").val().length === 0){
-          console.log("11111")
           depot_table_url = '/sale/manager/depot/search/%25'
         } else{
           depot_table_url = '/sale/manager/depot/search/'+$("#product_name").val()
@@ -99,11 +98,13 @@
       table.on('tool(depot_product)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
-        if (layEvent === 'detail') {
-          xadmin.open('审核订单', '/sale/order-detailapprove.html?order_id=' + data.order_id, 1200, 700);
+        if (layEvent === 'input') {
+          xadmin.open('入库', '/sale/depot-input.html?depot_name=' + data.depot_name + '&product_id='+data.product_id, 300, 180);
+        }else if(layEvent === 'output'){
+          xadmin.open('出库', '/sale/depot-output.html?depot_name=' + data.depot_name + '&product_id='+data.product_id, 300, 180);
+        }else if(layEvent === 'transfer'){
+          xadmin.open('调拨', '/sale/depot-transfer.html?depot_name=' + data.depot_name + '&product_id='+data.product_id, 300, 180);
         }
-        $(obj).parents("tr").remove();
-        console.log(data.order_id);
       })
       var form = layui.form,
         layer = layui.layer;
