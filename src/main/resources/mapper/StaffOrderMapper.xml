@@ -5,6 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hit.soft.dao.StaffOrderMapper">
 	
+	<select id="getLastId" resultType="Integer">
+		SELECT LAST_INSERT_ID();
+	</select>
+	
 	<insert id="addOrder" parameterType="Order">
 		INSERT INTO order_table(create_time, client_id, order_sale_price, order_purchase_price, order_profit, state, wholesale_order)
 		 VALUES(#{create_time}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{order_profit}, #{state}, #{wholesale_order})
@@ -24,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteDraft">
 		DELETE order_table, order_prod_table
 		FROM order_table LEFT JOIN order_prod_table ON order_table.order_id = order_prod_table.order_id
-		WHERE order_table.state = "published"
+		WHERE order_table.state = "draft"
 	</delete>
 	
 	<select id="countClients" resultType="Integer">

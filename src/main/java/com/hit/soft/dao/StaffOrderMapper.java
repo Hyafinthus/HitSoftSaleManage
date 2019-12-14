@@ -59,6 +59,8 @@ public interface StaffOrderMapper {
 
 	void updateOrder(Order order);
 
+	int getLastId();
+
 
 	
 }

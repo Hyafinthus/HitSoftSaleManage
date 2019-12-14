@@ -28,10 +28,14 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		Order order = orderProductToOrder(orderProduct, true);
 		List<Product> products = orderProduct.getProducts();
 		staffOrderMapper.deleteDraft();
-		for(int i=0; i<products.size(); i++){
-			staffOrderMapper.addProduct(products.get(i));
-		}
 		staffOrderMapper.addOrder(order);
+		int id = staffOrderMapper.getLastId();
+		for(int i=0; i<products.size(); i++){
+			Product product = products.get(i);
+			product.setOrder_id(id);
+			staffOrderMapper.addProduct(product);
+		}
+		
 	}
 	
 	//上传给经理审核
@@ -40,10 +44,14 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		Order order = orderProductToOrder(orderProduct, false);
 		List<Product> products = orderProduct.getProducts();
 		staffOrderMapper.deleteDraft();
-		for(int i=0; i<products.size(); i++){
-			staffOrderMapper.addProduct(products.get(i));
-		}
 		staffOrderMapper.addOrder(order);
+		int id = staffOrderMapper.getLastId();
+		for(int i=0; i<products.size(); i++){
+			Product product = products.get(i);
+			product.setOrder_id(id);
+			staffOrderMapper.addProduct(product);
+		}
+		
 	}
 	
 	@Override
