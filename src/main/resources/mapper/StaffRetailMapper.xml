@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProducts" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		SELECT product_id, product_name, type, unit, purchase_price, retail_price
 		FROM product_table
 		LIMIT #{offset}, #{limit}
 	</select>
@@ -81,14 +81,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProductsById" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		SELECT product_id, product_name, type, unit, purchase_price, retail_price
 		FROM product_table
 		WHERE product_id LIKE CONCAT("%", #{productId}, "%")
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchProductsByName" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		SELECT product_id, product_name, type, unit, purchase_price, retail_price
 		FROM product_table
 		WHERE product_name LIKE CONCAT("%", #{productName}, "%")
 		LIMIT #{offset}, #{limit}
