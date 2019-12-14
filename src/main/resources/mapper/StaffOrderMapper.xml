@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="addOrder" parameterType="Order">
 		INSERT INTO order_table(create_time, client_id, order_sale_price, order_purchase_price, order_profit, state, wholesale_order)
-		 VALUES(#{create_id}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{order_profit}, #{state}, #{wholesale_order})
+		 VALUES(#{create_time}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{order_profit}, #{state}, #{wholesale_order})
 	</insert>
 	
 	<insert id="addProduct" parameterType="Product">
