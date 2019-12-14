@@ -2,6 +2,8 @@ package com.hit.soft.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hit.soft.domain.Client;
+import com.hit.soft.domain.JsonClient;
 import com.hit.soft.domain.JsonStaff;
 import com.hit.soft.domain.Staff;
 import com.hit.soft.service.BossManageService;
@@ -25,10 +29,12 @@ public class BossManageController {
 	
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
 	@ResponseBody
-	public String queryAllStaffs(){
-		int count = 100;
-		List<Staff> staffs = bossManageService.queryStaff();
-		JsonStaff jsonStaff = new JsonStaff(count, staffs);
+	public String queryAllStaffs(HttpServletRequest request){
+		int count = bossManageService.countStaffs();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Staff> data = bossManageService.queryStaff((pageInt - 1) * limitInt, limitInt);
+		JsonStaff jsonStaff = new JsonStaff(count, data);
 		return JSONObject.fromObject(jsonStaff).toString();
 	}
 	
@@ -50,11 +56,6 @@ public class BossManageController {
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateStaffs(@RequestBody Staff staff){
-		/*Staff staff1=new Staff();
-		staff1.setStaff_id(4);
-		staff1.setStaff_name("pipixia");
-		staff1.setRole("manager");
-		staff1.setPass("t123456");*/
 		bossManageService.updateStaff(staff);
 		return "success";
 	}

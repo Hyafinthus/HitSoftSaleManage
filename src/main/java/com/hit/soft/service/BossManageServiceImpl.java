@@ -15,8 +15,13 @@ public class BossManageServiceImpl implements BossManageService {
 	private BossManageMapper bossManageMapper;
 
 	@Override
-	public List<Staff> queryStaff() {
-		return bossManageMapper.queryStaff();
+	public int countStaffs() {
+		return bossManageMapper.countStaffs();
+	}
+	
+	@Override
+	public List<Staff> queryStaff(int offset, int limit) {
+		return bossManageMapper.queryStaff(offset, limit);
 	}
 
 	@Override
