@@ -3,6 +3,7 @@ package com.hit.soft.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.hit.soft.domain.Client;
 import com.hit.soft.domain.Order;
@@ -13,27 +14,27 @@ public interface StaffRetailMapper {
 
 	int countClients();
 
-	List<Client> searchClients(int offset, int limit);
+	List<Client> searchClients(@Param("offset") Integer offset, @Param("limit")Integer limit);
 
 	int countClientsById(int parseInt);
 
 	int countClientsByName(String condition);
 
-	List<Client> searchClientsById(int parseInt, int offset, int limit);
+	List<Client> searchClientsById(@Param("clientId") int clientId, @Param("offset") Integer offset, @Param("limit")Integer limit);
 
-	List<Client> searchClientsByName(String condition, int offset, int limit);
+	List<Client> searchClientsByName(@Param("clientName") String clientName, @Param("offset") Integer offset, @Param("limit")Integer limit);
 
 	int countProducts();
 
-	List<Product> searchProducts(int offset, int limit);
+	List<Product> searchProducts(@Param("offset") Integer offset, @Param("limit")Integer limit);
 
 	int countProductsById(int parseInt);
 
 	int countProductsByName(String condition);
 
-	List<Product> searchProductsById(int parseInt, int offset, int limit);
+	List<Product> searchProductsById(@Param("productId") int productId, @Param("offset") Integer offset, @Param("limit")Integer limit);
 
-	List<Product> searchProductsByName(String condition, int offset, int limit);
+	List<Product> searchProductsByName(@Param("productName") String productName, @Param("offset") Integer offset, @Param("limit")Integer limit);
 
 	void addProduct(Product product);
 
