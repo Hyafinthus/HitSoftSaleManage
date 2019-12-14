@@ -88,10 +88,14 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 		Order order = orderProductToOrder(orderProduct, false);
 		order.setState("paid");
 		List<Product> products = orderProduct.getProducts();
-		for(int i=0; i<products.size(); i++){
-			staffRetailMapper.addProduct(products.get(i));
-		}
 		staffRetailMapper.addOrder(order);
+		int id = staffRetailMapper.getLastId();
+		for(int i=0; i<products.size(); i++){
+			Product product = products.get(i);
+			product.setOrder_id(id);
+			staffRetailMapper.addProduct(product);
+		}
+
 	}
 
 	private Order orderProductToOrder(OrderProduct orderProduct, boolean isdraft){

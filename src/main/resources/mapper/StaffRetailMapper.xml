@@ -5,6 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hit.soft.dao.StaffRetailMapper">
 	
+	<select id="getLastId" resultType="Integer">
+		SELECT LAST_INSERT_ID();
+	</select>
+	
 	<insert id="addOrder" parameterType="Order">
 		INSERT INTO order_table(create_time, client_id, order_sale_price, order_purchase_price, state, wholesale_order)
 		 VALUES(#{create_id}, #{client_id}, #{order_sale_price}, #{order_purchase_price}, #{state}, #{wholesale_order})

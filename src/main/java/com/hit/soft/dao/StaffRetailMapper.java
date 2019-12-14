@@ -39,4 +39,6 @@ public interface StaffRetailMapper {
 
 	void addOrder(Order order);
 
+	int getLastId();
+
 }
