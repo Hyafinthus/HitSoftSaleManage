@@ -5,9 +5,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hit.soft.dao.BossManageMapper">
 	
-	<select id="queryStaff" resultType="Staff">
-		SELECT staff_id,staff_name,role,pass FROM staff_table
+	<select id="countStaffs" resultType="Integer">
+		SELECT COUNT(*)
+		FROM staff_table
 		WHERE dismiss = 0
+	</select>
+	
+	<select id="queryStaff" resultType="Staff">
+		SELECT staff_id,staff_name,role,pass
+		FROM staff_table
+		WHERE dismiss = 0
+		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<update id="deleteStaff" parameterType="String">
