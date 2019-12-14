@@ -23,12 +23,6 @@
                             <input type="text" id="staff_id" name="staff_id" readonly="readonly" autocomplete="off" class="layui-input"></div>
                         <div class="layui-form-mid layui-word-aux">
                             <span class="x-red">*</span>将会成为您唯一的登入名</div></div>
-                    <div class="layui-form-item">
-                        <label for="staff_name" class="layui-form-label">
-                            <span class="x-red">*</span>姓名</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="staff_name" name="staff_name" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
-                    </div>
 					<div class="layui-form-item">
 					    <label for="role" class="layui-form-label">
 					        <span class="x-red">*</span>职位</label>
@@ -83,7 +77,6 @@
 					// console.log(data.field.role)
 					
 					var staff_data = '{"staff_id": "' + data.field.staff_id
-					+'","staff_name": "' + data.field.staff_name
 					+'","role": "' + data.field.role
 					+'","pass": "' + data.field.pass + '"}';
 					// var params=JSON.stringify(staff_data);
