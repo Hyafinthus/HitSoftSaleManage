@@ -12,13 +12,16 @@ public class Order {
 	private String state;
 	private int wholesale_order;
 	
+	//辅助用client_name
+	private String client_name;
+	
 	public Order() {
 		super();
 	}
 
 	public Order(int order_id, String create_time, String pay_time, String return_time, int client_id,
 			double order_sale_price, double order_purchase_price, double order_profit, String state,
-			int wholesale_order) {
+			int wholesale_order, String client_name) {
 		super();
 		this.order_id = order_id;
 		this.create_time = create_time;
@@ -30,7 +33,10 @@ public class Order {
 		this.order_profit = order_profit;
 		this.state = state;
 		this.wholesale_order = wholesale_order;
+		this.client_name = client_name;
 	}
+
+
 
 	public int getOrder_id() {
 		return order_id;
@@ -112,12 +118,22 @@ public class Order {
 		this.wholesale_order = wholesale_order;
 	}
 
+	public String getClient_name() {
+		return client_name;
+	}
+
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [order_id=" + order_id + ", create_time=" + create_time + ", pay_time=" + pay_time
 				+ ", return_time=" + return_time + ", client_id=" + client_id + ", order_sale_price=" + order_sale_price
 				+ ", order_purchase_price=" + order_purchase_price + ", order_profit=" + order_profit + ", state="
-				+ state + ", wholesale_order=" + wholesale_order + "]";
+				+ state + ", wholesale_order=" + wholesale_order + ", client_name=" + client_name + "]";
 	}
+
+	
 	
 }

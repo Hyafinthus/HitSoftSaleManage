@@ -113,9 +113,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchUnpaidOrder" resultType="Order">
-		SELECT order_id, client_id, create_time, order_sale_price, order_purchase_price, order_profit
-		FROM order_table
-		WHERE state = "approved"
+		SELECT o.order_id, o.client_id, o.create_time, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
+		FROM order_table o, client_table c
+		WHERE state = "approved" AND o.client_id = c.client_id 
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -126,9 +126,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchPaidOrder" resultType="Order">
-		SELECT order_id, create_time, pay_time, client_id, order_sale_price, order_purchase_price, order_profit
-		FROM order_table
-		WHERE state = "paid" and wholesale_order = 1
+		SELECT o.order_id, o.create_time, o.pay_time, o.client_id, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
+		FROM order_table o, client_table c
+		WHERE state = "paid" AND wholesale_order = 1 AND o.client_id = c.client_id 
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -155,7 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="searchOrder" resultType="Order" >
-		SELECT order_id, create_name, pay_time, return_time, client_id, order_sale_price,
+		SELECT order_id, create_time, pay_time, return_time, client_id, order_sale_price,
 		 order_purchase_price, order_profit, state, wholesale_order
 		FROM order_table
 		WHERE order_id = #{orderId}
