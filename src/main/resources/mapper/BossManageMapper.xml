@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateStaff" parameterType="Staff">
 		UPDATE staff_table
-		SET staff_name = #{staff_name}, role = #{role}, pass = #{pass}
+		SET role = #{role}, pass = #{pass}
 		WHERE staff_id = #{staff_id}
 	</update>
 	
