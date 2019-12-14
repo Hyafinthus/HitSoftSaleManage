@@ -150,7 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="purchase_price" property="purchase_price"/>
 			<result column="wholesale_price" property="wholesale_price"/>
 			<result column="count" property="count"/>
-			<result column="order_id" property="orderId"/>
+			<result column="order_id" property="order_id"/>
 		</collection>
 	</resultMap>
 	
