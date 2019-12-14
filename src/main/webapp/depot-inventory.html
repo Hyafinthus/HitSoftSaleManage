@@ -92,7 +92,7 @@
             var layEvent = obj.event;
             var count = parseInt($("#product_name"+data.depot_name+data.product_id).val());
             var o_count = parseInt(data.count);
-            if (layEvent === 'confirm') {
+            if (layEvent === 'confirm'+data.product_id) {
                 $("#confirm"+data.depot_name+data.product_id).attr("class","layui-btn layui-btn-disabled");
                 if(count>o_count){
                     $("#static"+data.depot_name+data.product_id).attr("style","color:red")
@@ -141,7 +141,7 @@
               class="layui-input">
     </div>
     <div class="layui-inline layui-show-xs-block">
-            <button class="layui-btn" lay-filter="confirm" id="confirm{{d.depot_name}}{{d.product_id}}" lay-event="confirm">确认</button>
+            <button class="layui-btn" lay-filter="confirm" id="confirm{{d.depot_name}}{{d.product_id}}" lay-event="confirm{{d.product_id}}">确认</button>
     </div>
     <div class="layui-inline layui-show-xs-block">
     <label id="static{{d.depot_name}}{{d.product_id}}" class="layui-form-label"></label>
