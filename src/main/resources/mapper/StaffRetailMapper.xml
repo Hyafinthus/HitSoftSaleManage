@@ -94,4 +94,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{offset}, #{limit}
 	</select>
 	
+	<update id="updateDepot" parameterType="Product">
+		UPDATE depot_prod_table
+		SET count = depot_prod_table.count-#{count}
+		WHERE depot_name = "门店" AND product_id = #{product_id}
+	</update>
+	
 </mapper>

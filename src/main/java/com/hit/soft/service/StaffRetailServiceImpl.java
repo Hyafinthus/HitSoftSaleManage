@@ -94,8 +94,8 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 			Product product = products.get(i);
 			product.setOrder_id(id);
 			staffRetailMapper.addProduct(product);
+			staffRetailMapper.updateDepot(product);
 		}
-
 	}
 
 	private Order orderProductToOrder(OrderProduct orderProduct, boolean isdraft){

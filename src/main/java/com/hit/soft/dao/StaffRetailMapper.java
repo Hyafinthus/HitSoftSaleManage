@@ -42,4 +42,6 @@ public interface StaffRetailMapper {
 
 	int getLastId();
 
+	void updateDepot(Product product);
+
 }
