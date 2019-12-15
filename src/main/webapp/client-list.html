@@ -56,7 +56,26 @@
 <script type="text/html" id="barDemo">
       <a class="layui-btn layui-btn-xs" lay-event="confirm">修改</a>
     </script>
+    <script type="text/html" id="wselect">
+      {{#  if(d.wholesale_client === 0){ }}
+        <input type="radio" name="sexw{{d.client_id}}" value="1" title="是">
+        <input type="radio" name="sexw{{d.client_id}}" value="0" title="否" checked> 
+        {{#  } else{ }} 
+        <input type="radio" name="sexw{{d.client_id}}" value="1" title="是" checked>
+        <input type="radio" name="sexw{{d.client_id}}" value="0" title="否">
+        {{# } }}    
+    </script>
+    <script type="text/html" id="rselect">
+        {{#  if(d.retail_client === 0){ }}
+        <input type="radio" name="sexr{{d.client_id}}" value="1" title="是">
+        <input type="radio" name="sexr{{d.client_id}}" value="0" title="否" checked> 
+        {{#  } else{ }} 
+        <input type="radio" name="sexr{{d.client_id}}" value="1" title="是" checked>
+        <input type="radio" name="sexr{{d.client_id}}" value="0" title="否">
+        {{# } }}   
+    </script>
 <script>
+  
   // layui.use('table',
   //     function() {
   //         var table = layui.table;
@@ -133,8 +152,8 @@
           { field: 'phone', title: '手机', width: 159, minWidth: 150, sort: true, edit: "text" },
           { field: 'address', title: '地址', width: 150, minWidth: 150, sort: true, edit: "text" },
           { field: 'points', title: '积分', width: 110, minWidth: 150, sort: true, edit: "text" },
-          { field: 'wholesale_client', title: '是否为批发客户(1是0否)', width: 190, minWidth: 150, sort: true, edit: "text" },
-          { field: 'retail_client', title: '是否为零售客户(1是0否)', width: 190, minWidth: 150, sort: true, edit: "text" },
+          { field: 'wholesale_client', title: '是否为批发客户', width: 190, minWidth: 150,templet: '#wselect'},
+          { field: 'retail_client', title: '是否为零售客户', width: 190, minWidth: 150,templet: '#rselect' },
           { fixed: 'right', width: 120, align: 'center', toolbar: '#barDemo' }]] //设置表头
           //,…… //更多参数参考右侧目录：基本参数选项
         });
@@ -157,8 +176,8 @@
           { field: 'phone', title: '手机', width: 159, minWidth: 150, sort: true, edit: "text" },
           { field: 'address', title: '地址', width: 150, minWidth: 150, sort: true, edit: "text" },
           { field: 'points', title: '积分', width: 110, minWidth: 150, sort: true, edit: "text" },
-          { field: 'wholesale_client', title: '是否为批发客户(1是0否)', width: 190, minWidth: 150, sort: true, edit: "text" },
-          { field: 'retail_client', title: '是否为零售客户(1是0否)', width: 190, minWidth: 150, sort: true, edit: "text" },
+          { field: 'wholesale_client', title: '是否为批发客户', width: 190, minWidth: 150,templet: '#wselect'},
+          { field: 'retail_client', title: '是否为零售客户', width: 190, minWidth: 150,templet: '#rselect'},
           { fixed: 'right', width: 120, align: 'center', toolbar: '#barDemo' }]] //设置表头
           //,…… //更多参数参考右侧目录：基本参数选项
         });
@@ -166,6 +185,10 @@
       table.on('tool(depot_product)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
+        var whole = $("[name='sexw"+data.client_id+"']:checked").val();
+        var retail = $("[name='sexr"+data.client_id+"']:checked").val();
+        console.log(whole);
+        console.log(retail);
         if (layEvent === 'confirm') {
           var value = obj.value //得到修改后的值
             ,
@@ -180,8 +203,8 @@
             "phone": data.phone,
             "address": data.address,
             "points": data.points,
-            "wholesale_client": data.wholesale_client,
-            "retail_client":data.retail_client
+            "wholesale_client": whole,
+            "retail_client":retail
           };
           var paramStr = JSON.stringify(param);
           $.ajax({
