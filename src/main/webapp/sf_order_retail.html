@@ -86,7 +86,7 @@
 				var sum_whole = 0.0
 				var sum_pr = 0.0
 				for (var i = 0; i < prod_list.length; i++) {
-					sum_whole += prod_list[i].count * prod_list[i].wholesale_price
+					sum_whole += prod_list[i].count * prod_list[i].retail_price
 					sum_pr += prod_list[i].count * prod_list[i].purchase_price
 				}
 				var label = document.getElementById("sum");
@@ -94,6 +94,7 @@
 				sp = sum_whole
 				pp = sum_pr
 				pro = sp - pp
+				console.log(sp)
 			}
 
 			function deleteRow(t) {
@@ -154,10 +155,10 @@
 
 			}
 
-			function addRow(id, name, unit, wholesale_price) {
+			function addRow(id, name, unit, retail_price) {
 				var rowindex = $("#product_table tbody tr").length;
 				var str = "<tr><td>" + rowindex +
-					"</td><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + wholesale_price +
+					"</td><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + retail_price +
 					"</td><td><input id='input" + id +
 					"'></input></td><td><a class='layui-btn'>删除</a></td></tr>";
 				$("#product_table tbody").append(str);
@@ -182,6 +183,7 @@
 				orderProduct.order_sale_price = sp
 				orderProduct.order_purchase_price = pp
 				orderProduct.order_profit = pro
+				console.log(orderProduct)
 				var products = []
 				for (var i = 0; i < prod_list.length; i++) {
 					products.push(prod_list[i])
@@ -289,12 +291,6 @@
 								sort: true
 							},
 							{
-								field: 'wholesale_price',
-								title: '批发价',
-								width: 200,
-								sort: true
-							},
-							{
 								field: 'retail_price',
 								title: '零售价'
 							}
@@ -312,7 +308,7 @@
 					var p_name = obj.data.product_name
 					var p_unit = obj.data.unit
 					var p_purchase_price = obj.data.purchase_price
-					var p_wholesale_price = obj.data.wholesale_price
+					var p_retail_price = obj.data.retail_price
 					console.log(obj.data)
 					var flag = true
 					var seq = 0
@@ -328,10 +324,10 @@
 						product.name = p_name
 						product.unit = p_unit
 						product.purchase_price = p_purchase_price
-						product.wholesale_price = p_wholesale_price
+						product.retail_price = p_retail_price
 						product.count = 1
 						prod_list.push(product)
-						addRow(p_id, p_name, p_unit, p_wholesale_price)
+						addRow(p_id, p_name, p_unit, p_retail_price)
 						var str = "input" + p_id
 						var inpu = document.getElementById(str)
 						inpu.value = 1
