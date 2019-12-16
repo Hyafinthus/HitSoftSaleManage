@@ -73,7 +73,6 @@ public class ManagerDepotController {
 	@RequestMapping(value="/inventory/confirm/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
 	@ResponseBody
 	public String confirmDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) {
-		System.out.println(depot_name + " " + product_id + " " + number);
 		managerDepotService.confirmDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));
 		return "success";
 	}
