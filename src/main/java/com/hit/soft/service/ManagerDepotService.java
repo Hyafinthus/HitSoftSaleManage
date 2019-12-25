@@ -2,6 +2,7 @@ package com.hit.soft.service;
 
 import java.util.List;
 
+import com.hit.soft.domain.Product;
 import com.hit.soft.domain.ProductDepot;
 
 public interface ManagerDepotService {
@@ -16,6 +17,10 @@ public interface ManagerDepotService {
 
 	public void transferDepot(String old_depot, String new_depot, Integer product_id, Integer number);
 
+	public Integer countOverstockProduct();
+	
+	public List<Product> overstockProduct(Integer page, Integer limit);
+	
 	public Integer countQueryDepot(String depot_name);
 	
 	public List<ProductDepot> queryDepot(String depot_name, Integer page, Integer limit);

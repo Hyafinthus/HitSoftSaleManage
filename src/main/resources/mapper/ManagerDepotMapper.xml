@@ -59,6 +59,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE product_id = #{product_id} AND depot_name = #{new_depot}
 	</update>
 	
+	<select id="countOverstockProduct" resultType="Integer">
+		SELECT COUNT(*) FROM
+		(SELECT COUNT(*) FROM depot_prod_table d, product_table p
+		WHERE p.product_id = d.product_id GROUP BY p.product_id) T
+	</select>
+	
+	<select id="overstockProduct" resultType="Product">
+		SELECT p.product_id, p.product_name, p.type, p.unit, d.depot_name, SUM(d.count)
+		FROM depot_prod_table d, product_table p
+		WHERE p.product_id = d.product_id
+		GROUP BY p.product_id
+		LIMIT #{page}, #{limit}
+	</select>
+	
 	<select id="countQueryDepot" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
 		FROM depot_prod_table d, product_table p
