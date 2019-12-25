@@ -26,7 +26,7 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 	
 	@Override
 	public void inDepot(String depot_name, Integer product_id, Integer number, Double in_price) {
-		Integer prodCount = managerDepotMapper.countProduct(product_id);
+		Integer prodCount = managerDepotMapper.countProductDepot(product_id);
 		Double prodOldPurch = managerDepotMapper.queryProductPurchase(product_id);
 		Double prodNewPurch = (prodCount * prodOldPurch + in_price * number) / (prodCount + number);
 		managerDepotMapper.updateProductPurchase(product_id, prodNewPurch);

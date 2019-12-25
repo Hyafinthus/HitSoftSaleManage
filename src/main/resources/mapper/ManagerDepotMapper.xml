@@ -20,6 +20,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{page}, #{limit}
 	</select>
 	
+	<select id="countProductDepot" parameterType="Integer" resultType="Integer">
+		SELECT SUM(count) FROM depot_prod_table
+		WHERE product_id = #{product_id}
+	</select>
+	
+	<select id="queryProductPurchase" parameterType="Integer" resultType="Double">
+		SELECT purchase_price FROM product_table
+		WHERE product_id = #{product_id}
+	</select>
+	
+	<update id="updateProductPurchase">
+		UPDATE product_table
+		SET purchase_price = #{purchase_price}
+		WHERE product_id = #{product_id}
+	</update>
+	
 	<update id="turnoverDepot">
 		UPDATE depot_prod_table
 		SET count = count + #{number}

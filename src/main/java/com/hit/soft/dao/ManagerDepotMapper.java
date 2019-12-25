@@ -16,7 +16,7 @@ public interface ManagerDepotMapper {
 	
 	// 以下为进货相关
 	// 查询某货品两个仓库总量
-	public Integer countProduct(Integer product_id);
+	public Integer countProductDepot(Integer product_id);
 	
 	// 查询某货品当前进价
 	public Double queryProductPurchase(Integer product_id);

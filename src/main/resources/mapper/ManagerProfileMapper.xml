@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="queryClients" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, points, wholesale_client, retail_client
+		SELECT client_id, client_name, sex, phone, address, wallet, wholesale_client, retail_client
 		FROM client_table
 		WHERE client_name LIKE CONCAT("%", #{query}, "%") OR phone = #{query}
 		LIMIT #{page}, #{limit}
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addClient" parameterType="Client">
-		INSERT INTO client_table(client_id, client_name, sex, phone, address, points, wholesale_client, retail_client)
+		INSERT INTO client_table(client_id, client_name, sex, phone, address, wallet, wholesale_client, retail_client)
 		VALUES(0, #{client_name}, #{sex}, #{phone}, #{address}, 0, #{wholesale_client}, #{retail_client})
 	</insert>
 	
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateClient" parameterType="Client">
 		UPDATE client_table
 		SET client_name = #{client_name}, sex = #{sex}, phone = #{phone}, address = #{address},
-		points = #{points}, wholesale_client = #{wholesale_client}, retail_client = #{retail_client}
+		wallet = #{wallet}, wholesale_client = #{wholesale_client}, retail_client = #{retail_client}
 		WHERE client_id = #{client_id}
 	</update>
 	
