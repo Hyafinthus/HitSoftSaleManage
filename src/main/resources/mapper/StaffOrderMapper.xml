@@ -34,42 +34,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countClients" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
+		WHERE client_id != 1
 	</select>
 	
 	<select id="searchClients" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, wallet 
 		FROM client_table
+		WHERE client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="countClientsById" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE client_id LIKE CONCAT("%", #{clientId}, "%")
+		WHERE client_id LIKE CONCAT("%", #{clientId}, "%") AND client_id != 1
 	</select>
 	
 	<select id="countClientsByName" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%") AND client_id != 1
 	</select>
 	
 	<select id="searchClientById" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, wallet
 		FROM client_table
-		WHERE client_id = #{clientId}
+		WHERE client_id = #{clientId} AND client_id != 1
 	</select>
 	
 	<select id="searchClientsById" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, wallet
 		FROM client_table
-		WHERE client_id LIKE CONCAT("%", #{clientId}, "%")
+		WHERE client_id LIKE CONCAT("%", #{clientId}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchClientsByName" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet FROM client_table
-		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+		SELECT client_id, client_name, sex, phone, address, wallet
+		FROM client_table
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
