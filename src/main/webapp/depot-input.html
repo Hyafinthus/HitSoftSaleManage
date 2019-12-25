@@ -30,6 +30,11 @@
                         <input type="text"  name="amount" id="amount" class="layui-input" autocomplete="off"></div>
                 </div>
                 <div class="layui-form-item">
+                    <label for="L_price" class="layui-form-label">进价</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="price" id="price" class="layui-input" autocomplete="off" lay-verify="price"></div>
+                </div>
+                <div class="layui-form-item">
                     <div class="layui-input-inline">
                         <button class="layui-btn" lay-filter="save" lay-submit="">入库</button></div>
                 </div>
@@ -40,6 +45,8 @@
         $("#amount").off("input").on("input", function() {
 					this.value= this.value.replace(/[^\d]/g, '')
 		});
+
+
 
         function getUrlParam(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -80,6 +87,13 @@
                         });
                         return false;
                     });
+                    form.verify({
+                        price:function(value, item){
+                            if(!new RegExp("^\\d+(\\.\\d+)?$").test(value)){
+                                return "进价只能为非负小数"
+                            }
+                        }
+                    })
 
             });</script>
     <script>var _hmt = _hmt || []; (function () {
