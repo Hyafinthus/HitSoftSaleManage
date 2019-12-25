@@ -52,13 +52,6 @@
                             lay-verify="address" autocomplete="off" class="layui-input"></div>
                 </div>
                 <div class="layui-form-item">
-                        <label class="layui-form-label"><span class="x-red">*</span>客户类型</label>
-                        <div class="layui-input-block">
-                          <input type="checkbox" id="wholesale_client" name="wholesale_client" title="批发客户">
-                          <input type="checkbox" id="retail_client" name="retail_client" title="零售客户">
-                        </div>
-                </div>
-                <div class="layui-form-item">
                     <label for="L_retail_price" class="layui-form-label"></label>
                     <button class="layui-btn" lay-filter="add" lay-submit="">增加</button></div>
             </form>
@@ -122,22 +115,12 @@
                         var sex = $("input:radio:checked").val();
                         var phone = $("#L_phone").val();
                         var address = $("#L_address").val();
-                        var wholesale_client = 0;
-                        var retail_client = 0;
-                        if($("#wholesale_client").is(":checked")){
-                            wholesale_client = 1;
-                        }
-                        if($("#retail_client").is(":checked")){
-                            retail_client = 1;
-                        }
                         var addurl = "/sale/manager/profile/client/add/"
                         var param = {
                             "client_name": client_name,
                             "sex": sex,
                             "phone": phone,
                             "address": address,
-                            "wholesale_client": wholesale_client,
-                            "retail_client": retail_client
                         };
                         var paramStr = JSON.stringify(param);
                         $.ajax({
