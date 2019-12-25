@@ -21,29 +21,43 @@ USE `hit_software_sale`;
 DROP TABLE IF EXISTS `client_table`;
 
 CREATE TABLE `client_table` (
-  `client_id` int(8) NOT NULL AUTO_INCREMENT,
+  `client_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `client_name` varchar(20) NOT NULL,
-  `sex` varchar(20) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `address` varchar(40) NOT NULL,
-  `points` int(8) NOT NULL DEFAULT '0',
-  `wholesale_client` tinyint(1) DEFAULT NULL,
-  `retail_client` tinyint(1) DEFAULT NULL,
+  `sex` varchar(20) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(40) DEFAULT NULL,
+  `wallet` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `client_table` */
 
-insert  into `client_table`(`client_id`,`client_name`,`sex`,`phone`,`address`,`points`,`wholesale_client`,`retail_client`) values (4,'皮皮虾','男','11122223333','地址000',0,1,1),(5,'客户2','女','11155556666','地址2',0,1,0),(6,'客户3','男','11133334444','地址3',0,0,1),(7,'客户4','男','11188886666','地址2',0,1,1),(8,'客户5','女','11188884444','地址2',0,0,1),(9,'客户6','女','11144447777','地址4',0,1,0),(10,'客户7','男','11133337777','地址8',0,0,1),(11,'客户8','男','11166662222','地址3',0,1,0),(12,'客户9','女','11166660000','地址9',0,1,1),(13,'客户10','男','11144449999','地址',0,1,0),(14,'客户11','男','11133336666','地址',0,1,1),(15,'客户12','男','11177779999','地址11',0,1,1),(16,'111','男','111','111',0,1,1);
+insert  into `client_table`(`client_id`,`client_name`,`sex`,`phone`,`address`,`wallet`) values (1,'零售客户',NULL,NULL,NULL,0),(4,'皮皮虾','男','11122223333','地址000',0),(5,'客户2','女','11155556666','地址2',0),(6,'客户3','男','11133334444','地址3',0),(7,'客户4','男','11188886666','地址2',0),(8,'客户5','女','11188884444','地址2',0),(9,'客户6','女','11144447777','地址4',0),(10,'客户7','男','11133337777','地址8',0),(11,'客户8','男','11166662222','地址3',0),(12,'客户9','女','11166660000','地址9',0),(13,'客户10','男','11144449999','地址',0),(14,'客户11','男','11133336666','地址',0),(15,'客户12','男','11177779999','地址11',0),(16,'111','男','111','111',0);
+
+/*Table structure for table `depot_in_table` */
+
+DROP TABLE IF EXISTS `depot_in_table`;
+
+CREATE TABLE `depot_in_table` (
+  `depot_in_pri` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(8) unsigned NOT NULL,
+  `count` int(8) unsigned NOT NULL,
+  `in_price` double NOT NULL,
+  `depot_name` varchar(20) NOT NULL,
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`depot_in_pri`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `depot_in_table` */
 
 /*Table structure for table `depot_prod_table` */
 
 DROP TABLE IF EXISTS `depot_prod_table`;
 
 CREATE TABLE `depot_prod_table` (
-  `depot_prod_pri` int(8) NOT NULL AUTO_INCREMENT,
+  `depot_prod_pri` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `depot_name` varchar(20) NOT NULL,
-  `product_id` int(8) NOT NULL,
+  `product_id` int(8) unsigned NOT NULL,
   `count` int(8) unsigned NOT NULL,
   PRIMARY KEY (`depot_prod_pri`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
@@ -57,27 +71,28 @@ insert  into `depot_prod_table`(`depot_prod_pri`,`depot_name`,`product_id`,`coun
 DROP TABLE IF EXISTS `order_prod_table`;
 
 CREATE TABLE `order_prod_table` (
-  `order_prod_pri` int(8) NOT NULL AUTO_INCREMENT,
-  `order_id` int(8) NOT NULL,
-  `product_id` int(8) NOT NULL,
-  `count` int(8) DEFAULT NULL,
+  `order_prod_pri` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(8) unsigned NOT NULL,
+  `product_id` int(8) unsigned NOT NULL,
+  `count` int(8) unsigned NOT NULL,
+  `bonus` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_prod_pri`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_prod_table` */
 
-insert  into `order_prod_table`(`order_prod_pri`,`order_id`,`product_id`,`count`) values (4,13,12,2),(5,13,11,2),(6,13,10,1),(10,15,9,2),(11,15,11,1),(12,15,12,1),(13,16,11,3),(14,16,12,1),(15,17,9,1),(16,17,10,1),(17,18,9,100),(18,19,9,100),(19,20,10,100),(20,20,9,100),(21,21,11,1),(22,21,12,3),(23,21,18,1),(24,21,16,4),(25,21,14,1),(26,21,13,1),(27,22,13,25),(28,23,12,1),(29,23,11,1),(30,23,13,1),(31,24,16,1),(32,24,18,1),(33,24,11,1),(34,25,9,1),(35,25,10,1),(36,25,19,1),(37,26,17,1),(38,26,18,1),(39,26,15,1),(40,26,19,166),(41,27,12,1),(42,27,11,1),(43,28,11,1),(44,28,10,1),(45,29,16,1),(46,29,9,1),(47,30,11,1),(48,30,13,1),(49,31,14,17),(50,31,15,25),(51,31,12,15),(52,32,15,1),(53,32,17,1),(62,35,9,10),(63,35,11,1),(64,35,17,1),(65,35,14,1),(66,36,9,1),(67,36,10,1);
+insert  into `order_prod_table`(`order_prod_pri`,`order_id`,`product_id`,`count`,`bonus`) values (4,13,12,2,0),(5,13,11,2,0),(6,13,10,1,0),(10,15,9,2,0),(11,15,11,1,0),(12,15,12,1,0),(13,16,11,3,0),(14,16,12,1,0),(15,17,9,1,0),(16,17,10,1,0),(17,18,9,100,0),(18,19,9,100,0),(19,20,10,100,0),(20,20,9,100,0),(21,21,11,1,0),(22,21,12,3,0),(23,21,18,1,0),(24,21,16,4,0),(25,21,14,1,0),(26,21,13,1,0),(27,22,13,25,0),(28,23,12,1,0),(29,23,11,1,0),(30,23,13,1,0),(31,24,16,1,0),(32,24,18,1,0),(33,24,11,1,0),(34,25,9,1,0),(35,25,10,1,0),(36,25,19,1,0),(37,26,17,1,0),(38,26,18,1,0),(39,26,15,1,0),(40,26,19,166,0),(41,27,12,1,0),(42,27,11,1,0),(43,28,11,1,0),(44,28,10,1,0),(45,29,16,1,0),(46,29,9,1,0),(47,30,11,1,0),(48,30,13,1,0),(49,31,14,17,0),(50,31,15,25,0),(51,31,12,15,0),(52,32,15,1,0),(53,32,17,1,0),(62,35,9,10,0),(63,35,11,1,0),(64,35,17,1,0),(65,35,14,1,0),(66,36,9,1,0),(67,36,10,1,0);
 
 /*Table structure for table `order_table` */
 
 DROP TABLE IF EXISTS `order_table`;
 
 CREATE TABLE `order_table` (
-  `order_id` int(8) NOT NULL AUTO_INCREMENT,
+  `order_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `create_time` datetime DEFAULT NULL,
   `pay_time` datetime DEFAULT NULL,
   `return_time` datetime DEFAULT NULL,
-  `client_id` int(8) DEFAULT NULL,
+  `client_id` int(8) unsigned DEFAULT NULL,
   `order_sale_price` double DEFAULT NULL COMMENT '售价',
   `order_purchase_price` double DEFAULT NULL COMMENT '进价',
   `order_profit` double DEFAULT NULL COMMENT '毛利',
@@ -95,7 +110,7 @@ insert  into `order_table`(`order_id`,`create_time`,`pay_time`,`return_time`,`cl
 DROP TABLE IF EXISTS `product_table`;
 
 CREATE TABLE `product_table` (
-  `product_id` int(20) NOT NULL AUTO_INCREMENT,
+  `product_id` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `product_name` varchar(20) NOT NULL,
   `type` varchar(20) NOT NULL,
   `unit` varchar(20) NOT NULL,
@@ -114,7 +129,7 @@ insert  into `product_table`(`product_id`,`product_name`,`type`,`unit`,`purchase
 DROP TABLE IF EXISTS `staff_table`;
 
 CREATE TABLE `staff_table` (
-  `staff_id` int(8) NOT NULL AUTO_INCREMENT,
+  `staff_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `staff_name` varchar(20) NOT NULL,
   `role` varchar(20) NOT NULL,
   `pass` varchar(20) NOT NULL,
