@@ -36,7 +36,12 @@ public class BossManageServiceImpl implements BossManageService {
 
 	@Override
 	public void updateStaff(Staff staff) {
-		bossManageMapper.updateStaff(staff);
+		if(staff.getPass().equals("")){
+			bossManageMapper.updatePosition(staff);
+		}else{
+			bossManageMapper.updateStaff(staff);
+		}
+		
 	}
 	
 }

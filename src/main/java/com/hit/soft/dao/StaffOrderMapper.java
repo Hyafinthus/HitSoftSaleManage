@@ -13,6 +13,8 @@ import com.hit.soft.domain.Product;
 @Mapper
 public interface StaffOrderMapper {
 	
+	
+
 	OrderProduct getDraft();
 
 	void deleteDraft();
@@ -28,6 +30,8 @@ public interface StaffOrderMapper {
 	int countClientsById(int clientId);
 
 	int countClientsByName(String clientName);
+	
+	Client searchClientById(int clientId);
 	
 	List<Client> searchClientsById(@Param("clientId") int clientId, @Param("offset") Integer offset, @Param("limit")Integer limit);
 	
@@ -60,6 +64,8 @@ public interface StaffOrderMapper {
 	void updateOrder(Order order);
 
 	int getLastId();
+
+	Product completeProduct(Product product);
 
 
 	

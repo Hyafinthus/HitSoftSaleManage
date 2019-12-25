@@ -34,38 +34,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countClients" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE wholesale_client = 1
 	</select>
 	
 	<select id="searchClients" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, points 
+		SELECT client_id, client_name, sex, phone, address, wallet 
 		FROM client_table
-		WHERE wholesale_client = 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="countClientsById" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE wholesale_client = 1 AND client_id LIKE CONCAT("%", #{clientId}, "%")
+		WHERE client_id LIKE CONCAT("%", #{clientId}, "%")
 	</select>
 	
 	<select id="countClientsByName" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE wholesale_client = 1 AND client_name LIKE CONCAT("%", #{clientName}, "%")
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+	</select>
+	
+	<select id="searchClientById" resultType="Client">
+		SELECT client_id, client_name, sex, phone, address, wallet
+		FROM client_table
+		WHERE client_id = #{clientId}
 	</select>
 	
 	<select id="searchClientsById" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, points
+		SELECT client_id, client_name, sex, phone, address, wallet
 		FROM client_table
-		WHERE wholesale_client = 1 AND client_id LIKE CONCAT("%", #{clientId}, "%")
+		WHERE client_id LIKE CONCAT("%", #{clientId}, "%")
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchClientsByName" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, points FROM client_table
-		WHERE wholesale_client = 1 AND client_name LIKE CONCAT("%", #{clientName}, "%")
+		SELECT client_id, client_name, sex, phone, address, wallet FROM client_table
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -104,6 +108,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM product_table
 		WHERE product_name LIKE CONCAT("%", #{productName}, "%")
 		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="completeProduct" resultType="Product">
+		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
+		FROM product_table
+		WHERE product_id = #{product_id}
 	</select>
 
 	<select id="countUnpaidOrder" resultType="Integer">

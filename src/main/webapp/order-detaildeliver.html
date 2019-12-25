@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+            <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label for="username" class="layui-form-label">订单ID:</label>
+                    <label id="order_id" class="layui-form-label"></label>
+                </div>
+                <div class="layui-form-item">
+                    <label for="username" class="layui-form-label">创建时间:</label>
+                    <label id="create_time" class="layui-form-label"></label>
+                </div>
+                <div class="layui-form-item">
+                    <label for="username" class="layui-form-label">客户姓名:</label>
+                    <label id="client_name" class="layui-form-label"></label>
+                </div>
+                <div class="layui-form-item">
+                    <label for="status" class="layui-form-label">是否付款:</label>
+                    <label id="status" class="layui-form-label"></label>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label for="desc" class="layui-form-label">订单货品</label>
+                    <div class="layui-input-block">
+                        <table class="layui-table">
+                            <thead>
+                                <tr>
+                                    <th>货品ID</th>
+                                    <th>货品名称</th>
+                                    <th>类型</th>
+                                    <th>单位</th>
+                                    <th>进价/元</th>
+                                    <th>批发价/元</th>
+                                    <th>数量</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="first">
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label"></label>
+                    <button class="layui-btn" lay-filter="deliver" lay-submit="">配货</button></div>
+            </form>
+        </div>
+    </div>
+    <script></script>
+
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>var _hmt = _hmt || []; (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            };
+            layui.use(['form', 'layer'],
+            function () {
+                $ = layui.jquery;
+                var form = layui.form,
+                    layer = layui.layer;
+
+                //监听提交
+                form.on('submit(deliver)',
+                    function (data) {
+                        var order_id = getUrlParam("order_id");
+                        var approveURL = "/sale/manager/order/review/approve/"+order_id;
+                        $.ajax({
+                            url: approveURL,
+                            type: "GET",
+                            dataType: "text",
+                            success: function (str) {
+                                layer.alert("通过", {
+                                    icon: 6
+                                },
+                                    function () {
+                                        // 获得frame索引
+                                        parent.$('#refresh').click();
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        //关闭当前frame
+                                        parent.layer.close(index);
+                                    });
+                            },
+                            error: function () { }
+                        });
+                        return false;
+                    });
+
+            });
+            $(document).ready(function () {
+                var order_id = getUrlParam("order_id");
+                console.log(order_id);
+                var queryURL = "/sale/manager/order/review/" + order_id;
+                $.ajax({
+                    url: queryURL,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (str) {
+                        //str-----json-----SchoolClass
+                        //清空id=first的所有兄弟节点
+                        console.log(str);
+                        $("#order_id").text(order_id);
+                        $("#create_time").text(str.create_time);
+                        $("#client_name").text(str.client_name);
+                        if(str.status === "approved"){
+                            $("#status").attr("style", "color:red");
+                            $("#status").text("未付款");
+                        } else {
+                            $("#status").attr("style", "color:green");
+                            $("#status").text("已付款");
+                        }
+                        $("#first").siblings().remove();
+                        var res = "";
+                        $(str.products).each(function (index, e) {
+                            res = res + '<tr>';
+                            res = res + '<td>' + e.product_id + '</td>';
+                            res = res + '<td>' + e.product_name + '</td>';
+                            res = res + '<td>' + e.type + '</td>';
+                            res = res + '<td>' + e.unit + '</td>';
+                            res = res + '<td>' + e.purchase_price + '</td>';
+                            res = res + '<td>' + e.wholesale_price + '</td>';
+                            res = res + '<td>' + e.count + '</td>';
+                            res = res + '</tr>';
+                        });
+                        var app = $(res);
+                        $("#first").after(app);
+                    },
+                    error: function () { }
+                });
+
+            });
+
+        })();</script>
+</body>
+
+</html>

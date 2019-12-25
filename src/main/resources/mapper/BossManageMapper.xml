@@ -30,6 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE staff_id = #{staff_id}
 	</update>
 	
+	<update id="updatePosition" parameterType="Staff">
+		UPDATE staff_table
+		SET role = #{role}
+		WHERE staff_id = #{staff_id}
+	</update>
+	
 	<insert id="addStaff" parameterType="Staff">
 		INSERT INTO staff_table VALUES(0,#{staff_name},#{role},#{pass},0)
 	</insert>

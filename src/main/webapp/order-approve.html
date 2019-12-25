@@ -68,6 +68,9 @@
             var layEvent = obj.event;
             if(layEvent === 'detail'){
                 xadmin.open('审核订单','/sale/order-detailapprove.html?order_id='+data.order_id,1000,500);
+            } else if(layEvent === 'deliver'){
+                //remain to do
+                xadmin.open()
             }
             $(obj).parents("tr").remove();
             console.log(data.order_id);
@@ -93,7 +96,11 @@
         
         </script>
     <script type="text/html" id="barDemo">
+        {{# if(d.state === "published"){  }}
         <a class="layui-btn layui-btn-xs" lay-event="detail">审核</a>
+        {{# } else{ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="deliver">配货</a>
+        {{# } }}
     </script>
 
     <script>var _hmt = _hmt || []; (function() {
