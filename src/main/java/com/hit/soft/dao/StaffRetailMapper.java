@@ -19,6 +19,8 @@ public interface StaffRetailMapper {
 	int countClientsById(int parseInt);
 
 	int countClientsByName(String condition);
+	
+	Client searchClientById(int client_id);
 
 	List<Client> searchClientsById(@Param("clientId") int clientId, @Param("offset") Integer offset, @Param("limit")Integer limit);
 
@@ -43,5 +45,9 @@ public interface StaffRetailMapper {
 	int getLastId();
 
 	void updateDepot(Product product);
+
+	Product completeProduct(Product tmpProduct);
+
+	
 
 }

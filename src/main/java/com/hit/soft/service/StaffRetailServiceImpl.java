@@ -85,8 +85,11 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 
 	@Override
 	public void payOrder(OrderProduct orderProduct) {
+		orderProduct = completeOrderProduct(orderProduct);
 		Order order = orderProductToOrder(orderProduct, false);
 		order.setState("paid");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		List<Product> products = orderProduct.getProducts();
 		staffRetailMapper.addOrder(order);
 		int id = staffRetailMapper.getLastId();
@@ -98,6 +101,31 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 		}
 	}
 
+	//已知product_id,client_id和count
+		//从前端仅传来上述三个值时，需要在后端人为的将orderProduct的其他信息完善，此函数便是实现此功能
+		private OrderProduct completeOrderProduct(OrderProduct orderProduct){
+			double orderSalePrice = 0, orderPurchasePrice = 0, orderProfit = 0; 
+			List<Product> products = orderProduct.getProducts();
+			
+			orderProduct.setClient_name(staffRetailMapper.searchClientById(orderProduct.getClient_id()).getClient_name());
+			for(int i=0;i<products.size();i++){
+				Product tmpProduct = products.get(i);
+				int tmpCount = tmpProduct.getCount();
+				tmpProduct = staffRetailMapper.completeProduct(tmpProduct);
+				tmpProduct.setCount(tmpCount);
+				products.set(i,tmpProduct);
+				
+				orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
+				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+			}
+			orderProfit = orderSalePrice - orderPurchasePrice;
+			orderProduct.setOrder_purchase_price(orderPurchasePrice);
+			orderProduct.setOrder_sale_price(orderSalePrice);
+			orderProduct.setOrder_profit(orderProfit);
+			orderProduct.setProducts(products);
+			return orderProduct;
+		}
+	
 	private Order orderProductToOrder(OrderProduct orderProduct, boolean isdraft){
 		Order order = new Order();
 		order.setClient_id(orderProduct.getClient_id());

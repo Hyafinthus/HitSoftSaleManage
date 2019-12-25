@@ -25,6 +25,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	//保存草稿
 	@Override
 	public void saveOrder(OrderProduct orderProduct) {
+		orderProduct = completeOrderProduct(orderProduct);
 		Order order = orderProductToOrder(orderProduct, true);
 		List<Product> products = orderProduct.getProducts();
 		staffOrderMapper.deleteDraft();
@@ -41,7 +42,10 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	//上传给经理审核
 	@Override
 	public void submitOrder(OrderProduct orderProduct) {
+		orderProduct = completeOrderProduct(orderProduct);
 		Order order = orderProductToOrder(orderProduct, false);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        order.setCreate_time(df.format(new Date()));// new Date()为获取当前系统时间
 		List<Product> products = orderProduct.getProducts();
 		staffOrderMapper.deleteDraft();
 		staffOrderMapper.addOrder(order);
@@ -171,6 +175,32 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		return order;
 	}
 
+	//已知product_id,client_id和count
+	//从前端仅传来上述三个值时，需要在后端人为的将orderProduct的其他信息完善，此函数便是实现此功能
+	private OrderProduct completeOrderProduct(OrderProduct orderProduct){
+		double orderSalePrice = 0, orderPurchasePrice = 0, orderProfit = 0; 
+		List<Product> products = orderProduct.getProducts();
+		
+		orderProduct.setClient_name(staffOrderMapper.searchClientById(orderProduct.getClient_id()).getClient_name());
+		for(int i=0;i<products.size();i++){
+			Product tmpProduct = products.get(i);
+			int tmpCount = tmpProduct.getCount();
+			tmpProduct = staffOrderMapper.completeProduct(tmpProduct);
+			tmpProduct.setCount(tmpCount);
+			products.set(i,tmpProduct);
+			
+			orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
+			orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+		}
+		orderProfit = orderSalePrice - orderPurchasePrice;
+		orderProduct.setOrder_purchase_price(orderPurchasePrice);
+		orderProduct.setOrder_sale_price(orderSalePrice);
+		orderProduct.setOrder_profit(orderProfit);
+		orderProduct.setProducts(products);
+		return orderProduct;
+	}
+	
+	//将OrderProduct转换为Order
 	private Order orderProductToOrder(OrderProduct orderProduct, boolean isdraft){
 		Order order = new Order();
 		order.setClient_id(orderProduct.getClient_id());
@@ -179,8 +209,6 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		if(isdraft){
 			order.setState("draft");//草稿
 		}else{
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-	        order.setCreate_time(df.format(new Date()));// new Date()为获取当前系统时间
 			order.setState("published");//提交审核
 		}
 		order.setWholesale_order(1);//1表示是批发单

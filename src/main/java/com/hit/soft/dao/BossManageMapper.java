@@ -19,5 +19,7 @@ public interface BossManageMapper {
 	public void updateStaff(Staff staff);
 
 	public int countStaffs();
+
+	public void updatePosition(Staff staff);
 	
 }
