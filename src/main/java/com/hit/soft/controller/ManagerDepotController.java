@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hit.soft.domain.JsonProduct;
 import com.hit.soft.domain.JsonProductDepot;
+import com.hit.soft.domain.Product;
 import com.hit.soft.domain.ProductDepot;
 import com.hit.soft.service.ManagerDepotService;
 
@@ -65,6 +67,18 @@ public class ManagerDepotController {
 		}
 		managerDepotService.transferDepot(oldDepot, newDepot, Integer.parseInt(product_id), Integer.parseInt(number));
 		return "success";
+	}
+	
+	@RequestMapping(value="/overstock", method=RequestMethod.GET)
+	@ResponseBody
+	public String overstockProduct(HttpServletRequest request) {
+		int count = managerDepotService.countOverstockProduct();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		List<Product> data = managerDepotService.overstockProduct((pageInt - 1) * limitInt, limitInt);
+		JsonProduct jsonProduct = new JsonProduct(count, data);
+		
+		return JSONObject.fromObject(jsonProduct).toString();
 	}
 	
 	@RequestMapping(value="/inventory/{depot_name}", method=RequestMethod.GET)

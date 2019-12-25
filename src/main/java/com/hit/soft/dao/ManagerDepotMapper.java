@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.hit.soft.domain.Product;
 import com.hit.soft.domain.ProductDepot;
 
 @Mapper
@@ -39,6 +40,10 @@ public interface ManagerDepotMapper {
 	public void transferNewDepot(@Param("new_depot") String new_depot, @Param("product_id") Integer product_id,
 			@Param("number") Integer number);
 
+	public Integer countOverstockProduct();
+	
+	public List<Product> overstockProduct(@Param("page") Integer page, @Param("limit") Integer limit);
+	
 	public Integer countQueryDepot(String depot_name);
 	
 	public List<ProductDepot> queryDepot(@Param("depot_name") String depot_name, @Param("page") Integer page,

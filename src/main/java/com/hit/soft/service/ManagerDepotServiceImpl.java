@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hit.soft.dao.ManagerDepotMapper;
+import com.hit.soft.domain.Product;
 import com.hit.soft.domain.ProductDepot;
 
 @Service
@@ -46,6 +47,16 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 	public void transferDepot(String old_depot, String new_depot, Integer product_id, Integer number) {
 		managerDepotMapper.transferOldDepot(old_depot, product_id, number);
 		managerDepotMapper.transferNewDepot(new_depot, product_id, number);
+	}
+	
+	@Override
+	public Integer countOverstockProduct() {
+		return managerDepotMapper.countOverstockProduct();
+	}
+
+	@Override
+	public List<Product> overstockProduct(Integer page, Integer limit) {
+		return managerDepotMapper.overstockProduct(page, limit);
 	}
 
 	@Override
