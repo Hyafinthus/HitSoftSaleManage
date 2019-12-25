@@ -14,6 +14,17 @@ public interface ManagerDepotMapper {
 	
 	public List<ProductDepot> queryProducts(@Param("query") String query, @Param("page") Integer page, @Param("limit") Integer limit);
 	
+	// 以下为进货相关
+	// 查询某货品两个仓库总量
+	public Integer countProduct(Integer product_id);
+	
+	// 查询某货品当前进价
+	public Double queryProductPurchase(Integer product_id);
+	
+	// 更新某货品进价
+	public void updateProductPurchase(@Param("product_id") Integer product_id, @Param("purchase_price") Double purchase_price);
+	
+	// 更新某仓库某货品数量 (进出货通用)
 	public void turnoverDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id, @Param("number") Integer number);
 
 	public void transferOldDepot(@Param("old_depot") String old_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);

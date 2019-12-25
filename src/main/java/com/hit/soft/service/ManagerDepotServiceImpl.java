@@ -23,6 +23,15 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 	public List<ProductDepot> queryProducts(String query, Integer page, Integer limit) {
 		return managerDepotMapper.queryProducts(query, page, limit);
 	}
+	
+	@Override
+	public void inDepot(String depot_name, Integer product_id, Integer number, Double in_price) {
+		Integer prodCount = managerDepotMapper.countProduct(product_id);
+		Double prodOldPurch = managerDepotMapper.queryProductPurchase(product_id);
+		Double prodNewPurch = (prodCount * prodOldPurch + in_price * number) / (prodCount + number);
+		managerDepotMapper.updateProductPurchase(product_id, prodNewPurch);
+		managerDepotMapper.turnoverDepot(depot_name, product_id, number);
+	}
 
 	@Override
 	public void turnoverDepot(String depot_name, Integer product_id, Integer number) {

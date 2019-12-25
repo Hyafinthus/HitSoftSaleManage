@@ -10,6 +10,8 @@ public interface ManagerDepotService {
 	
 	public List<ProductDepot> queryProducts(String query, Integer page, Integer limit);
 	
+	public void inDepot(String depot_name, Integer product_id, Integer number, Double in_price);
+	
 	public void turnoverDepot(String depot_name, Integer product_id, Integer number);
 
 	public void transferDepot(String old_depot, String new_depot, Integer product_id, Integer number);

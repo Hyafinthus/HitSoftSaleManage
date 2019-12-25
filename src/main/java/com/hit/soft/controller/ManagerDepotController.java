@@ -37,9 +37,18 @@ public class ManagerDepotController {
 		return JSONObject.fromObject(jsonProductDepot).toString();
 	}
 	
-	@RequestMapping(value="/turnover/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
+	// 进货
+	@RequestMapping(value="/in/{depot_name}/{product_id}/{number}/{in_price}", method=RequestMethod.GET)
 	@ResponseBody
-	public String turnoverDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) throws NumberFormatException, UnsupportedEncodingException {
+	public String inDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number, @PathVariable String in_price) {
+		managerDepotService.inDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number), Double.parseDouble(in_price));
+		return "success";
+	}
+	
+	// 出库
+	@RequestMapping(value="/out/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
+	@ResponseBody
+	public String outDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) throws NumberFormatException, UnsupportedEncodingException {
 		managerDepotService.turnoverDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));
 		return "success";
 	}
