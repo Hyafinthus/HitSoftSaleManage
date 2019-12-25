@@ -12,7 +12,8 @@ public interface ManagerDepotMapper {
 
 	public Integer countQueryProducts(String query);
 	
-	public List<ProductDepot> queryProducts(@Param("query") String query, @Param("page") Integer page, @Param("limit") Integer limit);
+	public List<ProductDepot> queryProducts(@Param("query") String query, @Param("page") Integer page,
+			@Param("limit") Integer limit);
 	
 	// 以下为进货相关
 	// 查询某货品两个仓库总量
@@ -24,17 +25,26 @@ public interface ManagerDepotMapper {
 	// 更新某货品进价
 	public void updateProductPurchase(@Param("product_id") Integer product_id, @Param("purchase_price") Double purchase_price);
 	
+	// 增加进货记录
+	public void addDepotHistory(@Param("product_id") Integer product_id, @Param("count") Integer count,
+			@Param("in_price") Double in_price, @Param("depot_name") String depot_name, @Param("time") String time);
+	
 	// 更新某仓库某货品数量 (进出货通用)
-	public void turnoverDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id, @Param("number") Integer number);
+	public void turnoverDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id,
+			@Param("number") Integer number);
 
-	public void transferOldDepot(@Param("old_depot") String old_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);
+	public void transferOldDepot(@Param("old_depot") String old_depot, @Param("product_id") Integer product_id,
+			@Param("number") Integer number);
 
-	public void transferNewDepot(@Param("new_depot") String new_depot, @Param("product_id") Integer product_id, @Param("number") Integer number);
+	public void transferNewDepot(@Param("new_depot") String new_depot, @Param("product_id") Integer product_id,
+			@Param("number") Integer number);
 
 	public Integer countQueryDepot(String depot_name);
 	
-	public List<ProductDepot> queryDepot(@Param("depot_name") String depot_name, @Param("page") Integer page, @Param("limit") Integer limit);
+	public List<ProductDepot> queryDepot(@Param("depot_name") String depot_name, @Param("page") Integer page,
+			@Param("limit") Integer limit);
 
-	public void confirmDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id, @Param("number") Integer number);
+	public void confirmDepot(@Param("depot_name") String depot_name, @Param("product_id") Integer product_id,
+			@Param("number") Integer number);
 	
 }

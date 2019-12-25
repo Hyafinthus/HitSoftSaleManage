@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE product_id = #{product_id}
 	</update>
 	
+	<insert id="addDepotHistory">
+		INSERT INTO depot_in_table(depot_in_pri, product_id, count, in_price, depot_name, time)
+		VALUES(0, #{product_id}, #{count}, #{in_price}, #{depot_name}, #{time})
+	</insert>
+	
 	<update id="turnoverDepot">
 		UPDATE depot_prod_table
 		SET count = count + #{number}

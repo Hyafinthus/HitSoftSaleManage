@@ -1,5 +1,7 @@
 package com.hit.soft.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 		Double prodNewPurch = (prodCount * prodOldPurch + in_price * number) / (prodCount + number);
 		managerDepotMapper.updateProductPurchase(product_id, prodNewPurch);
 		managerDepotMapper.turnoverDepot(depot_name, product_id, number);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        managerDepotMapper.addDepotHistory(product_id, number, in_price, depot_name, df.format(new Date()));
 	}
 
 	@Override

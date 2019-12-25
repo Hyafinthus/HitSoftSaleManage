@@ -7,15 +7,12 @@ public class Client {
 	private String phone;
 	private String address;
 	private double wallet;
-	private int wholesale_client;
-	private int retail_client;
 	
 	public Client() {
 		super();
 	}
 
-	public Client(int client_id, String client_name, String sex, String phone, String address, double wallet,
-			int wholesale_client, int retail_client) {
+	public Client(int client_id, String client_name, String sex, String phone, String address, double wallet) {
 		super();
 		this.client_id = client_id;
 		this.client_name = client_name;
@@ -23,8 +20,6 @@ public class Client {
 		this.phone = phone;
 		this.address = address;
 		this.wallet = wallet;
-		this.wholesale_client = wholesale_client;
-		this.retail_client = retail_client;
 	}
 
 	public int getClient_id() {
@@ -75,27 +70,10 @@ public class Client {
 		this.wallet = wallet;
 	}
 
-	public int getWholesale_client() {
-		return wholesale_client;
-	}
-
-	public void setWholesale_client(int wholesale_client) {
-		this.wholesale_client = wholesale_client;
-	}
-
-	public int getRetail_client() {
-		return retail_client;
-	}
-
-	public void setRetail_client(int retail_client) {
-		this.retail_client = retail_client;
-	}
-
 	@Override
 	public String toString() {
 		return "Client [client_id=" + client_id + ", client_name=" + client_name + ", sex=" + sex + ", phone=" + phone
-				+ ", address=" + address + ", wallet=" + wallet + ", wholesale_client=" + wholesale_client
-				+ ", retail_client=" + retail_client + "]";
+				+ ", address=" + address + ", wallet=" + wallet + "]";
 	}
 	
 }
