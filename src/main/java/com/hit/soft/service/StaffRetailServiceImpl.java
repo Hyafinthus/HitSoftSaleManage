@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hit.soft.dao.StaffRetailMapper;
-import com.hit.soft.domain.Client;
 import com.hit.soft.domain.Order;
 import com.hit.soft.domain.OrderProduct;
 import com.hit.soft.domain.Product;
@@ -20,37 +19,6 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 
 	@Autowired
 	private StaffRetailMapper staffRetailMapper;
-
-	@Override
-	public int countClients() {
-		return staffRetailMapper.countClients();
-	}
-
-	@Override
-	public List<Client> searchClients(int offset, int limit) {
-		List<Client> clients = staffRetailMapper.searchClients(offset, limit);
-		return clients;
-	}
-
-	@Override
-	public int countClientsByCondition(String condition) {
-		if(isInteger(condition)){
-			return staffRetailMapper.countClientsById(Integer.parseInt(condition));
-		}else{
-			return staffRetailMapper.countClientsByName(condition);
-		}
-	}
-
-	@Override
-	public List<Client> searchClientsByCondition(String condition, int offset, int limit) {
-		List<Client> clients = new ArrayList<Client>();
-		if(isInteger(condition)){
-			clients = staffRetailMapper.searchClientsById(Integer.parseInt(condition), offset, limit);
-		}else{
-			clients = staffRetailMapper.searchClientsByName(condition, offset, limit);
-		}
-		return clients;
-	}
 
 	@Override
 	public int countProducts() {
@@ -87,7 +55,7 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 	public void payOrder(OrderProduct orderProduct) {
 		orderProduct = completeOrderProduct(orderProduct);
 		Order order = orderProductToOrder(orderProduct, false);
-		order.setState("paid");
+		order.setState("paid_delivered");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		List<Product> products = orderProduct.getProducts();
@@ -107,7 +75,7 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 			double orderSalePrice = 0, orderPurchasePrice = 0, orderProfit = 0; 
 			List<Product> products = orderProduct.getProducts();
 			
-			orderProduct.setClient_name(staffRetailMapper.searchClientById(orderProduct.getClient_id()).getClient_name());
+			orderProduct.setClient_name("零售客户");
 			for(int i=0;i<products.size();i++){
 				Product tmpProduct = products.get(i);
 				int tmpCount = tmpProduct.getCount();

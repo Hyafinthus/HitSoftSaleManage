@@ -34,42 +34,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countClients" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
+		WHERE client_id != 1
 	</select>
 	
 	<select id="searchClients" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, wallet 
 		FROM client_table
+		WHERE client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="countClientsById" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE client_id LIKE CONCAT("%", #{clientId}, "%")
+		WHERE client_id LIKE CONCAT("%", #{clientId}, "%") AND client_id != 1
 	</select>
 	
 	<select id="countClientsByName" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
-		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%") AND client_id != 1
 	</select>
 	
 	<select id="searchClientById" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, wallet
 		FROM client_table
-		WHERE client_id = #{clientId}
+		WHERE client_id = #{clientId} AND client_id != 1
 	</select>
 	
 	<select id="searchClientsById" resultType="Client">
 		SELECT client_id, client_name, sex, phone, address, wallet
 		FROM client_table
-		WHERE client_id LIKE CONCAT("%", #{clientId}, "%")
+		WHERE client_id LIKE CONCAT("%", #{clientId}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchClientsByName" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet FROM client_table
-		WHERE client_name LIKE CONCAT("%", #{clientName}, "%")
+		SELECT client_id, client_name, sex, phone, address, wallet
+		FROM client_table
+		WHERE client_name LIKE CONCAT("%", #{clientName}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -79,8 +82,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProducts" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
-		FROM product_table
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, SUM(d.count) count
+		FROM product_table p, depot_prod_table d
+		where p.product_id = d.product_id
+		GROUP BY product_id
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -97,16 +102,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProductsById" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
-		FROM product_table
-		WHERE product_id LIKE CONCAT("%", #{productId}, "%")
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, SUM(d.count) count
+		FROM product_table p, depot_prod_table d
+		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%")
+		GROUP BY product_id
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchProductsByName" resultType="Product">
-		SELECT product_id, product_name, type, unit, purchase_price, wholesale_price
-		FROM product_table
-		WHERE product_name LIKE CONCAT("%", #{productName}, "%")
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, SUM(d.count) count
+		FROM product_table p, depot_prod_table d
+		where p.product_id = d.product_id AND p.product_name LIKE CONCAT("%", #{productName}, "%")
+		GROUP BY product_id
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -119,26 +126,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countUnpaidOrder" resultType="Integer">
 		SELECT COUNT(*)
 		FROM order_table
-		WHERE state = "approved"
+		WHERE state = "approved" OR state = "unpaid_delivered" OR state = "rejected"
 	</select>
 	
 	<select id="searchUnpaidOrder" resultType="Order">
 		SELECT o.order_id, o.client_id, o.create_time, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
 		FROM order_table o, client_table c
-		WHERE state = "approved" AND o.client_id = c.client_id 
+		WHERE (state = "approved" OR state = "unpaid_delivered" OR state = "rejected") AND o.client_id = c.client_id 
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="countPaidOrder" resultType="Integer">
 		SELECT COUNT(*)
 		FROM order_table
-		WHERE state = "paid" and wholesale_order = 1
+		WHERE (state = "paid_undelivered" OR state = "paid_delivered") AND wholesale_order = 1
 	</select>
 	
 	<select id="searchPaidOrder" resultType="Order">
 		SELECT o.order_id, o.create_time, o.pay_time, o.client_id, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
 		FROM order_table o, client_table c
-		WHERE state = "paid" AND wholesale_order = 1 AND o.client_id = c.client_id 
+		WHERE (state = "paid_undelivered" OR state = "paid_delivered") AND wholesale_order = 1 AND o.client_id = c.client_id 
 		LIMIT #{offset}, #{limit}
 	</select>
 	
