@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+  <meta charset="UTF-8">
+  <title>欢迎页面-X-admin2.2</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+  <link rel="stylesheet" href="./css/font.css">
+  <link rel="stylesheet" href="./css/xadmin.css">
+  <script src="./lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/xadmin.js"></script>
+  <script src="./js/jquery-1.11.1.min.js"></script>
+  <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a>
+        <cite>/ 销售情况统计</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" title="刷新" id="refresh">
+      <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+  </div>
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-body ">
+            <div class="layui-inline layui-show-xs-block">
+              <label class="layui-form-label">起止时间</label>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <input type="text" class="layui-input" id="start">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <span>——</span>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <input type="text" class="layui-input" id="end">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <button class="layui-btn" onclick="xadmin.open('添加客户','./client-add.html',600,600)">查询</button>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-body ">
+              <div id="main" style="width: 100%;height:400px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('main'));
+
+  // 指定图表的配置项和数据
+  var option = {
+    title: {
+      text: '折线图堆叠'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '邮件营销',
+        type: 'line',
+        stack: '总量',
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: '联盟广告',
+        type: 'line',
+        stack: '总量',
+        data: [220, 182, 191, 234, 290, 330, 310]
+      },
+      {
+        name: '视频广告',
+        type: 'line',
+        stack: '总量',
+        data: [150, 232, 201, 154, 190, 330, 410]
+      },
+      {
+        name: '直接访问',
+        type: 'line',
+        stack: '总量',
+        data: [320, 332, 301, 334, 390, 330, 320]
+      },
+      {
+        name: '搜索引擎',
+        type: 'line',
+        stack: '总量',
+        data: [820, 932, 901, 934, 1290, 1330, 1320]
+      }
+    ]
+  };
+
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+</script>
+<script>
+
+  layui.use(['laydate', 'form'], function () {
+    var laydate = layui.laydate;
+    var form = layui.form;
+
+
+    // 监听全选
+    form.on('checkbox(checkall)', function (data) {
+
+      if (data.elem.checked) {
+        $('tbody input').prop('checked', true);
+      } else {
+        $('tbody input').prop('checked', false);
+      }
+      form.render('checkbox');
+    });
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#start' //指定元素
+    });
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#end' //指定元素
+    });
+
+
+  });
+
+  /*用户-停用*/
+  function member_stop(obj, id) {
+    layer.confirm('确认要停用吗？', function (index) {
+
+      if ($(obj).attr('title') == '启用') {
+
+        //发异步把用户状态进行更改
+        $(obj).attr('title', '停用')
+        $(obj).find('i').html('&#xe62f;');
+
+        $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+        layer.msg('已停用!', { icon: 5, time: 1000 });
+
+      } else {
+        $(obj).attr('title', '启用')
+        $(obj).find('i').html('&#xe601;');
+
+        $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+        layer.msg('已启用!', { icon: 5, time: 1000 });
+      }
+
+    });
+  }
+
+  /*用户-删除*/
+  function member_del(obj, id) {
+    layer.confirm('确认要删除吗？', function (index) {
+      //发异步删除数据
+      $(obj).parents("tr").remove();
+      layer.msg('已删除!', { icon: 1, time: 1000 });
+    });
+  }
+
+
+
+  function delAll(argument) {
+    var ids = [];
+
+    // 获取选中的id 
+    $('tbody input').each(function (index, el) {
+      if ($(this).prop('checked')) {
+        ids.push($(this).val())
+      }
+    });
+
+    layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+      //捉到所有被选中的，发异步进行删除
+      layer.msg('删除成功', { icon: 1 });
+      $(".layui-form-checked").not('.header').parents('tr').remove();
+    });
+  }
+</script>
+
+</html>

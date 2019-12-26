@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+  <meta charset="UTF-8">
+  <title>欢迎页面-X-admin2.2</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+  <link rel="stylesheet" href="./css/font.css">
+  <link rel="stylesheet" href="./css/xadmin.css">
+  <script src="./lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/xadmin.js"></script>
+  <script src="./js/jquery-1.11.1.min.js"></script>
+  <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a>
+        <cite>/ 销售情况统计</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" title="刷新" id="refresh">
+      <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+  </div>
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-body ">
+            <div class="layui-inline layui-show-xs-block">
+              <label class="layui-form-label">起止时间</label>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <input type="text" class="layui-input" id="start" placeholder="yyyy-MM-dd">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <span>——</span>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <input type="text" class="layui-input" id="end" placeholder="yyyy-MM-dd">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <button class="layui-btn" id="search">查询</button>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-body ">
+              <div class="layui-inline layui-show-xs-block">
+                <label class="">进货总金额：</label>
+              </div>
+              <div class="layui-inline layui-show-xs-block">
+                <label class="">销售总金额：</label>
+              </div>
+              <div class="layui-inline layui-show-xs-block">
+                <label class="">利润总金额：</label>
+              </div>
+            </div>
+            <div class="layui-card-body ">
+              <table id="product1" lay-filter="order_demo"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<!-- var date = '2015-03-05 17:59:00';
+date = date.substring(0,19);    
+date = date.replace(/-/g,'/'); 
+var timestamp = new Date(date).getTime();
+document.write(timestamp); -->
+<script>
+  layui.use('table', function () {
+    var table = layui.table;
+    $(document).on('click', '#search', function () {
+      var start = $("#start").val();
+      var end = $("#end").val();
+      var start_time = new Date(start).getTime();
+      var end_time = new Date(end).getTime();
+      if(start_time > end_time){
+        layer.alert("起始时间不应晚于结束时间", {icon: 7});
+      }else{
+      var product1_table = table.render({
+        elem: '#product1' //指定原始表格元素选择器（推荐id选择器）
+        , page: true //容器高度
+        , url: '/sale/boss/statistic/market/'+start + '/' + end
+        , cols: [[{ field: 'product_id', title: '货品ID', width: 93, sort: true },
+        { field: 'product_name', title: '货品名称', width: 230, minWidth: 150, sort: true },
+        { field: 'type', title: '货品类型', width: 100, minWidth: 150, sort: true },
+        { field: 'unit', title: '货品单位', width: 100, minWidth: 150, sort: true },
+        { field: 'count', title: '进货数量', width: 199, minWidth: 150, sort: true },
+        { field: 'order_id', title: '销售数量', width: 199, minWidth: 150, sort: true }
+        ]]
+        //,…… //更多参数参考右侧目录：基本参数选项
+      });
+      }
+    });
+  });
+</script>
+<script>
+
+  layui.use(['laydate', 'form'], function () {
+    var laydate = layui.laydate;
+    var form = layui.form;
+
+
+    // 监听全选
+    form.on('checkbox(checkall)', function (data) {
+
+      if (data.elem.checked) {
+        $('tbody input').prop('checked', true);
+      } else {
+        $('tbody input').prop('checked', false);
+      }
+      form.render('checkbox');
+    });
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#start' //指定元素
+    });
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#end' //指定元素
+    });
+
+
+  });
+
+  /*用户-停用*/
+  function member_stop(obj, id) {
+    layer.confirm('确认要停用吗？', function (index) {
+
+      if ($(obj).attr('title') == '启用') {
+
+        //发异步把用户状态进行更改
+        $(obj).attr('title', '停用')
+        $(obj).find('i').html('&#xe62f;');
+
+        $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+        layer.msg('已停用!', { icon: 5, time: 1000 });
+
+      } else {
+        $(obj).attr('title', '启用')
+        $(obj).find('i').html('&#xe601;');
+
+        $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+        layer.msg('已启用!', { icon: 5, time: 1000 });
+      }
+
+    });
+  }
+
+  /*用户-删除*/
+  function member_del(obj, id) {
+    layer.confirm('确认要删除吗？', function (index) {
+      //发异步删除数据
+      $(obj).parents("tr").remove();
+      layer.msg('已删除!', { icon: 1, time: 1000 });
+    });
+  }
+
+
+
+  function delAll(argument) {
+    var ids = [];
+
+    // 获取选中的id 
+    $('tbody input').each(function (index, el) {
+      if ($(this).prop('checked')) {
+        ids.push($(this).val())
+      }
+    });
+
+    layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+      //捉到所有被选中的，发异步进行删除
+      layer.msg('删除成功', { icon: 1 });
+      $(".layui-form-checked").not('.header').parents('tr').remove();
+    });
+  }
+</script>
+
+</html>
