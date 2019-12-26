@@ -123,5 +123,10 @@ public class Product {
 				+ unit + ", purchase_price=" + purchase_price + ", wholesale_price=" + wholesale_price
 				+ ", retail_price=" + retail_price + ", count=" + count + ", order_id=" + order_id + "]";
 	}
+	
+	@Override
+	public int hashCode() {
+		return String.valueOf(this.product_id).hashCode();
+	}
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hit.soft.dao.BossStatisticMapper">
+	
+	<select id="queryInDepot" resultType="Product">
+		SELECT p.product_id, p.product_name, p.type, p.unit, SUM(d.count) count, 0 order_id
+		FROM product_table p, depot_in_table d
+		WHERE p.product_id = d.product_id AND d.time &gt; #{start_time} AND d.time &lt; #{end_time}
+		GROUP BY p.product_id
+	</select>
+	
+	<select id="queryMarketOrder" resultType="Product">
+		SELECT p.product_id, p.product_name, p.type, p.unit, 0 count, SUM(op.count) order_id
+		FROM product_table p, order_table o, order_prod_table op
+		WHERE o.create_time &gt; #{start_time} AND o.create_time &lt; #{end_time}
+		AND (o.state = "approved" OR o.state LIKE "%paid%")
+		AND o.order_id = op.order_id
+		AND op.product_id = p.product_id
+		GROUP BY p.product_id
+	</select>
+	
+</mapper>
