@@ -71,13 +71,30 @@ public class ManagerDepotController {
 	@RequestMapping(value="/overstock", method=RequestMethod.GET)
 	@ResponseBody
 	public String overstockProduct(HttpServletRequest request) {
-		int count = managerDepotService.countOverstockProduct();
+		List<Product> data = managerDepotService.overstockProduct();
+		int count = data.size();
 		int pageInt = Integer.parseInt(request.getParameter("page"));
 		int limitInt = Integer.parseInt(request.getParameter("limit"));
-		List<Product> data = managerDepotService.overstockProduct((pageInt - 1) * limitInt, limitInt);
-		JsonProduct jsonProduct = new JsonProduct(count, data);
+		int start = (pageInt - 1) * limitInt;
+		int end = start + limitInt;
+		if(end > count) {
+			end = count;
+		}
+		JsonProduct jsonProduct = new JsonProduct(count, data.subList(start, end));
 		
 		return JSONObject.fromObject(jsonProduct).toString();
+	}
+	
+	@RequestMapping(value="/price/overstock", method=RequestMethod.GET)
+	@ResponseBody
+	public String priceOverstock() {
+		Double priceOverstock = 0.0;
+		List<Product> overstockProduct = managerDepotService.overstockProduct();
+		for(Product product :overstockProduct) {
+			priceOverstock += product.getPurchase_price() * product.getCount();
+		}
+		
+		return "{\"overstock\":" + String.valueOf(priceOverstock) + "}";
 	}
 	
 	@RequestMapping(value="/inventory/{depot_name}", method=RequestMethod.GET)

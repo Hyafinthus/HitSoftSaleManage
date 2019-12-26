@@ -39,10 +39,8 @@ public interface ManagerDepotMapper {
 
 	public void transferNewDepot(@Param("new_depot") String new_depot, @Param("product_id") Integer product_id,
 			@Param("number") Integer number);
-
-	public Integer countOverstockProduct();
 	
-	public List<Product> overstockProduct(@Param("page") Integer page, @Param("limit") Integer limit);
+	public List<Product> overstockProduct();
 	
 	public Integer countQueryDepot(String depot_name);
 	
