@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hit.soft.dao.BossStatisticMapper;
+import com.hit.soft.domain.Order;
 import com.hit.soft.domain.Product;
 
 @Service
@@ -20,7 +21,12 @@ public class BossStatisticServiceImpl implements BossStatisticService {
 	}
 
 	@Override
-	public List<Product> queryMarketOrder(String start_time, String end_time) {
+	public List<Product> queryMarketProduct(String start_time, String end_time) {
+		return bossStatisticMapper.queryMarketProduct(start_time, end_time);
+	}
+
+	@Override
+	public List<Order> queryMarketOrder(String start_time, String end_time) {
 		return bossStatisticMapper.queryMarketOrder(start_time, end_time);
 	}
 

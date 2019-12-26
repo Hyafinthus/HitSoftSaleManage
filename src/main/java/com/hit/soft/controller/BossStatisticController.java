@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hit.soft.domain.JsonOrder;
 import com.hit.soft.domain.JsonProduct;
+import com.hit.soft.domain.Order;
 import com.hit.soft.domain.Product;
 import com.hit.soft.service.BossStatisticService;
 
@@ -33,7 +35,7 @@ public class BossStatisticController {
 		end_time += " 00:00:00";
 		
 		List<Product> purchaseProducts = bossStatisticService.queryInDepot(start_time, end_time);
-		List<Product> marketProducts = bossStatisticService.queryMarketOrder(start_time, end_time);
+		List<Product> marketProducts = bossStatisticService.queryMarketProduct(start_time, end_time);
 		Map<Integer, Product> allProducts = new HashMap<>();
 		for(Product product : purchaseProducts) {
 			allProducts.put(product.getProduct_id(), product);
@@ -50,9 +52,28 @@ public class BossStatisticController {
 		int count = data.size();
 		int pageInt = Integer.parseInt(request.getParameter("page"));
 		int limitInt = Integer.parseInt(request.getParameter("limit"));
-		JsonProduct jsonProduct = new JsonProduct(count, data.subList(pageInt, limitInt));
+		int start = (pageInt - 1) * limitInt;
+		int end = start + limitInt;
+		JsonProduct jsonProduct = new JsonProduct(count, data.subList(start, end));
 		
 		return JSONObject.fromObject(jsonProduct).toString();
+	}
+	
+	@RequestMapping(value="/profit/{start_time}/{end_time}", method=RequestMethod.GET)
+	@ResponseBody
+	public String profitStatistic(@PathVariable String start_time, @PathVariable String end_time, HttpServletRequest request) {
+		start_time += " 00:00:00";
+		end_time += " 00:00:00";
+		
+		List<Order> data = bossStatisticService.queryMarketOrder(start_time, end_time);
+		int count = data.size();
+		int pageInt = Integer.parseInt(request.getParameter("page"));
+		int limitInt = Integer.parseInt(request.getParameter("limit"));
+		int start = (pageInt - 1) * limitInt;
+		int end = start + limitInt;
+		JsonOrder jsonOrder = new JsonOrder(count, data.subList(start, end));
+		
+		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
 }

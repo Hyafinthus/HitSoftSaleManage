@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY p.product_id
 	</select>
 	
-	<select id="queryMarketOrder" resultType="Product">
+	<select id="queryMarketProduct" resultType="Product">
 		SELECT p.product_id, p.product_name, p.type, p.unit, 0 count, SUM(op.count) order_id
 		FROM product_table p, order_table o, order_prod_table op
 		WHERE o.create_time &gt; #{start_time} AND o.create_time &lt; #{end_time}
@@ -20,6 +20,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND o.order_id = op.order_id
 		AND op.product_id = p.product_id
 		GROUP BY p.product_id
+	</select>
+	
+	<select id="queryMarketOrder" resultType="Order">
+		SELECT COUNT(*) client_id, c.client_name state,
+			SUM(o.order_sale_price) order_sale_price, SUM(o.order_profit) order_profit
+		FROM order_table o, client_table c
+		WHERE o.create_time &gt; #{start_time} AND o.create_time &lt; #{end_time}
+		AND (o.state = "approved" OR o.state LIKE "%paid%")
+		AND o.client_id = c.client_id
+		GROUP BY c.client_name
 	</select>
 	
 </mapper>
