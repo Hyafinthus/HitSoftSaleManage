@@ -9,8 +9,8 @@ public interface BossStatisticService {
 
 	public List<Product> queryInDepot(String start_time, String end_time);
 	
-	public List<Product> queryMarketProduct(String start_time, String end_time);
+	public List<Product> queryTradeProduct(String start_time, String end_time);
 	
-	public List<Order> queryMarketOrder(String start_time, String end_time);
+	public List<Order> queryTradeOrder(String start_time, String end_time);
 	
 }

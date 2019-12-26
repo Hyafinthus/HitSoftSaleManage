@@ -13,8 +13,8 @@ public interface BossStatisticMapper {
 
 	public List<Product> queryInDepot(@Param("start_time") String start_time, @Param("end_time") String end_time);
 	
-	public List<Product> queryMarketProduct(@Param("start_time") String start_time, @Param("end_time") String end_time);
+	public List<Product> queryTradeProduct(@Param("start_time") String start_time, @Param("end_time") String end_time);
 	
-	public List<Order> queryMarketOrder(@Param("start_time") String start_time, @Param("end_time") String end_time);
+	public List<Order> queryTradeOrder(@Param("start_time") String start_time, @Param("end_time") String end_time);
 	
 }

@@ -21,13 +21,13 @@ public class BossStatisticServiceImpl implements BossStatisticService {
 	}
 
 	@Override
-	public List<Product> queryMarketProduct(String start_time, String end_time) {
-		return bossStatisticMapper.queryMarketProduct(start_time, end_time);
+	public List<Product> queryTradeProduct(String start_time, String end_time) {
+		return bossStatisticMapper.queryTradeProduct(start_time, end_time);
 	}
 
 	@Override
-	public List<Order> queryMarketOrder(String start_time, String end_time) {
-		return bossStatisticMapper.queryMarketOrder(start_time, end_time);
+	public List<Order> queryTradeOrder(String start_time, String end_time) {
+		return bossStatisticMapper.queryTradeOrder(start_time, end_time);
 	}
 
 }
