@@ -45,6 +45,8 @@ public interface StaffOrderService {
 
 	OrderProduct getDraft();
 
+	void saveMoney(Client client);
+
 
 	
 

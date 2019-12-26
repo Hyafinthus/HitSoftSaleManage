@@ -153,4 +153,12 @@ public class StaffOrderController {
 		return "success";
 	}
 	
+	//存款
+	@RequestMapping(value="/save/money",method=RequestMethod.POST)
+	@ResponseBody
+	public String saveMoney(@RequestBody Client client){
+		staffOrderService.saveMoney(client);
+		return "success";
+	}
+	
 }

@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addProduct" parameterType="Product">
-		INSERT INTO order_prod_table(order_id, product_id, count)
-		VALUES(#{order_id}, #{product_id}, #{count})
+		INSERT INTO order_prod_table(order_id, product_id, count, bonus)
+		VALUES(#{order_id}, #{product_id}, #{count}, #{bonus})
 	</insert>
 	
 	<select id="countProducts" resultType="Integer">
@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProducts" resultType="Product">
-		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, SUM(d.count) count
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, SUM(d.count) count
 		FROM product_table p, depot_prod_table d
 		where p.product_id = d.product_id
 		GROUP BY product_id
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProductsById" resultType="Product">
-		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, SUM(d.count) count
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, SUM(d.count) count
 		FROM product_table p, depot_prod_table d
 		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%")
 		GROUP BY product_id
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProductsByName" resultType="Product">
-		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, SUM(d.count) count
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, SUM(d.count) count
 		FROM product_table p, depot_prod_table d
 		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%")
 		GROUP BY product_id

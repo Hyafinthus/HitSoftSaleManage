@@ -12,6 +12,7 @@ public class Product {
 	// 针对某一单
 	private int count;
 	private int order_id;
+	private int bonus;
 	
 	public Product() {
 		super();
@@ -44,6 +45,14 @@ public class Product {
 		this.count = count;
 		this.setOrder_id(order_id);
 	}	
+
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
 
 	public int getProduct_id() {
 		return product_id;
@@ -121,7 +130,8 @@ public class Product {
 	public String toString() {
 		return "Product [product_id=" + product_id + ", product_name=" + product_name + ", type=" + type + ", unit="
 				+ unit + ", purchase_price=" + purchase_price + ", wholesale_price=" + wholesale_price
-				+ ", retail_price=" + retail_price + ", count=" + count + ", order_id=" + order_id + "]";
+				+ ", retail_price=" + retail_price + ", count=" + count + ", order_id=" + order_id + ", bonus=" + bonus
+				+ "]";
 	}
 	
 	@Override

@@ -185,6 +185,11 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		return staffOrderMapper.getDraft();
 	}
 	
+	@Override
+	public void saveMoney(Client client) {
+		staffOrderMapper.saveMoney(client);
+	}
+	
 	private Order searchOrder(int orderId){
 		Order order = staffOrderMapper.searchOrder(orderId);
 		return order;
@@ -205,7 +210,9 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 			products.set(i,tmpProduct);
 			
 			orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
-			orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+			if(tmpProduct.getBonus()!=1){
+				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+			}
 		}
 		orderProfit = orderSalePrice - orderPurchasePrice;
 		orderProduct.setOrder_purchase_price(orderPurchasePrice);
@@ -237,6 +244,8 @@ public class StaffOrderServiceImpl implements StaffOrderService{
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");  
         return pattern.matcher(str).matches();  
 	}
+
+	
 
 
 }
