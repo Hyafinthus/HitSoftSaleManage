@@ -85,7 +85,7 @@ public class BossStatisticController {
 	
 	@RequestMapping(value="/price/{start_time}/{end_time}", method=RequestMethod.GET)
 	@ResponseBody
-	public String pricePurchase(@PathVariable String start_time, @PathVariable String end_time) {
+	public String priceStatistic(@PathVariable String start_time, @PathVariable String end_time) {
 		start_time += " 00:00:00";
 		end_time += " 00:00:00";
 		

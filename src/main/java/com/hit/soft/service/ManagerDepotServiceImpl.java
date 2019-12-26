@@ -50,13 +50,8 @@ public class ManagerDepotServiceImpl implements ManagerDepotService {
 	}
 	
 	@Override
-	public Integer countOverstockProduct() {
-		return managerDepotMapper.countOverstockProduct();
-	}
-
-	@Override
-	public List<Product> overstockProduct(Integer page, Integer limit) {
-		return managerDepotMapper.overstockProduct(page, limit);
+	public List<Product> overstockProduct() {
+		return managerDepotMapper.overstockProduct();
 	}
 
 	@Override
