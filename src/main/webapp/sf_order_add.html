@@ -312,7 +312,7 @@
 								minWidth: 100
 							},
 							{
-								field: 'points',
+								field: 'wallet',
 								title: '积分'
 							}
 						]
@@ -373,7 +373,7 @@
 			});
 
 			table.on('rowDouble(test)', function(obj) {
-				if (obj.data.hasOwnProperty("points")) {
+				if (obj.data.hasOwnProperty("wallet")) {
 					client_name.value = obj.data.client_id
 					client_name_search.value = obj.data.client_name
 				} else {

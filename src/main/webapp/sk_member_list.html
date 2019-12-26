@@ -174,11 +174,15 @@
 								width: 200,
 								templet: function(d) {
 									var sid = d.staff_id
-									return '<div><a title="编辑"' +
-										'onclick="clickxadmin(' + sid + ')">' +
-										'<i class="layui-icon">&#xe642;</i></a><a title="删除" onclick="del(' + sid + ')">' +
-										'<i class="layui-icon">&#xe640;</i>' +
-										'</a></div>'
+									if(d.role!="boss"){
+										return '<div><a title="编辑"' +
+											'onclick="clickxadmin(' + sid + ')">' +
+											'<i class="layui-icon">&#xe642;</i></a><a title="删除" onclick="del(' + sid + ')">' +
+											'<i class="layui-icon">&#xe640;</i>' +
+											'</a></div>'
+									}else{
+										return "--"
+									}
 								}
 							}
 						]
@@ -190,7 +194,6 @@
 		//xadmin.open("编辑","member-edit.html?id="d.staff_id"",600,400)
 		function clickxadmin(id) {
 			xadmin.open("编辑", "sk_member_edit.html?id=" + id + "", 600, 400)
-			load_table();
 		}
 
 		function del(id) {
