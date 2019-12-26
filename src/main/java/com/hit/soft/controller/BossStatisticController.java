@@ -19,6 +19,7 @@ import com.hit.soft.domain.Order;
 import com.hit.soft.domain.Product;
 import com.hit.soft.service.BossStatisticService;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -54,6 +55,9 @@ public class BossStatisticController {
 		int limitInt = Integer.parseInt(request.getParameter("limit"));
 		int start = (pageInt - 1) * limitInt;
 		int end = start + limitInt;
+		if(end > count) {
+			end = count;
+		}
 		JsonProduct jsonProduct = new JsonProduct(count, data.subList(start, end));
 		
 		return JSONObject.fromObject(jsonProduct).toString();
@@ -71,6 +75,9 @@ public class BossStatisticController {
 		int limitInt = Integer.parseInt(request.getParameter("limit"));
 		int start = (pageInt - 1) * limitInt;
 		int end = start + limitInt;
+		if(end > count) {
+			end = count;
+		}
 		JsonOrder jsonOrder = new JsonOrder(count, data.subList(start, end));
 		
 		return JSONObject.fromObject(jsonOrder).toString();
