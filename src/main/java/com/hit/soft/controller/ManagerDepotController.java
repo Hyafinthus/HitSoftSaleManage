@@ -1,6 +1,5 @@
 package com.hit.soft.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +49,7 @@ public class ManagerDepotController {
 	// 出库
 	@RequestMapping(value="/out/{depot_name}/{product_id}/{number}", method=RequestMethod.GET)
 	@ResponseBody
-	public String outDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) throws NumberFormatException, UnsupportedEncodingException {
+	public String outDepot(@PathVariable String depot_name, @PathVariable String product_id, @PathVariable String number) {
 		managerDepotService.turnoverDepot(depot_name, Integer.parseInt(product_id), Integer.parseInt(number));
 		return "success";
 	}

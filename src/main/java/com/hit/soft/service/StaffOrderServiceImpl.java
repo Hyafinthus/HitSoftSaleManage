@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hit.soft.dao.ManagerDepotMapper;
 import com.hit.soft.dao.StaffOrderMapper;
 import com.hit.soft.domain.Client;
 import com.hit.soft.domain.Order;
@@ -21,6 +22,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 
 	@Autowired
 	private StaffOrderMapper staffOrderMapper;
+	private ManagerDepotMapper managerDepotMapper;
 
 	//保存草稿
 	@Override
@@ -157,6 +159,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		staffOrderMapper.updateOrder(order);
 	}
 
+	//退货时不仅修改状态，还要更改仓库物品的成本价
 	@Override
 	public void returnOrder(int orderId) {
 		Order order = searchOrder(orderId);
@@ -164,10 +167,27 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setReturn_time(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);
+		
+		OrderProduct orderProduct = searchOrderProduct(orderId);
+		List<Product> products = orderProduct.getProducts();
+		for (int i=0; i<products.size(); i++){
+			Product product = products.get(i);
+			
+			Integer prodCount = managerDepotMapper.countProductDepot(product.getProduct_id());
+			Double prodOldPurch = managerDepotMapper.queryProductPurchase(product.getProduct_id());
+			Double prodNewPurch = (prodCount * prodOldPurch + product.getPurchase_price() * product.getCount()) / (prodCount + product.getCount());
+			managerDepotMapper.updateProductPurchase(product.getProduct_id(), prodNewPurch);
+			managerDepotMapper.turnoverDepot("门店",product.getProduct_id(), product.getCount());
+		}
 	}
 
 	public OrderProduct getDraft(){
 		return staffOrderMapper.getDraft();
+	}
+	
+	@Override
+	public void saveMoney(Client client) {
+		staffOrderMapper.saveMoney(client);
 	}
 	
 	private Order searchOrder(int orderId){
@@ -190,7 +210,9 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 			products.set(i,tmpProduct);
 			
 			orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
-			orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+			if(tmpProduct.getBonus()!=1){
+				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+			}
 		}
 		orderProfit = orderSalePrice - orderPurchasePrice;
 		orderProduct.setOrder_purchase_price(orderPurchasePrice);
@@ -222,6 +244,8 @@ public class StaffOrderServiceImpl implements StaffOrderService{
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");  
         return pattern.matcher(str).matches();  
 	}
+
+	
 
 
 }

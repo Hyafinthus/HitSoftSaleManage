@@ -2,19 +2,10 @@ package com.hit.soft.service;
 
 import java.util.List;
 
-import com.hit.soft.domain.Client;
 import com.hit.soft.domain.OrderProduct;
 import com.hit.soft.domain.Product;
 
 public interface StaffRetailService {
-
-	int countClients();
-
-	List<Client> searchClients(int offset, int limit);
-
-	int countClientsByCondition(String condition);
-
-	List<Client> searchClientsByCondition(String condition, int offset, int limit);
 
 	int countProducts();
 

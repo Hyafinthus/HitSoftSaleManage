@@ -37,29 +37,6 @@
                     <table id="product1" lay-filter="order_demo"></table>
                 </div>
             </div>
-            <!-- <div class="layui-col-md12">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this">仓库</li>
-                        <li>门店</li>
-                    </ul>
-                    <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item layui-show">
-                            <div class="layui-card">
-                                <div class="layui-card-body ">
-                                    <table id="product1" lay-filter="order_demo"></table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-tab-item">
-                            <div class="layui-card">
-                                <div class="layui-card-body ">
-                                    <table id="product2" lay-filter="order_demo"></table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-            </div> -->
         </div>
     </div>
 </body>
@@ -71,14 +48,17 @@
             var product1_table = table.render({
                 elem: '#product1' //指定原始表格元素选择器（推荐id选择器）
                 , page: true //容器高度
-                , url: '/sale/manager/depot/inventory/仓库'
-                , toolbar: "#toolbarDemo"
+                , url: '/sale/manager/depot/overstock'
                 , cols: [[{ field: 'product_id', title: '货品ID', width: 93, sort: true },
                 { field: 'product_name', title: '货品名称', width: 230, minWidth: 150, sort: true },
-                { field: 'type', title: '货品类型', width: 150, minWidth: 150, sort: true },
-                { field: 'unit', title: '货品单位', width: 169, minWidth: 150, sort: true },
+                { field: 'type', title: '货品类型', width: 100, minWidth: 150, sort: true },
+                { field: 'unit', title: '货品单位', width: 100, minWidth: 150, sort: true },
+                { field: 'purchase_price', title: '货品进价', width: 119, minWidth: 150, sort: true },
                 { field: 'count', title: '数量', width: 199, minWidth: 150, sort: true },
-                { field: 'money', title: '积压金额', width: 388, minWidth: 150, sort: true }]]
+                { field: 'money', title: '积压金额', width: 388, minWidth: 150, sort: true, templet: function(d){
+                        return d.count*d.purchase_price;
+                    } 
+                }]]
                 //,…… //更多参数参考右侧目录：基本参数选项
             });
         });

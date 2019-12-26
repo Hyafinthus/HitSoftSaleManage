@@ -12,13 +12,13 @@ import com.hit.soft.domain.Product;
 
 @Mapper
 public interface StaffOrderMapper {
-	
-	
-
+	//获取草稿
 	OrderProduct getDraft();
 
+	//删除所有有关草稿的数据
 	void deleteDraft();
 
+	//添加货物订单信息到order_prod
 	void addProduct(Product product);
 
 	void addOrder(Order order);
@@ -31,8 +31,10 @@ public interface StaffOrderMapper {
 
 	int countClientsByName(String clientName);
 	
+	//根据ID精准查询得到客户信息
 	Client searchClientById(int clientId);
 	
+	//根据ID模糊查询得到客户信息
 	List<Client> searchClientsById(@Param("clientId") int clientId, @Param("offset") Integer offset, @Param("limit")Integer limit);
 	
 	List<Client> searchClientsByName(@Param("clientName") String clientName, @Param("offset") Integer offset, @Param("limit")Integer limit);
@@ -63,9 +65,13 @@ public interface StaffOrderMapper {
 
 	void updateOrder(Order order);
 
+	//用以在加入自增ID的表中时获取最后一条数据的ID
 	int getLastId();
 
+	//根据product的ID填充product的所有信息
 	Product completeProduct(Product product);
+
+	void saveMoney(Client client);
 
 
 	
