@@ -133,5 +133,10 @@ public class Product {
 				+ ", retail_price=" + retail_price + ", count=" + count + ", order_id=" + order_id + ", bonus=" + bonus
 				+ "]";
 	}
+	
+	@Override
+	public int hashCode() {
+		return String.valueOf(this.product_id).hashCode();
+	}
 
 }
