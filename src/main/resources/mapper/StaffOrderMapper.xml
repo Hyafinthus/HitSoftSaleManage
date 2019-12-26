@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getDraft" resultMap="mymap">
-		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count,p.bonus pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, p.bonus, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
 		FROM order_table o, order_prod_table p, client_table c, product_table pd
 		WHERE o.state = "draft" AND o.order_id = p.order_id AND o.client_id = c.client_id AND p.product_id = pd.product_id
 	</select>
