@@ -47,6 +47,10 @@ public interface StaffOrderService {
 
 	void saveMoney(Client client);
 
+	int countRejectedOrder();
+
+	List<Order> searchRejectedOrder(Integer offset, Integer limit);
+
 
 	
 

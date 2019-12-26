@@ -22,6 +22,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 
 	@Autowired
 	private StaffOrderMapper staffOrderMapper;
+	@Autowired
 	private ManagerDepotMapper managerDepotMapper;
 
 	//保存草稿
@@ -49,7 +50,14 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setCreate_time(df.format(new Date()));// new Date()为获取当前系统时间
 		List<Product> products = orderProduct.getProducts();
-		staffOrderMapper.deleteDraft();
+		
+		if(orderProduct.getOrder_id() >= 1){
+			staffOrderMapper.deleteOrder(orderProduct.getOrder_id());
+		}else{
+			staffOrderMapper.deleteDraft();
+		}
+		
+		
 		staffOrderMapper.addOrder(order);
 		int id = staffOrderMapper.getLastId();
 		for(int i=0; i<products.size(); i++){
@@ -143,6 +151,17 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		List<Order> orders = staffOrderMapper.searchPaidOrder(offset, limit);
 		return orders;
 	}
+	
+	@Override
+	public int countRejectedOrder() {
+		return staffOrderMapper.countRejectedOrder();
+	}
+
+	@Override
+	public List<Order> searchRejectedOrder(Integer offset, Integer limit) {
+		List<Order> orders = staffOrderMapper.searchRejectedOrder(offset, limit);
+		return orders;
+	}
 
 	@Override
 	public OrderProduct searchOrderProduct(int orderId) {
@@ -177,7 +196,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		List<Product> products = orderProduct.getProducts();
 		for (int i=0; i<products.size(); i++){
 			Product product = products.get(i);
-			
+			System.err.println(product);
 			Integer prodCount = managerDepotMapper.countProductDepot(product.getProduct_id());
 			Double prodOldPurch = managerDepotMapper.queryProductPurchase(product.getProduct_id());
 			Double prodNewPurch = (prodCount * prodOldPurch + product.getPurchase_price() * product.getCount()) / (prodCount + product.getCount());
@@ -249,6 +268,8 @@ public class StaffOrderServiceImpl implements StaffOrderService{
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");  
         return pattern.matcher(str).matches();  
 	}
+
+	
 
 	
 

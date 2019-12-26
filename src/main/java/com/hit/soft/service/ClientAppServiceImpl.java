@@ -19,6 +19,7 @@ public class ClientAppServiceImpl implements ClientAppService {
 
 	@Autowired
 	private ClientAppMapper clientAppMapper;
+	@Autowired
 	private StaffRetailMapper staffRetailMapper;
 	
 	@Override

@@ -130,10 +130,10 @@ public class StaffOrderController {
 	}
 	
 	//查询已付款的订单用来退款
-		@RequestMapping(value="/search/rejectedOrder",method=RequestMethod.GET)
-		@ResponseBody
-		public String searchRejectedOrder(HttpServletRequest request){
-			int count = staffOrderService.countRejectedOrder();
+	@RequestMapping(value="/search/rejectedOrder",method=RequestMethod.GET)
+	@ResponseBody
+	public String searchRejectedOrder(HttpServletRequest request){
+		int count = staffOrderService.countRejectedOrder();
 			int pageInt = Integer.parseInt(request.getParameter("page"));
 			int limitInt = Integer.parseInt(request.getParameter("limit"));
 			List<Order> data = staffOrderService.searchRejectedOrder((pageInt - 1) * limitInt, limitInt);
