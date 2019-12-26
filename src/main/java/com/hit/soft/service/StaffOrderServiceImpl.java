@@ -153,7 +153,12 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	@Override
 	public void payOrder(int orderId) {
 		Order order = searchOrder(orderId);
-		order.setState("paid");
+		if(order.getState().equals("approved")){
+			order.setState("paid_undelivered");
+		}else{
+			order.setState("paid_delivered");
+		}
+		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);

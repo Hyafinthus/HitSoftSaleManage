@@ -129,6 +129,18 @@ public class StaffOrderController {
 		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
+	//查询已付款的订单用来退款
+		@RequestMapping(value="/search/rejectedOrder",method=RequestMethod.GET)
+		@ResponseBody
+		public String searchRejectedOrder(HttpServletRequest request){
+			int count = staffOrderService.countRejectedOrder();
+			int pageInt = Integer.parseInt(request.getParameter("page"));
+			int limitInt = Integer.parseInt(request.getParameter("limit"));
+			List<Order> data = staffOrderService.searchRejectedOrder((pageInt - 1) * limitInt, limitInt);
+			JsonOrder jsonOrder = new JsonOrder(count, data);
+			return JSONObject.fromObject(jsonOrder).toString();
+		}
+	
 	//查询订单详情
 	@RequestMapping(value="/search/OrderProduct/{order_id}",method=RequestMethod.GET)
 	@ResponseBody

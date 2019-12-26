@@ -126,13 +126,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countUnpaidOrder" resultType="Integer">
 		SELECT COUNT(*)
 		FROM order_table
-		WHERE state = "approved" OR state = "unpaid_delivered" OR state = "rejected"
+		WHERE state = "approved" OR state = "unpaid_delivered"
 	</select>
 	
 	<select id="searchUnpaidOrder" resultType="Order">
 		SELECT o.order_id, o.client_id, o.create_time, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
 		FROM order_table o, client_table c
-		WHERE (state = "approved" OR state = "unpaid_delivered" OR state = "rejected") AND o.client_id = c.client_id 
+		WHERE (state = "approved" OR state = "unpaid_delivered") AND o.client_id = c.client_id
 		LIMIT #{offset}, #{limit}
 	</select>
 	
