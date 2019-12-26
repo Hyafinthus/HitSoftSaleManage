@@ -53,15 +53,17 @@
         <div class="layui-col-md12">
           <div class="layui-card">
             <div class="layui-card-body ">
+              <span class = "price">
               <div class="layui-inline layui-show-xs-block">
-                <label class="">进货总金额：</label>
+                <label class="price" id="purchase"></label>
               </div>
               <div class="layui-inline layui-show-xs-block">
-                <label class="">销售总金额：</label>
+                <label class="price" id="trade"></label>
               </div>
               <div class="layui-inline layui-show-xs-block">
-                <label class="">利润总金额：</label>
+                <label class="price" id="profit"></label>
               </div>
+              </span>
             </div>
             <div class="layui-card-body ">
               <table id="product1" lay-filter="order_demo"></table>
@@ -102,6 +104,22 @@ document.write(timestamp); -->
         ]]
         //,…… //更多参数参考右侧目录：基本参数选项
       });
+      $.ajax({
+          url: '/sale/boss/statistic/price/' + start + '/' + end,
+          type: "GET",
+          dataType: "json",
+          success: function (str) {
+            var purchase = str.purchase;
+            var trade = str.trade;
+            var profit = str.profit;
+            $("span.price").parent().css({"text-align":"center"});
+            $("label.price").attr("style", "font-size:150%")
+            $("#purchase").html("进货总金额：￥"+purchase+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+            $("#trade").html("销售总金额：￥"+trade+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+            $("#profit").html("利润总金额：￥"+profit);
+          },
+          error: function () { }
+        });
       }
     });
   });
