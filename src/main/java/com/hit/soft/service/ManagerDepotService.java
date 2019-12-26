@@ -16,10 +16,8 @@ public interface ManagerDepotService {
 	public void turnoverDepot(String depot_name, Integer product_id, Integer number);
 
 	public void transferDepot(String old_depot, String new_depot, Integer product_id, Integer number);
-
-	public Integer countOverstockProduct();
 	
-	public List<Product> overstockProduct(Integer page, Integer limit);
+	public List<Product> overstockProduct();
 	
 	public Integer countQueryDepot(String depot_name);
 	
