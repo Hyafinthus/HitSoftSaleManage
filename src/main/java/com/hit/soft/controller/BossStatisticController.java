@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import com.hit.soft.domain.Order;
 import com.hit.soft.domain.Product;
 import com.hit.soft.service.BossStatisticService;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -38,7 +38,7 @@ public class BossStatisticController {
 		List<Product> purchaseProducts = bossStatisticService.queryInDepot(start_time, end_time);
 		List<Product> marketProducts = bossStatisticService.queryMarketProduct(start_time, end_time);
 		Map<Integer, Product> allProducts = new HashMap<>();
-		for(Product product : purchaseProducts) {
+		for(Product product : purchaseProducts) { 
 			allProducts.put(product.getProduct_id(), product);
 		}
 		for(Product product : marketProducts) {
@@ -81,6 +81,21 @@ public class BossStatisticController {
 		JsonOrder jsonOrder = new JsonOrder(count, data.subList(start, end));
 		
 		return JSONObject.fromObject(jsonOrder).toString();
+	}
+	
+	@RequestMapping(value="/price/purchase/{start_time}/{end_time}", method=RequestMethod.GET)
+	@ResponseBody
+	public Double pricePurchase(@PathVariable String start_time, @PathVariable String end_time) {
+		start_time += " 00:00:00";
+		end_time += " 00:00:00";
+		
+		Double pricePurchase = 0.0;
+		List<Product> purchaseProducts = bossStatisticService.queryInDepot(start_time, end_time);
+		for(Product product : purchaseProducts) {
+			pricePurchase += product.getPurchase_price() * product.getCount();
+		}
+		
+		return pricePurchase;
 	}
 	
 }
