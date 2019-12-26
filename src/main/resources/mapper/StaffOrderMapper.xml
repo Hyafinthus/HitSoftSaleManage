@@ -15,12 +15,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addProduct" parameterType="Product">
-		INSERT INTO order_prod_table(order_id, product_id, count)
-		VALUES(#{order_id}, #{product_id}, #{count})
+		INSERT INTO order_prod_table(order_id, product_id, count, bonus)
+		VALUES(#{order_id}, #{product_id}, #{count}, #{bonus})
 	</insert>
 	
 	<select id="getDraft" resultMap="mymap">
-		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count,p.bonus pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
 		FROM order_table o, order_prod_table p, client_table c, product_table pd
 		WHERE o.state = "draft" AND o.order_id = p.order_id AND o.client_id = c.client_id AND p.product_id = pd.product_id
 	</select>
@@ -150,7 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchOrderProduct" resultMap="mymap" >
-		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, p.bonus, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
 		FROM order_table o, order_prod_table p, client_table c, product_table pd
 		WHERE o.order_id = #{orderId} AND o.order_id = p.order_id AND o.client_id = c.client_id AND p.product_id = pd.product_id
 	</select>
@@ -168,6 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="wholesale_price" property="wholesale_price"/>
 			<result column="count" property="count"/>
 			<result column="order_id" property="order_id"/>
+			<result column="bonus" property="bonus"/>
 		</collection>
 	</resultMap>
 	
@@ -184,6 +185,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order_sale_price = #{order_sale_price}, order_purchase_price = #{order_purchase_price},
 		order_profit = #{order_profit}, state = #{state}
 		WHERE order_id = #{order_id}
+	</update>
+	
+	<update id="saveMoney" parameterType="Client">
+		UPDATE client_table
+		SET wallet = wallet + #{wallet}
+		WHERE client_id = #{client_id}
 	</update>
 	
 </mapper>

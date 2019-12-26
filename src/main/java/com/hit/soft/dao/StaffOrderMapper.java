@@ -71,6 +71,8 @@ public interface StaffOrderMapper {
 	//根据product的ID填充product的所有信息
 	Product completeProduct(Product product);
 
+	void saveMoney(Client client);
+
 
 	
 }

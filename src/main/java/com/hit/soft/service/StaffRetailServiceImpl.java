@@ -84,7 +84,9 @@ public class StaffRetailServiceImpl implements StaffRetailService {
 				products.set(i,tmpProduct);
 				
 				orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
-				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+				if(tmpProduct.getBonus()!=1){
+					orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+				}
 			}
 			orderProfit = orderSalePrice - orderPurchasePrice;
 			orderProduct.setOrder_purchase_price(orderPurchasePrice);
