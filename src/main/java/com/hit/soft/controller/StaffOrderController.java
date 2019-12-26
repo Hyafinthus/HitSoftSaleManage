@@ -153,7 +153,7 @@ public class StaffOrderController {
 		return "success";
 	}
 	
-	//上传给经理审核
+	//存款
 	@RequestMapping(value="/save/money",method=RequestMethod.POST)
 	@ResponseBody
 	public String saveMoney(@RequestBody Client client){
