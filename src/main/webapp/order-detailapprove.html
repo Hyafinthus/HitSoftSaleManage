@@ -99,18 +99,22 @@
                                 type: "GET",
                                 dataType: "text",
                                 success: function (str) {    
-                                    console.log(order_id);                               
-                                    layer.alert("通过", {
-                                        icon: 6
-                                    },
-                                        function (index) {
+                                    console.log(order_id);
+                                    layer.confirm("是否赊账配货？",{
+                                        btn:["确定","取消"],
+                                        yes:function(index,layero){
                                             // 获得frame索引
                                             //关闭当前frame
                                             layer.close(index);
                                             parent.parent.layer.open({ type:2,title: '订单配货', content: '/sale/order-detaildeliver.html?order_id=' + order_id,end : function(){
                                                 parent.$('#refresh').click();
                                             },area: ['1000px', '500px']});
-                                        });
+                                        },
+                                        btn2:function(index,layero){
+                                            layer.close(index);
+                                            parent.$('#refresh').click();
+                                        }
+                                    })                               
                                 },
                                 error: function () { }
                             });
