@@ -67,18 +67,18 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	}
 
 	@Override
-	public List<Client> queryPoint() {
-		return managerProfileMapper.queryPoint();
+	public List<Client> queryPoints() {
+		return managerProfileMapper.queryPoints();
 	}
 
 	@Override
-	public void addPoint(Integer points, Double wallet) {
-		managerProfileMapper.addPoint(points, wallet);
+	public void addPoints(Integer points, Double wallet) {
+		managerProfileMapper.addPoints(points, wallet);
 	}
 
 	@Override
-	public void deletePoint(Integer points_id) {
-		managerProfileMapper.deletePoint(points_id);
+	public void deletePoints(Integer points_id) {
+		managerProfileMapper.deletePoints(points_id);
 	}
 
 }

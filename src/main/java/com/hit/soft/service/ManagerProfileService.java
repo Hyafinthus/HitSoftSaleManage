@@ -27,10 +27,10 @@ public interface ManagerProfileService {
 	
 	public void updateRate(Double rate);
 	
-	public List<Client> queryPoint();
+	public List<Client> queryPoints();
 	
-	public void addPoint(Integer points, Double wallet);
+	public void addPoints(Integer points, Double wallet);
 	
-	public void deletePoint(Integer points_id);
+	public void deletePoints(Integer points_id);
 	
 }

@@ -33,10 +33,10 @@ public interface ManagerProfileMapper {
 	
 	public void updateRate(Double rate);
 	
-	public List<Client> queryPoint();
+	public List<Client> queryPoints();
 	
-	public void addPoint(@Param("points") Integer points, @Param("wallet") Double wallet);
+	public void addPoints(@Param("points") Integer points, @Param("wallet") Double wallet);
 	
-	public void deletePoint(Integer points_id);
+	public void deletePoints(Integer points_id);
 	
 }

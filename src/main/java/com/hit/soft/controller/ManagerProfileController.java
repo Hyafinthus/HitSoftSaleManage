@@ -96,7 +96,7 @@ public class ManagerProfileController {
 	@RequestMapping(value="/points", method=RequestMethod.GET)
 	@ResponseBody
 	public String queryPoints() {
-		List<Client> data = managerProfileService.queryPoint();
+		List<Client> data = managerProfileService.queryPoints();
 		JsonClient jsonClient = new JsonClient(data.size(), data);
 		
 		return JSONObject.fromObject(jsonClient).toString();
@@ -107,7 +107,7 @@ public class ManagerProfileController {
 	public String addPoints(@PathVariable String points, @PathVariable String wallet) {
 		Integer pointsInt = Integer.parseInt(points);
 		Double walletDouble = Double.parseDouble(wallet);
-		managerProfileService.addPoint(pointsInt, walletDouble);
+		managerProfileService.addPoints(pointsInt, walletDouble);
 		return "success";
 	}
 	
@@ -115,7 +115,7 @@ public class ManagerProfileController {
 	@ResponseBody
 	public String addPoints(@PathVariable String id) {
 		Integer idInt = Integer.parseInt(id);
-		managerProfileService.deletePoint(idInt);
+		managerProfileService.deletePoints(idInt);
 		return "success";
 	}
 	
