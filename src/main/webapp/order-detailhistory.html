@@ -95,7 +95,7 @@
                         $("#order_id").text(order_id);
                         $("#create_time").text(str.create_time);
                         $("#client_name").text(str.client_name);
-                        if(str.state === "approved"){
+                        if(str.state === "unpaid_delivered"){
                             $("#status").attr("style", "color:red");
                             $("#status").text("未付款");
                         } else {
