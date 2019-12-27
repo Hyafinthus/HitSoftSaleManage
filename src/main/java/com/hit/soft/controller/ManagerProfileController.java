@@ -111,7 +111,7 @@ public class ManagerProfileController {
 		return "success";
 	}
 	
-	@RequestMapping(value="/points/add/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/points/delete/{id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String addPoints(@PathVariable String id) {
 		Integer idInt = Integer.parseInt(id);
