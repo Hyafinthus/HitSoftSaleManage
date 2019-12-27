@@ -225,6 +225,16 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		double orderSalePrice = 0, orderPurchasePrice = 0, orderProfit = 0; 
 		List<Product> products = orderProduct.getProducts();
 		
+		//获取折扣
+		double discount=1;
+		for(int i=0;i<products.size();i++){
+			if(products.get(i).getProduct_id()==-1){
+				discount = products.get(i).getCount()/100.0;
+				products.remove(i);
+			}
+		}
+		
+		//完善每个货物的具体信息
 		orderProduct.setClient_name(staffOrderMapper.searchClientById(orderProduct.getClient_id()).getClient_name());
 		for(int i=0;i<products.size();i++){
 			Product tmpProduct = products.get(i);
@@ -238,6 +248,9 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
 			}
 		}
+		orderSalePrice *= discount;
+		
+		//设置价格
 		orderProfit = orderSalePrice - orderPurchasePrice;
 		orderProduct.setOrder_purchase_price(orderPurchasePrice);
 		orderProduct.setOrder_sale_price(orderSalePrice);
