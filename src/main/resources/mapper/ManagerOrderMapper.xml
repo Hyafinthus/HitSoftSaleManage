@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="showOrder" parameterType="String" resultType="OrderProduct">
-		SELECT o.create_time, c.client_name
+		SELECT o.create_time, o.state, c.client_name
 		FROM order_table o, client_table c
 		WHERE o.order_id = #{order_id} AND o.client_id = c.client_id
 	</select>
