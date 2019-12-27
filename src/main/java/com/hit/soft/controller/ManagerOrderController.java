@@ -59,4 +59,11 @@ public class ManagerOrderController {
 		return "success";
 	}
 	
+	@RequestMapping(value="/deliver/{order_id}", method=RequestMethod.GET)
+	@ResponseBody
+	public String deliverOrder(@PathVariable String order_id) {
+		managerOrderService.deliverOrder(order_id);
+		return "success";
+	}
+	
 }

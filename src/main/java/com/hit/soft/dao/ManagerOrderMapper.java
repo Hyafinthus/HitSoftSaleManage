@@ -25,4 +25,6 @@ public interface ManagerOrderMapper {
 	
 	public void rejectOrder(String order_id);
 	
+	public void deliverOrder(String order_id);
+	
 }

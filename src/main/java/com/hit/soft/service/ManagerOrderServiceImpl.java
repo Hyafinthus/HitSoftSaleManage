@@ -59,5 +59,10 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 	public void rejectOrder(String order_id) {
 		managerOrderMapper.rejectOrder(order_id);
 	}
+
+	@Override
+	public void deliverOrder(String order_id) {
+		managerOrderMapper.deliverOrder(order_id);
+	}
 	
 }

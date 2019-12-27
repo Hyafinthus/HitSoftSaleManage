@@ -20,4 +20,6 @@ public interface ManagerOrderService {
 	
 	public void rejectOrder(String order_id);
 	
+	public void deliverOrder(String order_id);
+	
 }
