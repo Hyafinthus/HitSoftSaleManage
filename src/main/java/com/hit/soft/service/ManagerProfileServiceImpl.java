@@ -73,14 +73,12 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 
 	@Override
 	public void addPoint(Integer points, Double wallet) {
-		// TODO Auto-generated method stub
-		
+		managerProfileMapper.addPoint(points, wallet);
 	}
 
 	@Override
 	public void deletePoint(Integer points_id) {
-		// TODO Auto-generated method stub
-		
+		managerProfileMapper.deletePoint(points_id);
 	}
 
 }

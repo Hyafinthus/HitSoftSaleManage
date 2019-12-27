@@ -74,4 +74,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT points_id client_id, points, wallet FROM points_table WHERE points_id != 1
 	</select>
 	
+	<insert id="addPoints">
+		INSERT INTO points_table(points_id, points, wallet)
+		VALUES(0, #{points}, #{wallet})
+	</insert>
+	
+	<delete id="deletePoints" parameterType="Integer">
+		DELETE FROM points_table WHERE points_id = #{points_id}
+	</delete>
+	
 </mapper>

@@ -79,13 +79,13 @@ public class ManagerProfileController {
 		return "success";
 	}
 	
-	@RequestMapping(value="/rate", method=RequestMethod.POST)
+	@RequestMapping(value="/rate", method=RequestMethod.GET)
 	@ResponseBody
 	public Double queryRate() {
 		return managerProfileService.queryRate();
 	}
 	
-	@RequestMapping(value="/rate/{rate}", method=RequestMethod.POST)
+	@RequestMapping(value="/rate/{rate}", method=RequestMethod.GET)
 	@ResponseBody
 	public String updateRate(@PathVariable String rate) {
 		Double rateDouble = Double.parseDouble(rate);
@@ -93,13 +93,30 @@ public class ManagerProfileController {
 		return "success";
 	}
 	
-	@RequestMapping(value="/points", method=RequestMethod.POST)
+	@RequestMapping(value="/points", method=RequestMethod.GET)
 	@ResponseBody
 	public String queryPoints() {
 		List<Client> data = managerProfileService.queryPoint();
 		JsonClient jsonClient = new JsonClient(data.size(), data);
 		
 		return JSONObject.fromObject(jsonClient).toString();
+	}
+	
+	@RequestMapping(value="/points/add/{points}/{wallet}", method=RequestMethod.GET)
+	@ResponseBody
+	public String addPoints(@PathVariable String points, @PathVariable String wallet) {
+		Integer pointsInt = Integer.parseInt(points);
+		Double walletDouble = Double.parseDouble(wallet);
+		managerProfileService.addPoint(pointsInt, walletDouble);
+		return "success";
+	}
+	
+	@RequestMapping(value="/points/add/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public String addPoints(@PathVariable String id) {
+		Integer idInt = Integer.parseInt(id);
+		managerProfileService.deletePoint(idInt);
+		return "success";
 	}
 	
 }
