@@ -11,4 +11,6 @@ public interface ClientAppService {
 
 	boolean payOrder(OrderProduct orderProduct);
 
+	void pointsForCash(int client_id);
+
 }

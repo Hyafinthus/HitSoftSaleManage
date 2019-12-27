@@ -242,8 +242,10 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		for(int i=0;i<products.size();i++){
 			Product tmpProduct = products.get(i);
 			int tmpCount = tmpProduct.getCount();
+			int tmpBonus = tmpProduct.getBonus();
 			tmpProduct = staffOrderMapper.completeProduct(tmpProduct);
 			tmpProduct.setCount(tmpCount);
+			tmpProduct.setBonus(tmpBonus);
 			products.set(i,tmpProduct);
 			
 			orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
