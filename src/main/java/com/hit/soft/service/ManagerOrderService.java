@@ -8,9 +8,9 @@ import com.hit.soft.domain.Product;
 
 public interface ManagerOrderService {
 	
-	public Integer countQueryOrders();
+	public Integer countQueryOrders(String type);
 	
-	public List<Order> queryOrders(Integer page, Integer limit);
+	public List<Order> queryOrders(Integer page, Integer limit, String type);
 	
 	public List<Product> showProducts(String order_id);
 	

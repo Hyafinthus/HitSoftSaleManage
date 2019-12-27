@@ -12,9 +12,10 @@ import com.hit.soft.domain.Product;
 @Mapper
 public interface ManagerOrderMapper {
 	
-	public Integer countQueryOrders();
+	public Integer countQueryOrders(@Param("state1") String state1, @Param("state2") String state2);
 	
-	public List<Order> queryOrders(@Param("page") Integer page, @Param("limit") Integer limit);
+	public List<Order> queryOrders(@Param("page") Integer page, @Param("limit") Integer limit,
+			@Param("state1") String state1, @Param("state2") String state2);
 	
 	public List<Product> showProducts(String order_id);
 	

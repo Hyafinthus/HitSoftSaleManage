@@ -25,19 +25,19 @@ public class ManagerOrderController {
 	@Autowired
 	private ManagerOrderService managerOrderService;
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/{type}", method=RequestMethod.GET)
 	@ResponseBody
-	public String queryOrders(HttpServletRequest request) {
-		int count = managerOrderService.countQueryOrders();
+	public String queryOrders(@PathVariable String type, HttpServletRequest request) {
+		int count = managerOrderService.countQueryOrders(type);
 		int pageInt = Integer.parseInt(request.getParameter("page"));
 		int limitInt = Integer.parseInt(request.getParameter("limit"));
-		List<Order> data = managerOrderService.queryOrders((pageInt - 1) * limitInt, limitInt);
+		List<Order> data = managerOrderService.queryOrders((pageInt - 1) * limitInt, limitInt, type);
 		JsonOrder jsonOrder = new JsonOrder(count, data);
 		
 		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
-	@RequestMapping(value="/review/{order_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/review/detail/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public OrderProduct reviewOrder(@PathVariable String order_id) {
 		OrderProduct orderProduct = managerOrderService.showOrder(order_id);
