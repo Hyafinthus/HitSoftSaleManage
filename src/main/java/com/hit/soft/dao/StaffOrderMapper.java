@@ -58,6 +58,10 @@ public interface StaffOrderMapper {
 	int countPaidOrder();
 
 	List<Order> searchPaidOrder(@Param("offset") Integer offset, @Param("limit")Integer limit);
+	
+	int countRejectedOrder();
+
+	List<Order> searchRejectedOrder(@Param("offset") Integer offset, @Param("limit")Integer limit);
 
 	OrderProduct searchOrderProduct(int orderId);
 	
@@ -72,6 +76,12 @@ public interface StaffOrderMapper {
 	Product completeProduct(Product product);
 
 	void saveMoney(Client client);
+
+	void deleteOrder(int orderId);
+
+	void changePoints(@Param("points") Integer points, @Param("clientId")Integer clientId);
+
+	
 
 
 	

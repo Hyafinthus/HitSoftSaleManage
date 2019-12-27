@@ -55,6 +55,10 @@
 								var data = checkStatus.data;
 								layer.msg('选中了：' + data.length + ' 个');
 								break;
+							case 'edit':
+								var data = obj.data;
+								alert("1234");
+								break;
 						};
 					});
 			});
@@ -64,7 +68,7 @@
 			var table = layui.table;
 			table.render({
 				elem: '#order_table',
-				url: '/sale/staff/order/search/paidOrder' //数据接口
+				url: '/sale/staff/order/search/unpaidOrder' //数据接口
 					,
 				toolbar: '#toolbarTable',
 				page: true //开启分页
@@ -101,7 +105,7 @@
 							width: 200,
 							templet: function(d) {
 								var sid = d.order_id
-								return '<div><a title="退款" class="layui-btn" onclick="refund(' + sid + ')">退款</a></div>'
+								return '<div><a title="付款" class="layui-btn" onclick="open(' + sid + ')">付款</a></div>'
 							}
 						}
 					]
@@ -114,7 +118,7 @@
 				var table = layui.table;
 				table.render({
 					elem: '#order_table',
-					url: '/sale/staff/order/search/paidOrder' //数据接口
+					url: '/sale/staff/order/search/unpaidOrder' //数据接口
 						,
 					toolbar: '#toolbarTable',
 					page: true //开启分页
@@ -151,7 +155,7 @@
 								width: 200,
 								templet: function(d) {
 									var sid = d.order_id
-									return '<div><a title="退款" class="layui-btn" onclick="refund(' + sid + ')">退款</a></div>'
+									return '<div><a title="付款" class="layui-btn" onclick="open(' + sid + ')">付款</a></div>'
 								}
 							}
 						]
@@ -160,17 +164,17 @@
 			});
 		}
 
-		function refund(id) {
-			layer.confirm('确认要退款吗？', function(index) {
+		function open(id) {
+			layer.confirm('确认要付款吗？', function(index) {
 				$.ajax({
-					url: "/sale/staff/order/return/" + id,
+					url: "/sale/staff/order/pay/" + id,
 					datatype: "text",
 					type: "get",
 					data: {},
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 					success: function(data) {
 						if (data == "success") {
-							layer.msg('已退款!', {
+							layer.msg('已付款!', {
 								icon: 1,
 								time: 1000
 							});

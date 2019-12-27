@@ -31,6 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE order_table.state = "draft"
 	</delete>
 	
+	<delete id="deleteOrder" parameterType="Integer">
+		DELETE order_table, order_prod_table
+		FROM order_table LEFT JOIN order_prod_table ON order_table.order_id = order_prod_table.order_id
+		WHERE order_table.order_id = #{orderId}
+	</delete>
+	
 	<select id="countClients" resultType="Integer">
 		SELECT COUNT(*)
 		FROM client_table
@@ -38,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchClients" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet 
+		SELECT client_id, client_name, sex, phone, address, wallet, points 
 		FROM client_table
 		WHERE client_id != 1
 		LIMIT #{offset}, #{limit}
@@ -57,20 +63,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchClientById" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet
+		SELECT client_id, client_name, sex, phone, address, wallet, points
 		FROM client_table
 		WHERE client_id = #{clientId} AND client_id != 1
 	</select>
 	
 	<select id="searchClientsById" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet
+		SELECT client_id, client_name, sex, phone, address, wallet, points
 		FROM client_table
 		WHERE client_id LIKE CONCAT("%", #{clientId}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchClientsByName" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet
+		SELECT client_id, client_name, sex, phone, address, wallet, points
 		FROM client_table
 		WHERE client_name LIKE CONCAT("%", #{clientName}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
@@ -126,13 +132,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countUnpaidOrder" resultType="Integer">
 		SELECT COUNT(*)
 		FROM order_table
-		WHERE state = "approved" OR state = "unpaid_delivered" OR state = "rejected"
+		WHERE state = "approved" OR state = "unpaid_delivered"
 	</select>
 	
 	<select id="searchUnpaidOrder" resultType="Order">
 		SELECT o.order_id, o.client_id, o.create_time, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
 		FROM order_table o, client_table c
-		WHERE (state = "approved" OR state = "unpaid_delivered" OR state = "rejected") AND o.client_id = c.client_id 
+		WHERE (state = "approved" OR state = "unpaid_delivered") AND o.client_id = c.client_id
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -148,6 +154,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE (state = "paid_undelivered" OR state = "paid_delivered") AND wholesale_order = 1 AND o.client_id = c.client_id 
 		LIMIT #{offset}, #{limit}
 	</select>
+	
+	<select id="countRejectedOrder" resultType="Integer">
+		SELECT COUNT(*)
+		FROM order_table
+		WHERE state = "rejected"
+	</select>
+	
+	<select id="searchRejectedOrder" resultType="Order">
+		SELECT o.order_id, o.create_time, o.pay_time, o.client_id, o.order_sale_price, o.order_purchase_price, o.order_profit, c.client_name
+		FROM order_table o, client_table c
+		WHERE state = "rejected" AND o.client_id = c.client_id 
+		LIMIT #{offset}, #{limit}
+	</select>
+	
 	
 	<select id="searchOrderProduct" resultMap="mymap" >
 		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, p.bonus, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
@@ -191,6 +211,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE client_table
 		SET wallet = wallet + #{wallet}
 		WHERE client_id = #{client_id}
+	</update>
+	
+	<update id="changePoints">
+		UPDATE client_table
+		SET points = points + #{points}
+		WHERE client_id = #{clientId}
 	</update>
 	
 </mapper>

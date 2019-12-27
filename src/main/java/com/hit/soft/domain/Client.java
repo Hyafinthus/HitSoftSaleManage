@@ -7,12 +7,14 @@ public class Client {
 	private String phone;
 	private String address;
 	private double wallet;
+	private double points;
 	
 	public Client() {
 		super();
 	}
 
-	public Client(int client_id, String client_name, String sex, String phone, String address, double wallet) {
+	public Client(int client_id, String client_name, String sex, String phone, String address, double wallet,
+			double points) {
 		super();
 		this.client_id = client_id;
 		this.client_name = client_name;
@@ -20,6 +22,15 @@ public class Client {
 		this.phone = phone;
 		this.address = address;
 		this.wallet = wallet;
+		this.points = points;
+	}
+
+	public double getPoints() {
+		return points;
+	}
+
+	public void setPoints(double points) {
+		this.points = points;
 	}
 
 	public int getClient_id() {
@@ -73,7 +84,9 @@ public class Client {
 	@Override
 	public String toString() {
 		return "Client [client_id=" + client_id + ", client_name=" + client_name + ", sex=" + sex + ", phone=" + phone
-				+ ", address=" + address + ", wallet=" + wallet + "]";
+				+ ", address=" + address + ", wallet=" + wallet + ", points=" + points + "]";
 	}
+
+	
 	
 }

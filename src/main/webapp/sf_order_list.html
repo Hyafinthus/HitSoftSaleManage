@@ -55,10 +55,6 @@
 								var data = checkStatus.data;
 								layer.msg('选中了：' + data.length + ' 个');
 								break;
-							case 'edit':
-								var data = obj.data;
-								alert("1234");
-								break;
 						};
 					});
 			});
@@ -105,7 +101,7 @@
 							width: 200,
 							templet: function(d) {
 								var sid = d.order_id
-								return '<div><a title="付款" class="layui-btn" onclick="del(' + sid + ')">付款</a></div>'
+								return '<div><a title="付款" class="layui-btn" onclick="pay(' + sid + ')">付款</a></div>'
 							}
 						}
 					]
@@ -155,7 +151,7 @@
 								width: 200,
 								templet: function(d) {
 									var sid = d.order_id
-									return '<div><a title="付款" class="layui-btn" onclick="del(' + sid + ')">付款</a></div>'
+									return '<div><a title="付款" class="layui-btn" onclick="pay(' + sid + ')">付款</a></div>'
 								}
 							}
 						]
@@ -164,7 +160,7 @@
 			});
 		}
 
-		function del(id) {
+		function pay(id) {
 			layer.confirm('确认要付款吗？', function(index) {
 				$.ajax({
 					url: "/sale/staff/order/pay/" + id,

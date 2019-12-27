@@ -22,6 +22,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 
 	@Autowired
 	private StaffOrderMapper staffOrderMapper;
+	@Autowired
 	private ManagerDepotMapper managerDepotMapper;
 
 	//保存草稿
@@ -49,7 +50,14 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setCreate_time(df.format(new Date()));// new Date()为获取当前系统时间
 		List<Product> products = orderProduct.getProducts();
-		staffOrderMapper.deleteDraft();
+		
+		if(orderProduct.getOrder_id() >= 1){
+			staffOrderMapper.deleteOrder(orderProduct.getOrder_id());
+		}else{
+			staffOrderMapper.deleteDraft();
+		}
+		
+		
 		staffOrderMapper.addOrder(order);
 		int id = staffOrderMapper.getLastId();
 		for(int i=0; i<products.size(); i++){
@@ -143,6 +151,17 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		List<Order> orders = staffOrderMapper.searchPaidOrder(offset, limit);
 		return orders;
 	}
+	
+	@Override
+	public int countRejectedOrder() {
+		return staffOrderMapper.countRejectedOrder();
+	}
+
+	@Override
+	public List<Order> searchRejectedOrder(Integer offset, Integer limit) {
+		List<Order> orders = staffOrderMapper.searchRejectedOrder(offset, limit);
+		return orders;
+	}
 
 	@Override
 	public OrderProduct searchOrderProduct(int orderId) {
@@ -153,7 +172,15 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	@Override
 	public void payOrder(int orderId) {
 		Order order = searchOrder(orderId);
-		order.setState("paid");
+		if(order.getState().equals("approved")){
+			order.setState("paid_undelivered");
+		}else{
+			order.setState("paid_delivered");
+		}
+		
+		int addPoints = (int)(order.getOrder_sale_price()*1.0);
+		staffOrderMapper.changePoints(addPoints,order.getClient_id());
+		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);
@@ -172,7 +199,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		List<Product> products = orderProduct.getProducts();
 		for (int i=0; i<products.size(); i++){
 			Product product = products.get(i);
-			
+			System.err.println(product);
 			Integer prodCount = managerDepotMapper.countProductDepot(product.getProduct_id());
 			Double prodOldPurch = managerDepotMapper.queryProductPurchase(product.getProduct_id());
 			Double prodNewPurch = (prodCount * prodOldPurch + product.getPurchase_price() * product.getCount()) / (prodCount + product.getCount());
@@ -201,6 +228,16 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		double orderSalePrice = 0, orderPurchasePrice = 0, orderProfit = 0; 
 		List<Product> products = orderProduct.getProducts();
 		
+		//获取折扣
+		double discount=1;
+		for(int i=0;i<products.size();i++){
+			if(products.get(i).getProduct_id()==-1){
+				discount = products.get(i).getCount()/100.0;
+				products.remove(i);
+			}
+		}
+		
+		//完善每个货物的具体信息
 		orderProduct.setClient_name(staffOrderMapper.searchClientById(orderProduct.getClient_id()).getClient_name());
 		for(int i=0;i<products.size();i++){
 			Product tmpProduct = products.get(i);
@@ -214,6 +251,9 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
 			}
 		}
+		orderSalePrice *= discount;
+		
+		//设置价格
 		orderProfit = orderSalePrice - orderPurchasePrice;
 		orderProduct.setOrder_purchase_price(orderPurchasePrice);
 		orderProduct.setOrder_sale_price(orderSalePrice);
@@ -244,6 +284,8 @@ public class StaffOrderServiceImpl implements StaffOrderService{
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");  
         return pattern.matcher(str).matches();  
 	}
+
+	
 
 	
 

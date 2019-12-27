@@ -53,12 +53,14 @@
         <div class="layui-col-md12">
           <div class="layui-card">
             <div class="layui-card-body ">
-              <div class="layui-inline layui-show-xs-block">
-                <label class="">销售总金额：</label>
-              </div>
-              <div class="layui-inline layui-show-xs-block">
-                <label class="">利润总金额：</label>
-              </div>
+              <span class="price">
+                <div class="layui-inline layui-show-xs-block">
+                  <label class="price" id="trade"></label>
+                </div>
+                <div class="layui-inline layui-show-xs-block">
+                  <label class="price" id="profit"></label>
+                </div>
+              </span>
             </div>
             <div class="layui-card-body ">
               <table id="product1" lay-filter="order_demo"></table>
@@ -83,20 +85,35 @@ document.write(timestamp); -->
       var end = $("#end").val();
       var start_time = new Date(start).getTime();
       var end_time = new Date(end).getTime();
-      if(start_time > end_time){
-        layer.alert("起始时间不应晚于结束时间", {icon: 7});
-      }else{
-      var product1_table = table.render({
-        elem: '#product1' //指定原始表格元素选择器（推荐id选择器）
-        , page: true //容器高度
-        , url: '/sale/boss/statistic/profit/'+start + '/' + end
-        , cols: [[{ field: 'state', title: '客户名称', width: 373, minWidth: 150, sort: true },
-        { field: 'client_id', title: '下单数量', width: 127, sort: true },
-        { field: 'order_sale_price', title: '销售总金额', width: 150, minWidth: 150, sort: true},
-        { field: 'order_profit', title: '利润总金额', width: 150, minWidth: 150, sort: true}
-        ]]
-        //,…… //更多参数参考右侧目录：基本参数选项
-      });
+      if (start_time > end_time) {
+        layer.alert("起始时间不应晚于结束时间", { icon: 7 });
+      } else {
+        var product1_table = table.render({
+          elem: '#product1' //指定原始表格元素选择器（推荐id选择器）
+          , page: true //容器高度
+          , url: '/sale/boss/statistic/profit/' + start + '/' + end
+          , cols: [[{ field: 'state', title: '客户名称', width: 373, minWidth: 150, sort: true },
+          { field: 'client_id', title: '下单数量', width: 127, sort: true },
+          { field: 'order_sale_price', title: '销售总金额/￥', width: 150, minWidth: 150, sort: true },
+          { field: 'order_profit', title: '利润总金额/￥', width: 150, minWidth: 150, sort: true }
+          ]]
+          //,…… //更多参数参考右侧目录：基本参数选项
+        });
+        $.ajax({
+          url: '/sale/boss/statistic/price/' + start + '/' + end,
+          type: "GET",
+          dataType: "json",
+          success: function (str) {
+            var purchase = str.purchase;
+            var trade = str.trade;
+            var profit = str.profit;
+            $("span.price").parent().css({ "text-align": "center" });
+            $("label.price").attr("style", "font-size:150%")
+            $("#profit").html("利润总金额：￥" + profit);
+            $("#trade").html("销售总金额：￥" + trade + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+          },
+          error: function () { }
+        });
       }
     });
   });

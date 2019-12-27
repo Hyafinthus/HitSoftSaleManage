@@ -9,6 +9,6 @@ public interface ClientAppService {
 
 	Client searchClient(int clientId);
 
-	void payOrder(OrderProduct orderProduct);
+	boolean payOrder(OrderProduct orderProduct);
 
 }

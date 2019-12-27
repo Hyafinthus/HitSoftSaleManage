@@ -52,6 +52,7 @@
 										<th>货品号</th>
 										<th>货品名</th>
 										<th>单位</th>
+										<th>库存</th>
 										<th>单价</th>
 										<th>数量</th>
 										<th>
@@ -79,24 +80,19 @@
 		</div>
 		<script>
 			var prod_list = []
-			var sp = 0.0
-			var pp = 0.0
-			var pro = 0.0
-			
+			var repro_count = []
+
+			// 计算总额
 			function sumUp() {
 				var sum_whole = 0.0
-				var sum_pr = 0.0
 				for (var i = 0; i < prod_list.length; i++) {
 					sum_whole += prod_list[i].count * prod_list[i].wholesale_price
-					sum_pr += prod_list[i].count * prod_list[i].purchase_price
 				}
 				var label = document.getElementById("sum");
 				label.innerText = sum_whole
-				sp = sum_whole
-				pp = sum_pr
-				pro = sp - pp
 			}
-			
+
+			// 删除行
 			function deleteRow(t) {
 				var tr = t.parent().parent();
 				var p_id = t.parent().prev().prev().prev().prev().prev().text()
@@ -113,18 +109,16 @@
 				sumUp()
 				resetSerialNum();
 			}
-			
-			
-			
-			
-			
+
+			// 重置序号
 			function resetSerialNum() {
 				var trs = $("#product_table tbody tr");
 				for (var i = 0; i < trs.length; i++) {
 					$("#product_table tbody tr:nth-child(" + (i + 1) + ") td:nth-child(1)").text(i);
 				}
 			}
-			
+
+			// 注册按钮事件
 			function registerClick() {
 				$("#product_table tbody tr td a").off("click").on("click", function() {
 					var text = $(this).text();
@@ -134,12 +128,14 @@
 							break;
 					}
 				});
-			
+
 				$("#product_table tbody tr td input").off("input").on("input", function() {
 					this.value = this.value.replace(/[^\d]/g, '')
 					if (this.value != "") {
 						var p_id = this.id.substring(5)
 						p_id = parseInt(p_id)
+						var p_count = $(this).parent().prev().prev().text()
+						var count = parseInt(p_count)
 						var num = this.value
 						var flag = false
 						var seq = 0
@@ -148,24 +144,33 @@
 								seq = i
 							}
 						}
-						prod_list[seq].count = num
+						if (num <= count) {
+							prod_list[seq].count = num
+						} else {
+							prod_list[seq].count = count
+							this.value = count
+						}
 					}
 					sumUp()
 				});
-			
+
 			}
-			
-			function addRow(id, name, unit, wholesale_price) {
+
+			function addRow(id, name, unit, count, wholesale_price) {
 				var rowindex = $("#product_table tbody tr").length;
+				var po_count = {}
+				po_count.id = id
+				po_count.count = count
+				repro_count.push(po_count)
 				var str = "<tr><td>" + rowindex +
-					"</td><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + wholesale_price +
+					"</td><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + count + "</td><td>" + wholesale_price +
 					"</td><td><input id='input" + id +
 					"'></input></td><td><a class='layui-btn'>删除</a></td></tr>";
 				$("#product_table tbody").append(str);
 				registerClick();
 			}
 			//读取草稿
-			window.onload = function(){
+			window.onload = function() {
 				$.ajax({
 					url: "/sale/staff/order/create",
 					datatype: "json",
@@ -173,7 +178,7 @@
 					data: {},
 					contentType: "application/json;charset=UTF-8",
 					success: function(data) {
-						if(data==""){
+						if (data == "") {
 							return
 						}
 						console.log(data)
@@ -185,25 +190,43 @@
 							product.name = data.products[i].product_name
 							product.unit = data.products[i].unit
 							product.purchase_price = data.products[i].purchase_price
-							product.wholesale_price =data.products[i].wholesale_price
+							product.wholesale_price = data.products[i].wholesale_price
 							product.count = data.products[i].count
 							prod_list.push(product)
-							addRow(product.product_id, product.name, product.unit, product.wholesale_price)
+							count = query_count(product.product_id)
+
+							addRow(product.product_id, product.name, product.unit, count, product.wholesale_price)
 							var str = "input" + product.product_id
 							var inpu = document.getElementById(str)
 							inpu.value = product.count
 							sumUp()
 						}
-						
+
 					},
 				});
 			}
+
+
+			function query_count(id) {
+				var draft_count = 0
+				$.ajax({
+					async: false,
+					url: "/sale/staff/order/search/products/" + id + "?page=1&limit=10",
+					datatype: "json",
+					type: "get",
+					contentType: "application/json;charset=UTF-8",
+					success: function(data) {
+						var obj = JSON.parse(data).data[0]
+						draft_count = obj.count
+					},
+				});
+				return draft_count
+			}
 		</script>
-		
+
 		<script>
 			var btn_submit = document.getElementById("product_submit");
 			btn_submit.onclick = function() {
-				console.log(sp+":"+pp+":" + pro)
 				if (client_name.value == "") {
 					alert("客户名不能为空")
 					return
@@ -212,19 +235,16 @@
 				if (table_length == 1) {
 					return
 				}
-				
+
 				var orderProduct = {}
 				orderProduct.client_id = client_name.value
-				orderProduct.order_sale_price = sp
-				orderProduct.order_purchase_price = pp
-				orderProduct.order_profit = pro 
 				var products = []
 				for (var i = 0; i < prod_list.length; i++) {
 					products.push(prod_list[i])
 					console.log(products[i])
 				}
 				orderProduct.products = products
-				
+
 				$.ajax({
 					url: "/sale/staff/order/submit",
 					datatype: "json",
@@ -240,7 +260,6 @@
 
 			var btn_save = document.getElementById("product_save");
 			btn_save.onclick = function() {
-				console.log(sp+":"+pp+":" + pro)
 				if (client_name.value == "") {
 					alert("客户名不能为空")
 					return
@@ -252,9 +271,6 @@
 
 				var orderProduct = {}
 				orderProduct.client_id = client_name.value
-				orderProduct.order_sale_price = sp
-				orderProduct.order_purchase_price = pp
-				orderProduct.order_profit = pro 
 				var products = []
 				for (var i = 0; i < prod_list.length; i++) {
 					products.push(prod_list[i])
@@ -277,7 +293,6 @@
 	</body>
 
 	<script>
-		
 		layui.use('table', function() {
 			var table = layui.table;
 
@@ -313,7 +328,7 @@
 							},
 							{
 								field: 'wallet',
-								title: '积分'
+								title: '预存款'
 							}
 						]
 					]
@@ -366,6 +381,12 @@
 								title: '批发价',
 								width: 200,
 								sort: true
+							},
+							{
+								field: 'count',
+								title: '数量',
+								width: 200,
+								sort: true
 							}
 						]
 					]
@@ -380,6 +401,7 @@
 					var p_id = obj.data.product_id
 					var p_name = obj.data.product_name
 					var p_unit = obj.data.unit
+					var p_count = obj.data.count
 					var p_purchase_price = obj.data.purchase_price
 					var p_wholesale_price = obj.data.wholesale_price
 					console.log(obj.data)
@@ -400,14 +422,21 @@
 						product.wholesale_price = p_wholesale_price
 						product.count = 1
 						prod_list.push(product)
-						addRow(p_id, p_name, p_unit, p_wholesale_price)
+						addRow(p_id, p_name, p_unit, p_count, p_wholesale_price)
 						var str = "input" + p_id
 						var inpu = document.getElementById(str)
 						inpu.value = 1
 						sumUp()
 					} else {
 						var num = prod_list[seq].count
-						num++
+						for (var i = 0; i < repro_count.length; i++) {
+							if (prod_list[seq].product_id == repro_count[i].id) {
+								if (num != repro_count[i].count) {
+									num++;
+								}
+								break;
+							}
+						}
 						prod_list[seq].count = num
 						var str = "input" + p_id
 						var inpu = document.getElementById(str)
