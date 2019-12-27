@@ -6,37 +6,33 @@ public class Order {
 	private String pay_time;
 	private String return_time;
 	private int client_id;
+	private String client_name;
 	private double order_sale_price;
 	private double order_purchase_price;
 	private double order_profit;
 	private String state;
 	private int wholesale_order;
 	
-	//辅助用client_name
-	private String client_name;
-	
 	public Order() {
 		super();
 	}
 
 	public Order(int order_id, String create_time, String pay_time, String return_time, int client_id,
-			double order_sale_price, double order_purchase_price, double order_profit, String state,
-			int wholesale_order, String client_name) {
+			String client_name, double order_sale_price, double order_purchase_price, double order_profit, String state,
+			int wholesale_order) {
 		super();
 		this.order_id = order_id;
 		this.create_time = create_time;
 		this.pay_time = pay_time;
 		this.return_time = return_time;
 		this.client_id = client_id;
+		this.client_name = client_name;
 		this.order_sale_price = order_sale_price;
 		this.order_purchase_price = order_purchase_price;
 		this.order_profit = order_profit;
 		this.state = state;
 		this.wholesale_order = wholesale_order;
-		this.client_name = client_name;
 	}
-
-
 
 	public int getOrder_id() {
 		return order_id;
@@ -76,6 +72,14 @@ public class Order {
 
 	public void setClient_id(int client_id) {
 		this.client_id = client_id;
+	}
+
+	public String getClient_name() {
+		return client_name;
+	}
+
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
 	}
 
 	public double getOrder_sale_price() {
@@ -118,22 +122,12 @@ public class Order {
 		this.wholesale_order = wholesale_order;
 	}
 
-	public String getClient_name() {
-		return client_name;
-	}
-
-	public void setClient_name(String client_name) {
-		this.client_name = client_name;
-	}
-
 	@Override
 	public String toString() {
 		return "Order [order_id=" + order_id + ", create_time=" + create_time + ", pay_time=" + pay_time
-				+ ", return_time=" + return_time + ", client_id=" + client_id + ", order_sale_price=" + order_sale_price
-				+ ", order_purchase_price=" + order_purchase_price + ", order_profit=" + order_profit + ", state="
-				+ state + ", wholesale_order=" + wholesale_order + ", client_name=" + client_name + "]";
+				+ ", return_time=" + return_time + ", client_id=" + client_id + ", client_name=" + client_name
+				+ ", order_sale_price=" + order_sale_price + ", order_purchase_price=" + order_purchase_price
+				+ ", order_profit=" + order_profit + ", state=" + state + ", wholesale_order=" + wholesale_order + "]";
 	}
-
-	
 	
 }

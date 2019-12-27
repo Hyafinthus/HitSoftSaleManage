@@ -10,29 +10,27 @@ public class OrderProduct {
 	private double order_sale_price;
 	private double order_purchase_price;
 	private double order_profit;
+	private String state;
 	private List<Product> products;
 	
 	public OrderProduct() {
 		super();
 	}
 
-	// 开单时 前端返回后端
-	public OrderProduct(String create_time, int client_id, List<Product> products) {
-		super();
-		this.create_time = create_time;
-		this.client_id = client_id;
-		this.products = products;
-	}
-
-	// 审核时 后端显示前端
-	public OrderProduct(int order_id, String create_time, String client_name, List<Product> products) {
+	public OrderProduct(int order_id, String create_time, int client_id, String client_name, double order_sale_price,
+			double order_purchase_price, double order_profit, String state, List<Product> products) {
 		super();
 		this.order_id = order_id;
 		this.create_time = create_time;
+		this.client_id = client_id;
 		this.client_name = client_name;
+		this.order_sale_price = order_sale_price;
+		this.order_purchase_price = order_purchase_price;
+		this.order_profit = order_profit;
+		this.state = state;
 		this.products = products;
 	}
-	
+
 	public int getOrder_id() {
 		return order_id;
 	}
@@ -89,6 +87,14 @@ public class OrderProduct {
 		this.order_profit = order_profit;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -101,11 +107,8 @@ public class OrderProduct {
 	public String toString() {
 		return "OrderProduct [order_id=" + order_id + ", create_time=" + create_time + ", client_id=" + client_id
 				+ ", client_name=" + client_name + ", order_sale_price=" + order_sale_price + ", order_purchase_price="
-				+ order_purchase_price + ", order_profit=" + order_profit + ", products=" + products + "]";
+				+ order_purchase_price + ", order_profit=" + order_profit + ", state=" + state + ", products="
+				+ products + "]";
 	}
-
-	
-
-	
 	
 }
