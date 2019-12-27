@@ -84,66 +84,68 @@
                 return null;
             };
             layui.use(['form', 'layer'],
-            function () {
-                $ = layui.jquery;
-                var form = layui.form,
-                    layer = layui.layer;
+                function () {
+                    $ = layui.jquery;
+                    var form = layui.form,
+                        layer = layui.layer;
 
-                //监听提交
-                form.on('submit(approve)',
-                    function (data) {
-                        var order_id = getUrlParam("order_id");
-                        var approveURL = "/sale/manager/order/review/approve/"+order_id;
-                        $.ajax({
-                            url: approveURL,
-                            type: "GET",
-                            dataType: "text",
-                            success: function (str) {
-                                layer.alert("通过", {
-                                    icon: 6
+                    //监听提交
+                    form.on('submit(approve)',
+                        function (data) {
+                            var order_id = getUrlParam("order_id");
+                            var approveURL = "/sale/manager/order/review/approve/" + order_id;
+                            $.ajax({
+                                url: approveURL,
+                                type: "GET",
+                                dataType: "text",
+                                success: function (str) {    
+                                    console.log(order_id);                               
+                                    layer.alert("通过", {
+                                        icon: 6
+                                    },
+                                        function (index) {
+                                            // 获得frame索引
+                                            //关闭当前frame
+                                            layer.close(index);
+                                            parent.parent.layer.open({ type:2,title: '订单配货', content: '/sale/order-detaildeliver.html?order_id=' + order_id,end : function(){
+                                                parent.$('#refresh').click();
+                                            },area: ['1000px', '500px']});
+                                        });
                                 },
-                                    function () {
-                                        // 获得frame索引
-                                        parent.$('#refresh').click();
-                                        var index = parent.layer.getFrameIndex(window.name);
-                                        //关闭当前frame
-                                        parent.layer.close(index);
-                                    });
-                            },
-                            error: function () { }
+                                error: function () { }
+                            });
+                            return false;
                         });
-                        return false;
-                    });
                     form.on('submit(reject)',
-                    function (data) {
-                        var order_id = getUrlParam("order_id");
-                        var approveURL = "/sale/manager/order/review/reject/"+order_id;
-                        $.ajax({
-                            url: approveURL,
-                            type: "GET",
-                            dataType: "text",
-                            success: function (str) {
-                                layer.alert("不通过", {
-                                    icon: 5
+                        function (data) {
+                            var order_id = getUrlParam("order_id");
+                            var approveURL = "/sale/manager/order/review/reject/" + order_id;
+                            $.ajax({
+                                url: approveURL,
+                                type: "GET",
+                                dataType: "text",
+                                success: function (str) {
+                                    layer.alert("不通过", {
+                                        icon: 5
+                                    },
+                                        function () {
+                                            // 获得frame索引
+                                            parent.$('#refresh').click();
+                                            var index = parent.layer.getFrameIndex(window.name);
+                                            //关闭当前frame
+                                            parent.layer.close(index);
+                                        });
                                 },
-                                    function () {
-                                        // 获得frame索引
-                                        parent.$('#refresh').click();
-                                        var index = parent.layer.getFrameIndex(window.name);
-                                        //关闭当前frame
-                                        parent.layer.close(index);
-                                    });
-                            },
-                            error: function () { }
+                                error: function () { }
+                            });
+                            return false;
                         });
-                        return false;
-                    });
 
-            });
+                });
             $(document).ready(function () {
                 var order_id = getUrlParam("order_id");
                 console.log(order_id);
-                var queryURL = "/sale/manager/order/review/" + order_id;
+                var queryURL = "/sale/manager/order/review/detail/" + order_id;
                 $.ajax({
                     url: queryURL,
                     type: "GET",

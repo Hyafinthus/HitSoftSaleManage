@@ -62,10 +62,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label for="L_repass" class="layui-form-label"></label>
-                    <button class="layui-btn" lay-filter="deliver" lay-submit="">确认配货</button>
-                </div>
             </form>
         </div>
     </div>
@@ -84,39 +80,6 @@
                 if (r != null) return unescape(r[2]);
                 return null;
             };
-            layui.use(['form', 'layer'],
-            function () {
-                $ = layui.jquery;
-                var form = layui.form,
-                    layer = layui.layer;
-
-                //监听提交
-                form.on('submit(deliver)',
-                    function (data) {
-                        var order_id = getUrlParam("order_id");
-                        var approveURL = "/sale/manager/order/deliver/"+order_id;
-                        $.ajax({
-                            url: approveURL,
-                            type: "GET",
-                            dataType: "text",
-                            success: function (str) {
-                                layer.alert("通过", {
-                                    icon: 6
-                                },
-                                    function () {
-                                        // 获得frame索引
-                                        parent.$('#refresh').click();
-                                        var index = parent.layer.getFrameIndex(window.name);
-                                        //关闭当前frame
-                                        parent.layer.close(index);
-                                    });
-                            },
-                            error: function () { }
-                        });
-                        return false;
-                    });
-
-            });
             $(document).ready(function () {
                 var order_id = getUrlParam("order_id");
                 console.log(order_id);
