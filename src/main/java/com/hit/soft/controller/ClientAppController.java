@@ -27,6 +27,7 @@ public class ClientAppController {
 
 	@Autowired
 	private ClientAppService clientAppService;
+	@Autowired
 	private StaffRetailService staffRetailService;
 	
 		//存款
