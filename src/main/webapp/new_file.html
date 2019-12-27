@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>欢迎页面-X-admin2.2</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+	</head>
+	<body>
+
+		<table id="product_table" lay-filter="test" class="layui-table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>货品号</th>
+					<th>货品名</th>
+					<th>单位</th>
+					<th>库存</th>
+					<th>单价</th>
+					<th>数量</th>
+					<th>
+						<button id="product_submit" type="button" class="layui-btn">提交</button>
+					</th>
+					<th><label id="sum" for="search_table" class="layui-form-label"></label></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="radio" name="sex" value="男" title="男">
+						<input type="radio" name="sex" value="女" title="女" checked></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+	<script>
+		var radio = document.getElementsByName("sex")
+		var str = "<tr><td>" + 1 +
+			"</td><td>" + 2 + "</td><td>" + 3 + "</td><td>" + 4 + "</td><td>" + 5 + "</td><td>" + 6 +
+			"</td><td><input id='input" + 2 +
+			"'></input></td><td><a class='layui-btn'>删除</a></td>" +
+			"<td><div>" +
+			"<input type='radio' name='sex' value='男' title='男'>" +
+			"</div></td></tr>";
+		var table1 = document.getElementById("product_table")
+		var tbody = document.getElementsByTagName("tbody")
+		console.log(table1)
+		table1.innerHTML += str
+	</script>
+</html>

@@ -68,7 +68,7 @@
 			var table = layui.table;
 			table.render({
 				elem: '#order_table',
-				url: '/sale/staff/order/search/unpaidOrder' //数据接口
+				url: '/sale/staff/order/search/rejectedOrder' //数据接口
 					,
 				toolbar: '#toolbarTable',
 				page: true //开启分页
@@ -97,7 +97,7 @@
 						},
 						{
 							field: 'order_sale_price',
-							title: '单价'
+							title: '总价'
 						},
 						{
 							field: 'order_id',
@@ -105,7 +105,7 @@
 							width: 200,
 							templet: function(d) {
 								var sid = d.order_id
-								return '<div><a title="付款" class="layui-btn" onclick="open(' + sid + ')">付款</a></div>'
+								return '<div><a title="情况" class="layui-btn" onclick="open_modify(' + sid + ')">详情</a></div>'
 							}
 						}
 					]
@@ -118,7 +118,7 @@
 				var table = layui.table;
 				table.render({
 					elem: '#order_table',
-					url: '/sale/staff/order/search/unpaidOrder' //数据接口
+					url: '/sale/staff/order/search/rejectedOrder' //数据接口
 						,
 					toolbar: '#toolbarTable',
 					page: true //开启分页
@@ -147,7 +147,7 @@
 							},
 							{
 								field: 'order_sale_price',
-								title: '单价'
+								title: '总价'
 							},
 							{
 								field: 'order_id',
@@ -155,7 +155,7 @@
 								width: 200,
 								templet: function(d) {
 									var sid = d.order_id
-									return '<div><a title="付款" class="layui-btn" onclick="open(' + sid + ')">付款</a></div>'
+									return '<div><a title="情况" class="layui-btn" onclick="open_modify(' + sid + ')">详情</a></div>'
 								}
 							}
 						]
@@ -164,26 +164,8 @@
 			});
 		}
 
-		function open(id) {
-			layer.confirm('确认要付款吗？', function(index) {
-				$.ajax({
-					url: "/sale/staff/order/pay/" + id,
-					datatype: "text",
-					type: "get",
-					data: {},
-					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-					success: function(data) {
-						if (data == "success") {
-							layer.msg('已付款!', {
-								icon: 1,
-								time: 1000
-							});
-						}
-					},
-				});
-				load_table()
-			});
-
+		function open_modify(id) {
+			xadmin.open("编辑", "sf_order_modify.html?id=" + id + "", 1400, 600)
 		}
 	</script>
 </html>

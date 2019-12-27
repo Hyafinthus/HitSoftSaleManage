@@ -48,57 +48,30 @@
 							<input type="text" id="product_name_search" name="username" class="layui-input"></div>
 						<button id="product_list" type="button" class="layui-btn">查找货品</button>
 					</div>
-					<div class="layui-form-item">
-						<label for="client_name_search" class="layui-form-label">
-							<span class="x-red"></span>折扣系数(%)</label>
-						<div class="layui-input-inline">
-							<input type="text" id="discount" name="username" class="layui-input"></div>
-						<label class="layui-form-label">总价格:</label>
-						<label id="sum" class="layui-form-label"></label>
-					</div>
 					<div class="layui-form-item layui-form-text">
 						<label for="desc" class="layui-form-label">
 							<span class="x-red"></span>清单</label>
 						<div class="layui-input-block layui-col-md4">
-							<table id="product_table" class="layui-table">
+							<table id="product_table" lay-filter="test" class="layui-table">
 								<thead>
 									<tr>
-										<th>序号(购买)</th>
+										<th>序号</th>
 										<th>货品号</th>
 										<th>货品名</th>
 										<th>单位</th>
 										<th>库存</th>
 										<th>单价</th>
 										<th>数量</th>
-										<th>操作</th>
 										<th>
 											<button id="product_submit" type="button" class="layui-btn">提交</button>
 										</th>
+										<th><label id="sum" for="search_table" class="layui-form-label"></label></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr></tr>
 								</tbody>
 							</table>
-
-							<table id="product_bonus_table" class="layui-table">
-								<thead>
-									<tr>
-										<th>序号(赠送)</th>
-										<th>货品号</th>
-										<th>货品名</th>
-										<th>单位</th>
-										<th>库存</th>
-										<th>单价</th>
-										<th>数量</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr></tr>
-								</tbody>
-							</table>
-
 
 						</div>
 					</div>
@@ -115,18 +88,12 @@
 		<script>
 			var prod_list = []
 			var repro_count = []
-			var whole_discount = 100
 
 			// 计算总额
 			function sumUp() {
 				var sum_whole = 0.0
 				for (var i = 0; i < prod_list.length; i++) {
-					sum_whole += prod_list[i].count * prod_list[i].wholesale_price * (1 - prod_list[i].bonus)
-				}
-				sum_whole *= (whole_discount / 100)
-				sum_whole = sum_whole.toString()
-				if(sum_whole.indexOf(".")!=-1){
-					sum_whole = sum_whole.substring(0,sum_whole.indexOf(".")+3);
+					sum_whole += prod_list[i].count * prod_list[i].wholesale_price
 				}
 				var label = document.getElementById("sum");
 				label.innerText = sum_whole
@@ -135,9 +102,7 @@
 			// 删除行
 			function deleteRow(t) {
 				var tr = t.parent().parent();
-				var p_id = t.parent().prev().prev().prev().prev().prev().prev().text()
-				console.log(t)
-				console.log(p_id)
+				var p_id = t.parent().prev().prev().prev().prev().prev().text()
 				var flag = false
 				var seq = 0
 				for (var i = 0; i < prod_list.length; i++) {
@@ -148,44 +113,6 @@
 				}
 				prod_list.splice(seq, 1)
 				$(tr).remove();
-				sumUp()
-				resetSerialNum();
-			}
-
-			function deleteFreeRow(t) {
-				var tr = t.parent().parent();
-				var p_id = t.parent().prev().prev().prev().prev().prev().prev().text()
-				var flag = false
-				var seq = 0
-				for (var i = 0; i < prod_list.length; i++) {
-					if (prod_list[i].product_id == p_id) {
-						flag = true
-						seq = i
-					}
-				}
-				prod_list.splice(seq, 1)
-				$(tr).remove();
-				sumUp()
-				resetFreeSerialNum();
-			}
-
-			function bonus_row(t) {
-				var tr = t.parent().parent();
-				var p_id = t.parent().prev().prev().prev().prev().prev().prev().prev().text()
-				var flag = false
-				var seq = 0
-				for (var i = 0; i < prod_list.length; i++) {
-					if (prod_list[i].product_id == p_id) {
-						flag = true
-						seq = i
-					}
-				}
-				prod_list[seq].bonus = 1
-				addFreeRow(prod_list[seq].product_id, prod_list[seq].name, prod_list[seq].unit, query_count(p_id), 0);
-				$(tr).remove();
-				var str1 = "input" + p_id
-				var inpu1 = document.getElementById(str1)
-				inpu1.value = prod_list[seq].count
 				sumUp()
 				resetSerialNum();
 			}
@@ -198,28 +125,6 @@
 				}
 			}
 
-			function resetFreeSerialNum() {
-				var trs = $("#product_bonus_table tbody tr");
-				for (var i = 0; i < trs.length; i++) {
-					$("#product_bonus_table tbody tr:nth-child(" + (i + 1) + ") td:nth-child(1)").text(i);
-				}
-			}
-
-			function discount_input() {
-				$("#discount").off("input").on("input", function() {
-					this.value = this.value.replace(/[^\d]/g, '')
-					if (this.value != "") {
-						whole_discount = parseInt(this.value)
-						if (whole_discount == 0 || whole_discount > 100) {
-							whole_discount = 100;
-							this.value = 100
-						}
-					} else {
-					}
-					sumUp()
-				});
-			}
-
 			// 注册按钮事件
 			function registerClick() {
 				$("#product_table tbody tr td a").off("click").on("click", function() {
@@ -227,9 +132,6 @@
 					switch (text) {
 						case "删除":
 							deleteRow($(this));
-							break;
-						case "赠送":
-							bonus_row($(this));
 							break;
 					}
 				});
@@ -258,45 +160,8 @@
 					}
 					sumUp()
 				});
+
 			}
-
-			function registerFreeClick() {
-				$("#product_bonus_table tbody tr td a").off("click").on("click", function() {
-					var text = $(this).text();
-					switch (text) {
-						case "删除":
-							deleteFreeRow($(this));
-							break;
-					}
-				});
-
-				$("#product_bonus_table tbody tr td input").off("input").on("input", function() {
-					this.value = this.value.replace(/[^\d]/g, '')
-					if (this.value != "") {
-						var p_id = this.id.substring(5)
-						p_id = parseInt(p_id)
-						var p_count = $(this).parent().prev().prev().text()
-						var count = parseInt(p_count)
-						var num = this.value
-						var flag = false
-						var seq = 0
-						for (var i = 0; i < prod_list.length; i++) {
-							if (prod_list[i].product_id == p_id) {
-								seq = i
-							}
-						}
-						if (num <= count) {
-							prod_list[seq].count = num
-						} else {
-							prod_list[seq].count = count
-							this.value = count
-						}
-					}
-					sumUp()
-				});
-			}
-
-
 
 			function addRow(id, name, unit, count, wholesale_price) {
 				var rowindex = $("#product_table tbody tr").length;
@@ -306,31 +171,18 @@
 				repro_count.push(po_count)
 				var str = "<tr><td>" + rowindex +
 					"</td><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + count + "</td><td>" + wholesale_price +
-					"</td><td><input id='input" + id + "'></input></td><td><a class='layui-btn'>删除</a></td>" +
-					"<td><a class='layui-btn'>赠送</a></td>" +
-					"</tr>";
+					"</td><td><input id='input" + id +
+					"'></input></td><td><a class='layui-btn'>删除</a></td></tr>";
 				$("#product_table tbody").append(str);
 				registerClick();
 			}
-
-			function addFreeRow(id, name, unit, count, wholesale_price) {
-				var rowindex = $("#product_bonus_table tbody tr").length;
-				var str = "<tr><td>" + rowindex +
-					"</td><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + count + "</td><td>" + wholesale_price +
-					"</td><td><input id='input" + id + "'></input></td><td><a class='layui-btn'>删除</a></td>" +
-					"</tr>";
-
-				$("#product_bonus_table tbody").append(str);
-				registerFreeClick();
-			}
-
 			//读取草稿
 			window.onload = function() {
 				var url = window.location.href;
 				var result = url.split("?")[1];
 				var info = result.split("=")[1]
 				var orderinfo_id = parseInt(info)
-				
+
 				$.ajax({
 					url: "/sale/staff/order/search/OrderProduct/" + orderinfo_id,
 					datatype: "json",
@@ -338,9 +190,6 @@
 					data: {},
 					contentType: "application/json;charset=UTF-8",
 					success: function(data) {
-						if (data == "") {
-							return
-						}
 						console.log(data)
 						client_name.value = data.client_id
 						client_name_search.value = data.client_name
@@ -351,27 +200,20 @@
 							product.product_id = data.products[i].product_id
 							product.name = data.products[i].product_name
 							product.unit = data.products[i].unit
-							product.bonus = data.products[i].bonus
 							product.purchase_price = data.products[i].purchase_price
 							product.wholesale_price = data.products[i].wholesale_price
 							product.count = data.products[i].count
 							prod_list.push(product)
 							count = query_count(product.product_id)
-							if(product.bonus == "0"){
-								addRow(product.product_id, product.name, product.unit, count, product.wholesale_price)
-							} else {
-								addFreeRow(product.product_id, product.name, product.unit, count, 0)
-							}
-							
+
+							addRow(product.product_id, product.name, product.unit, count, product.wholesale_price)
 							var str = "input" + product.product_id
 							var inpu = document.getElementById(str)
 							inpu.value = product.count
 							sumUp()
 						}
-
 					},
 				});
-				discount_input()
 			}
 
 
@@ -412,13 +254,7 @@
 					products.push(prod_list[i])
 					console.log(products[i])
 				}
-				var product = {}
-				product.product_id = -1
-				product.count = whole_discount
-				products.push(product)
 				orderProduct.products = products
-				
-				console.log(orderProduct)
 
 				$.ajax({
 					url: "/sale/staff/order/submit",
@@ -538,8 +374,6 @@
 				});
 			});
 
-
-
 			table.on('rowDouble(test)', function(obj) {
 				if (obj.data.hasOwnProperty("wallet")) {
 					client_name.value = obj.data.client_id
@@ -567,7 +401,6 @@
 						product.unit = p_unit
 						product.purchase_price = p_purchase_price
 						product.wholesale_price = p_wholesale_price
-						product.bonus = 0
 						product.count = 1
 						prod_list.push(product)
 						addRow(p_id, p_name, p_unit, p_count, p_wholesale_price)
@@ -592,10 +425,6 @@
 						sumUp()
 					}
 				}
-			});
-
-			table.on('rowDouble(test1)', function(obj) {
-
 			});
 		});
 	</script>
