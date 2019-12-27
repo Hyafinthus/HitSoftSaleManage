@@ -178,6 +178,9 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 			order.setState("paid_delivered");
 		}
 		
+		int addPoints = (int)(order.getOrder_sale_price()*1.0);
+		staffOrderMapper.changePoints(addPoints,order.getClient_id());
+		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);

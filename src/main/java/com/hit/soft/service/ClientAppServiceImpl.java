@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hit.soft.dao.ClientAppMapper;
+import com.hit.soft.dao.StaffOrderMapper;
 import com.hit.soft.dao.StaffRetailMapper;
 import com.hit.soft.domain.Client;
 import com.hit.soft.domain.Order;
@@ -21,6 +22,8 @@ public class ClientAppServiceImpl implements ClientAppService {
 	private ClientAppMapper clientAppMapper;
 	@Autowired
 	private StaffRetailMapper staffRetailMapper;
+	@Autowired
+	private StaffOrderMapper staffOrderMapper;
 	
 	@Override
 	public void saveMoney(Client client) {
@@ -34,11 +37,26 @@ public class ClientAppServiceImpl implements ClientAppService {
 	}
 
 	@Override
-	public void payOrder(OrderProduct orderProduct) {
+	public boolean payOrder(OrderProduct orderProduct) {
 		orderProduct = completeOrderProduct(orderProduct);
 		Order order = orderProductToOrder(orderProduct, false);
-		order.setState("paid_delivered");
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		
+		//判断钱包是否足够支付
+        Client client = searchClient(orderProduct.getClient_id());
+        double money = order.getOrder_sale_price();
+        if(client.getWallet()>=money){
+        	clientAppMapper.payment(money);
+        }else{
+        	return false;
+        }
+        
+        //增加积分
+        int addPoints = (int)(order.getOrder_sale_price()*1.0);
+		staffOrderMapper.changePoints(addPoints,order.getClient_id());
+        
+		//设定订单状态及其他数据库操作
+        order.setState("paid_delivered");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		List<Product> products = orderProduct.getProducts();
 		staffRetailMapper.addOrder(order);
@@ -49,6 +67,7 @@ public class ClientAppServiceImpl implements ClientAppService {
 			staffRetailMapper.addProduct(product);
 			staffRetailMapper.updateDepot(product);
 		}
+		return true;
 	}
 	
 	//已知product_id,client_id和count

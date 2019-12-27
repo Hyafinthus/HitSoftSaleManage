@@ -50,8 +50,10 @@ public class ClientAppController {
 		@RequestMapping(value="/pay",method=RequestMethod.POST)
 		@ResponseBody
 		public String payOrder(@RequestBody OrderProduct orderProduct){
-			clientAppService.payOrder(orderProduct);
-			return "success";
+			if(clientAppService.payOrder(orderProduct)){
+				return "success";
+			}
+			return "false";
 		}
 		
 		//查询产品

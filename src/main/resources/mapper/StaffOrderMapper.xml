@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchClients" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet 
+		SELECT client_id, client_name, sex, phone, address, wallet, points 
 		FROM client_table
 		WHERE client_id != 1
 		LIMIT #{offset}, #{limit}
@@ -63,20 +63,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchClientById" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet
+		SELECT client_id, client_name, sex, phone, address, wallet, points
 		FROM client_table
 		WHERE client_id = #{clientId} AND client_id != 1
 	</select>
 	
 	<select id="searchClientsById" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet
+		SELECT client_id, client_name, sex, phone, address, wallet, points
 		FROM client_table
 		WHERE client_id LIKE CONCAT("%", #{clientId}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchClientsByName" resultType="Client">
-		SELECT client_id, client_name, sex, phone, address, wallet
+		SELECT client_id, client_name, sex, phone, address, wallet, points
 		FROM client_table
 		WHERE client_name LIKE CONCAT("%", #{clientName}, "%") AND client_id != 1
 		LIMIT #{offset}, #{limit}
@@ -211,6 +211,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE client_table
 		SET wallet = wallet + #{wallet}
 		WHERE client_id = #{client_id}
+	</update>
+	
+	<update id="changePoints">
+		UPDATE client_table
+		SET points = points + #{points}
+		WHERE client_id = #{clientId}
 	</update>
 	
 </mapper>

@@ -79,6 +79,8 @@ public interface StaffOrderMapper {
 
 	void deleteOrder(int orderId);
 
+	void changePoints(@Param("points") Integer points, @Param("clientId")Integer clientId);
+
 	
 
 
