@@ -91,14 +91,20 @@
       var end = $("#end").val();
       var start_time = new Date(start).getTime();
       var end_time = new Date(end).getTime();
+      console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/day');
       if (start_time > end_time) {
         layer.alert("起始时间不应晚于结束时间", { icon: 7 });
       } else {
         $.ajax({
-          url: '/sale/boss/statistic/chart/' + start + '/' + end,
+          url: '/sale/boss/statistic/chart/' + start + '/' + end + '/day',
           type: "GET",
-          dataType: "json",
+          dataType: "text",
           success: function (str) {
+            var sjson = eval("(" + str + ")");
+            var dates = sjson.dates;
+            var purchase = sjson.purchase;
+            var profit = sjson.profit;
+            var sale = sjson.sale;
             // 基于准备好的dom，初始化echarts实例
             // 指定图表的配置项和数据
             var myChart = echarts.init(document.getElementById('main'));
@@ -126,7 +132,7 @@
               xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['2019-11-22', '2019-22-66', '2156-05-88', '2156-05-88', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日', '周二', '周三', '周四', '周五', '周六', '周日']
+                data: dates
               },
               yAxis: {
                 type: 'value'
@@ -136,25 +142,27 @@
                   name: '销售金额',
                   type: 'line',
                   stack: '总量',
-                  data: [120, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210, 210]
+                  data: sale
                 },
                 {
                   name: '利润金额',
                   type: 'line',
                   stack: '总量',
-                  data: [220, 182, 191, 234, 290, 330, 310, 120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210, 210]
+                  data: profit
                 },
                 {
                   name: '进货金额',
                   type: 'line',
                   stack: '总量',
-                  data: [150, 232, 201, 154, 190, 330, 410, 120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210, 210]
+                  data: purchase
                 }
               ]
             };
             myChart.setOption(option);
           },
-          error: function () { }
+          error: function () { 
+            console.log("未访问到后端");
+          }
         });
       }
     });
