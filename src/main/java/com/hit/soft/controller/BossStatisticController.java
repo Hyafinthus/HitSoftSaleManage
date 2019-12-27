@@ -118,7 +118,7 @@ public class BossStatisticController {
 		
 		List<Product> purchaseDay = bossStatisticService.pricePurchaseDay(start_time + " 00:00:00", end_time + " 23:59:59", start_time, end_time);
 		for(Product product : purchaseDay) {
-			date.add(product.getProduct_name());
+			date.add("\"" + product.getProduct_name() + "\"");
 			pricePurchase.add(product.getPurchase_price());
 		}
 		
