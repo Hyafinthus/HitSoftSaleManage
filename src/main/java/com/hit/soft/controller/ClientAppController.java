@@ -80,10 +80,10 @@ public class ClientAppController {
 		}
 		
 		//积分兑换现金
-		//@RequestMapping(value="/points_for_cash",method=RequestMethod.POST)
-		//@ResponseBody
-		//public String pointsForCash(@RequestBody OrderProduct orderProduct){
-		//	clientAppService.pointsForCash(orderProduct);
-		//	return "success";
-		//}
+		@RequestMapping(value="/points_for_cash/{client_id}",method=RequestMethod.POST)
+		@ResponseBody
+		public String pointsForCash(@PathVariable int client_id){
+			clientAppService.pointsForCash(client_id);
+			return "success";
+		}
 }

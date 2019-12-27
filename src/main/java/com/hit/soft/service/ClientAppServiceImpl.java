@@ -70,6 +70,12 @@ public class ClientAppServiceImpl implements ClientAppService {
 		return true;
 	}
 	
+	@Override
+	public void pointsForCash(int client_id) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	//已知product_id,client_id和count
 	//从前端仅传来上述三个值时，需要在后端人为的将orderProduct的其他信息完善，此函数便是实现此功能
 	private OrderProduct completeOrderProduct(OrderProduct orderProduct){
@@ -116,5 +122,7 @@ public class ClientAppServiceImpl implements ClientAppService {
 		order.setOrder_profit(orderProduct.getOrder_profit());
 		return order;
 	}
+
+	
 
 }
