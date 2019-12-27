@@ -43,6 +43,7 @@
                   <div class="layui-inline layui-show-xs-block">
                     <button class="layui-btn" lay-filter="change" lay-submit="">修改</button>
                   </div>
+                  <label>（客户每单金额乘该系数为该单获得积分）</label>
                 </div>
             </form>
           </div>
@@ -55,7 +56,7 @@
               <label class="price">积分-金额兑换规则表</label>
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <button class="layui-btn" onclick="xadmin.open('添加客户','./wallet-add.html',600,600)"><i
+              <button class="layui-btn" onclick="xadmin.open('添加客户','./wallet-add.html',300,250)"><i
                   class="layui-icon"></i>添加</button>
             </div>
           </span>
@@ -127,7 +128,7 @@
           , toolbar: "#toolbarDemo"
           , cols: [[
             { field: 'points', title: '积分', width: 456, minWidth: 100, sort: true, edit: "text" },
-            { field: 'wallet', title: '余额', width: 629, minWidth: 150, sort: true, edit: "text" },
+            { field: 'wallet', title: '余额/元', width: 629, minWidth: 150, sort: true, edit: "text" },
             // { field: 'wholesale_client', title: '是否为批发客户', width: 190, minWidth: 150,templet: '#wselect'},
             // { field: 'retail_client', title: '是否为零售客户', width: 190, minWidth: 150,templet: '#rselect'},
             { fixed: 'right', width: 168, align: 'center', toolbar: '#barDemo' }]] //设置表头
@@ -144,7 +145,7 @@
           , toolbar: "#toolbarDemo"
           , cols: [[
             { field: 'points', title: '积分', width: 456, minWidth: 100, sort: true, edit: "text" },
-            { field: 'wallet', title: '余额', width: 629, minWidth: 150, sort: true, edit: "text" },
+            { field: 'wallet', title: '余额/元', width: 629, minWidth: 150, sort: true, edit: "text" },
             // { field: 'wholesale_client', title: '是否为批发客户', width: 190, minWidth: 150,templet: '#wselect'},
             // { field: 'retail_client', title: '是否为零售客户', width: 190, minWidth: 150,templet: '#rselect'},
             { fixed: 'right', width: 168, align: 'center', toolbar: '#barDemo' }]] //设置表头
