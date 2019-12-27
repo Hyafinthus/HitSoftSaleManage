@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="queryOrders" resultType="Order">
-		SELECT o.order_id, o.create_time, c.client_name, o.order_sale_price, o.order_purchase_price, o.order_profit ,o.state
+		SELECT o.order_id, o.create_time, c.client_name, o.order_sale_price, o.order_purchase_price, o.order_profit, o.state
 		FROM order_table o, client_table c
 		WHERE (state = #{state1} OR state = #{state2})
 		AND o.client_id = c.client_id

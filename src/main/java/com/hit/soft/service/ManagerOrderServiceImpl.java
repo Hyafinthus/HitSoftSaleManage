@@ -23,7 +23,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 		} else if (type.equals("deliver")) {
 			return managerOrderMapper.countQueryOrders("approved", "paid_undelivered");
 		} else if (type.equals("history")) {
-			return managerOrderMapper.countQueryOrders("unpaid_delivered", "paid_deliverd");
+			return managerOrderMapper.countQueryOrders("unpaid_delivered", "paid_delivered");
 		}
 		return 0;
 	}
@@ -35,7 +35,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 		} else if (type.equals("deliver")) {
 			return managerOrderMapper.queryOrders(page, limit, "approved", "paid_undelivered");
 		} else if (type.equals("history")) {
-			return managerOrderMapper.queryOrders(page, limit, "unpaid_delivered", "paid_deliverd");
+			return managerOrderMapper.queryOrders(page, limit, "unpaid_delivered", "paid_delivered");
 		}
 		return null;
 	}
