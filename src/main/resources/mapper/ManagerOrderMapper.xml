@@ -10,9 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="queryOrders" resultType="Order">
-		SELECT order_id, create_time, client_id, order_sale_price, order_purchase_price, order_profit
-		FROM order_table
-		WHERE state = "published"
+		SELECT o.order_id, o.create_time, c.client_name, o.order_sale_price, o.order_purchase_price, o.order_profit ,o.state
+		FROM order_table o, client_table c
+		WHERE (state = "published" OR state = "")
+		AND o.client_id = c.client_id
 		LIMIT #{page}, #{limit}
 	</select>
 	
