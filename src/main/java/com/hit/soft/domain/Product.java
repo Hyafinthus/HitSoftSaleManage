@@ -18,9 +18,8 @@ public class Product {
 		super();
 	}
 
-	// 档案时
 	public Product(int product_id, String product_name, String type, String unit, double purchase_price,
-			double wholesale_price, double retail_price) {
+			double wholesale_price, double retail_price, int count, int order_id, int bonus) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
@@ -29,28 +28,8 @@ public class Product {
 		this.purchase_price = purchase_price;
 		this.wholesale_price = wholesale_price;
 		this.retail_price = retail_price;
-	}
-
-	// 订单时
-	// 注意零售订单里价格的填充的字段也是 wholesale_price
-	public Product(int product_id, String product_name, String type, String unit, double purchase_price,
-			double wholesale_price, int count, int order_id) {
-		super();
-		this.product_id = product_id;
-		this.product_name = product_name;
-		this.type = type;
-		this.unit = unit;
-		this.purchase_price = purchase_price;
-		this.wholesale_price = wholesale_price;
 		this.count = count;
-		this.setOrder_id(order_id);
-	}	
-
-	public int getBonus() {
-		return bonus;
-	}
-
-	public void setBonus(int bonus) {
+		this.order_id = order_id;
 		this.bonus = bonus;
 	}
 
@@ -126,17 +105,20 @@ public class Product {
 		this.order_id = order_id;
 	}
 
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [product_id=" + product_id + ", product_name=" + product_name + ", type=" + type + ", unit="
 				+ unit + ", purchase_price=" + purchase_price + ", wholesale_price=" + wholesale_price
 				+ ", retail_price=" + retail_price + ", count=" + count + ", order_id=" + order_id + ", bonus=" + bonus
 				+ "]";
-	}
-	
-	@Override
-	public int hashCode() {
-		return String.valueOf(this.product_id).hashCode();
 	}
 
 }

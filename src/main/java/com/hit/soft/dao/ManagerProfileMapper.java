@@ -29,4 +29,14 @@ public interface ManagerProfileMapper {
 	
 	public void addDepot();
 	
+	public Double queryRate();
+	
+	public void updateRate(Double rate);
+	
+	public List<Client> queryPoint();
+	
+	public void addPoint(@Param("points") Integer points, @Param("wallet") Double wallet);
+	
+	public void deletePoint(Integer points_id);
+	
 }

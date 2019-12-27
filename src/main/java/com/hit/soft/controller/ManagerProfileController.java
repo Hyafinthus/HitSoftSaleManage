@@ -79,4 +79,27 @@ public class ManagerProfileController {
 		return "success";
 	}
 	
+	@RequestMapping(value="/rate", method=RequestMethod.POST)
+	@ResponseBody
+	public Double queryRate() {
+		return managerProfileService.queryRate();
+	}
+	
+	@RequestMapping(value="/rate/{rate}", method=RequestMethod.POST)
+	@ResponseBody
+	public String updateRate(@PathVariable String rate) {
+		Double rateDouble = Double.parseDouble(rate);
+		managerProfileService.updateRate(rateDouble);
+		return "success";
+	}
+	
+	@RequestMapping(value="/points", method=RequestMethod.POST)
+	@ResponseBody
+	public String queryPoints() {
+		List<Client> data = managerProfileService.queryPoint();
+		JsonClient jsonClient = new JsonClient(data.size(), data);
+		
+		return JSONObject.fromObject(jsonClient).toString();
+	}
+	
 }

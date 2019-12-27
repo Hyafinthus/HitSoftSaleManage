@@ -23,4 +23,14 @@ public interface ManagerProfileService {
 	
 	public void updateClient(Client client);
 	
+	public Double queryRate();
+	
+	public void updateRate(Double rate);
+	
+	public List<Client> queryPoint();
+	
+	public void addPoint(Integer points, Double wallet);
+	
+	public void deletePoint(Integer points_id);
+	
 }

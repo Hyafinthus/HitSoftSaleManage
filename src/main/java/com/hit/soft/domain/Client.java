@@ -6,31 +6,23 @@ public class Client {
 	private String sex;
 	private String phone;
 	private String address;
+	private int points;
 	private double wallet;
-	private double points;
 	
 	public Client() {
 		super();
 	}
 
-	public Client(int client_id, String client_name, String sex, String phone, String address, double wallet,
-			double points) {
+	public Client(int client_id, String client_name, String sex, String phone, String address, int points,
+			double wallet) {
 		super();
 		this.client_id = client_id;
 		this.client_name = client_name;
 		this.sex = sex;
 		this.phone = phone;
 		this.address = address;
+		this.points = points;
 		this.wallet = wallet;
-		this.points = points;
-	}
-
-	public double getPoints() {
-		return points;
-	}
-
-	public void setPoints(double points) {
-		this.points = points;
 	}
 
 	public int getClient_id() {
@@ -73,6 +65,14 @@ public class Client {
 		this.address = address;
 	}
 
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
 	public double getWallet() {
 		return wallet;
 	}
@@ -84,9 +84,7 @@ public class Client {
 	@Override
 	public String toString() {
 		return "Client [client_id=" + client_id + ", client_name=" + client_name + ", sex=" + sex + ", phone=" + phone
-				+ ", address=" + address + ", wallet=" + wallet + ", points=" + points + "]";
+				+ ", address=" + address + ", points=" + points + ", wallet=" + wallet + "]";
 	}
-
-	
 	
 }

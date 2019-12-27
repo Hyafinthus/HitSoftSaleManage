@@ -60,4 +60,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(0, "仓库", (SELECT LAST_INSERT_ID()), 0), (0, "门店", (SELECT LAST_INSERT_ID()), 0)
 	</insert>
 	
+	<select id="queryRate" resultType="Double">
+		SELECT wallet FROM points_table WHERE points_id = 1
+	</select>
+	
+	<update id="updateRate" parameterType="Double">
+		UPDATE points_table
+		SET wallet = #{rate}
+		WHERE points_id = 1
+	</update>
+	
+	<select id="queryPoints" resultType="Client">
+		SELECT points_id client_id, points, wallet FROM points_table WHERE points_id != 1
+	</select>
+	
 </mapper>

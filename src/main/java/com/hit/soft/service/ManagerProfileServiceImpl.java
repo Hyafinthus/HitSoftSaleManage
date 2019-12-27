@@ -56,4 +56,31 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 		managerProfileMapper.updateClient(client);
 	}
 
+	@Override
+	public Double queryRate() {
+		return managerProfileMapper.queryRate();
+	}
+
+	@Override
+	public void updateRate(Double rate) {
+		managerProfileMapper.updateRate(rate);
+	}
+
+	@Override
+	public List<Client> queryPoint() {
+		return managerProfileMapper.queryPoint();
+	}
+
+	@Override
+	public void addPoint(Integer points, Double wallet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deletePoint(Integer points_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
