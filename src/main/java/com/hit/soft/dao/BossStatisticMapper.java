@@ -17,4 +17,10 @@ public interface BossStatisticMapper {
 	
 	public List<Order> queryTradeOrder(@Param("start_time") String start_time, @Param("end_time") String end_time);
 	
+	public List<Product> pricePurchaseDay(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
+	public List<Order> priceTradeProfitDay(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
 }

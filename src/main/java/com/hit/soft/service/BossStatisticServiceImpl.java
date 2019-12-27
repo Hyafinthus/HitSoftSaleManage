@@ -30,4 +30,14 @@ public class BossStatisticServiceImpl implements BossStatisticService {
 		return bossStatisticMapper.queryTradeOrder(start_time, end_time);
 	}
 
+	@Override
+	public List<Product> pricePurchaseDay(String start_time, String end_time, String start_date, String end_date) {
+		return bossStatisticMapper.pricePurchaseDay(start_time, end_time, start_date, end_date);
+	}
+
+	@Override
+	public List<Order> priceTradeProfitDay(String start_time, String end_time, String start_date, String end_date) {
+		return bossStatisticMapper.priceTradeProfitDay(start_time, end_time, start_date, end_date);
+	}
+
 }

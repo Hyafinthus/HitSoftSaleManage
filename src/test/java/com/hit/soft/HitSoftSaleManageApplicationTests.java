@@ -11,6 +11,7 @@ public class HitSoftSaleManageApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		
 	}
 
 }

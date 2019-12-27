@@ -5,33 +5,95 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hit.soft.dao.BossStatisticMapper">
 	
+	<!-- 进货表 按货品 -->
 	<select id="queryInDepot" resultType="Product">
 		SELECT p.product_id, p.product_name, p.type, p.unit,
 			SUM(d.count) count, 0 order_id, d.in_price purchase_price
 		FROM product_table p, depot_in_table d
-		WHERE d.time &gt; #{start_time} AND d.time &lt; #{end_time}
+		WHERE d.time &gt;= #{start_time} AND d.time &lt;= #{end_time}
 		AND p.product_id = d.product_id
 		GROUP BY p.product_id
 	</select>
 	
+	<!-- 销售单表 按货品 -->
 	<select id="queryTradeProduct" resultType="Product">
 		SELECT p.product_id, p.product_name, p.type, p.unit, 0 count, SUM(op.count) order_id
 		FROM product_table p, order_table o, order_prod_table op
-		WHERE o.create_time &gt; #{start_time} AND o.create_time &lt; #{end_time}
+		WHERE o.create_time &gt;= #{start_time} AND o.create_time &lt;= #{end_time}
 		AND (o.state = "approved" OR o.state LIKE "%paid%")
 		AND o.order_id = op.order_id
 		AND op.product_id = p.product_id
 		GROUP BY p.product_id
 	</select>
 	
+	<!-- 销售单表 按客户 -->
 	<select id="queryTradeOrder" resultType="Order">
 		SELECT COUNT(*) client_id, c.client_name state,
 			SUM(o.order_sale_price) order_sale_price, SUM(o.order_profit) order_profit
 		FROM order_table o, client_table c
-		WHERE o.create_time &gt; #{start_time} AND o.create_time &lt; #{end_time}
+		WHERE o.create_time &gt;= #{start_time} AND o.create_time &lt;= #{end_time}
 		AND (o.state = "approved" OR o.state LIKE "%paid%")
 		AND o.client_id = c.client_id
 		GROUP BY c.client_name
+	</select>
+	
+	<!-- 以下是按type查询进货金额 -->
+	<!-- 进货表 按天 -->
+	<select id="pricePurchaseDay" resultType="Product">
+	<![CDATA[
+		SELECT day_list.day_time AS product_name, IFNULL(data_t.purchase_price, 0) AS purchase_price FROM
+		(
+			SELECT DATE_FORMAT(d.time, "%Y-%m-%d") AS date_time, SUM(d.count * d.in_price) AS purchase_price
+			FROM product_table p, depot_in_table d
+			WHERE d.time >= #{start_time} AND d.time <= #{end_time}
+			AND p.product_id = d.product_id
+			GROUP BY DATE_FORMAT(d.time, "%Y-%m-%d")
+		) data_t
+		RIGHT JOIN
+		(
+			SELECT ADDDATE(#{start_date}, INTERVAL @i := @i+1 DAY) AS day_time FROM
+			(
+				SELECT a.a
+				FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+				CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+				CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+				CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+			) a
+			JOIN (SELECT @i := -1) r1
+			WHERE @i < DATEDIFF(#{end_date}, #{start_date})
+		) day_list
+		ON
+		day_list.day_time = data_t.date_time
+	]]>
+	</select>
+	
+	<!-- 销售单表 按天 -->
+	<select id="priceTradeProfitDay" resultType="Order">
+	<![CDATA[
+		SELECT day_list.day_time AS create_time, IFNULL(data_t.order_sale_price, 0) AS order_sale_price, IFNULL(data_t.order_profit, 0) AS order_profit FROM
+		(
+			SELECT DATE_FORMAT(create_time, "%Y-%m-%d") AS date_time, SUM(order_sale_price) AS order_sale_price, SUM(order_profit) AS order_profit
+			FROM order_table
+			WHERE create_time >= #{start_time} AND create_time <= #{end_time}
+			AND (state = "approved" OR state LIKE "%paid%")
+			GROUP BY DATE_FORMAT(create_time, "%Y-%m-%d")
+		) data_t
+		RIGHT JOIN
+		(
+			SELECT ADDDATE(#{start_date}, INTERVAL @i := @i+1 DAY) AS day_time FROM
+			(
+				SELECT a.a
+				FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+				CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+				CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+				CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+			) a
+			JOIN (SELECT @i := -1) r1
+			WHERE @i < DATEDIFF(#{end_date}, #{start_date})
+		) day_list
+		ON
+		day_list.day_time = data_t.date_time
+	]]>
 	</select>
 	
 </mapper>
