@@ -25,9 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProducts" resultType="Product">
-		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, SUM(d.count) count
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, d.count
 		FROM product_table p, depot_prod_table d
-		where p.product_id = d.product_id
+		where p.product_id = d.product_id AND d.depot_name = '门店'
 		GROUP BY product_id
 		LIMIT #{offset}, #{limit}
 	</select>
@@ -45,17 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchProductsById" resultType="Product">
-		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, SUM(d.count) count
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, d.count
 		FROM product_table p, depot_prod_table d
-		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%")
+		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%") AND d.depot_name = '门店'
 		GROUP BY product_id
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="searchProductsByName" resultType="Product">
-		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, SUM(d.count) count
+		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.retail_price, d.count
 		FROM product_table p, depot_prod_table d
-		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%")
+		where p.product_id = d.product_id AND p.product_id LIKE CONCAT("%", #{productId}, "%") AND d.depot_name = '门店'
 		GROUP BY product_id
 		LIMIT #{offset}, #{limit}
 	</select>
