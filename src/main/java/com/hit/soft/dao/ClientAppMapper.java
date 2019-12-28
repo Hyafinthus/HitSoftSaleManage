@@ -13,7 +13,7 @@ public interface ClientAppMapper {
 
 	Client searchClient(int clientId);
 
-	void payment(double money);
+	void payment(Client client);
 
 	List<Client> searchPointsForCash();
 

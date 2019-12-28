@@ -45,7 +45,8 @@ public class ClientAppServiceImpl implements ClientAppService {
         Client client = searchClient(orderProduct.getClient_id());
         double money = order.getOrder_sale_price();
         if(client.getWallet()>=money){
-        	clientAppMapper.payment(money);
+        	client.setWallet(money);
+        	clientAppMapper.payment(client);
         }else{
         	return false;
         }

@@ -206,7 +206,8 @@ public class StaffOrderServiceImpl implements StaffOrderService{
         Client client = clientAppMapper.searchClient(order.getClient_id());
         double money = order.getOrder_sale_price();
         if(client.getWallet()>=money){
-        	clientAppMapper.payment(money);
+        	client.setWallet(money);
+        	clientAppMapper.payment(client);
         }else{
         	return false;
         }
