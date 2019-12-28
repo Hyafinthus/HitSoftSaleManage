@@ -115,7 +115,7 @@ public class ClientAppServiceImpl implements ClientAppService {
 				
 			orderPurchasePrice += tmpProduct.getPurchase_price()*tmpCount;
 			if(tmpProduct.getBonus()!=1){
-				orderSalePrice += tmpProduct.getWholesale_price()*tmpCount;
+				orderSalePrice += tmpProduct.getRetail_price()*tmpCount;
 			}
 		}
 		orderProfit = orderSalePrice - orderPurchasePrice;
