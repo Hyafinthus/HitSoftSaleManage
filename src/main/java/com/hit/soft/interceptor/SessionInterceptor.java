@@ -12,14 +12,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class SessionInterceptor implements HandlerInterceptor {
 
 	private static List<String> boss = Arrays.asList(
-			"/boss/manage", "/boss/statistic",
+			"/boss/manage", "/boss/statistic", "/logout",
 			
 			"/sk_index.html", "/sk_member_add.html", "/sk_member_edit.html", "/sk_member_list.html",
 			
 			"/boss_market.html", "/boss_profit.html", "/boss_statistics.html");
 	
 	private static List<String> manager = Arrays.asList(
-			"/manager/order", "/manager/profile", "/manager/depot",
+			"/manager/order", "/manager/profile", "/manager/depot", "/logout",
 			
 			"/manager-index.html", "/new_file.html", "/wallet-add.html", "/wallet-list.html",
 			"/client-add.html", "/client-list.html", "/product-add.html", "/product-list.html",
@@ -31,7 +31,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 			"/order-detaildeliver.html", "/order-detailhistory.html", "/order-history.html");
 	
 	private static List<String> staff = Arrays.asList(
-			"/staff/order", "/staff/retail",
+			"/staff/order", "/staff/retail", "/logout",
 			
 			"/sf_index.html", "/sf_paid_order_list.html",
 			"/sf_order_add.html", "/sf_order_list.html", "/sf_order_modify.html",
