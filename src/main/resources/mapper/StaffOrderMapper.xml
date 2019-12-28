@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addProduct" parameterType="Product">
-		INSERT INTO order_prod_table(order_id, product_id, count, bonus)
-		VALUES(#{order_id}, #{product_id}, #{count}, #{bonus})
+		INSERT INTO order_prod_table(order_id, product_id, count, bonus, purchase_price)
+		VALUES(#{order_id}, #{product_id}, #{count}, #{bonus}, #{purchase_price})
 	</insert>
 	
 	<select id="getDraft" resultMap="mymap">
@@ -170,7 +170,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="searchOrderProduct" resultMap="mymap" >
-		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, p.bonus, pd.product_name, pd.type, pd.unit, pd.purchase_price, pd.wholesale_price
+		SELECT o.order_id, o.create_time, o.client_id, c.client_name, p.product_id, p.count, p.bonus, p.purchase_price, pd.product_name, pd.type, pd.unit, pd.wholesale_price
 		FROM order_table o, order_prod_table p, client_table c, product_table pd
 		WHERE o.order_id = #{orderId} AND o.order_id = p.order_id AND o.client_id = c.client_id AND p.product_id = pd.product_id
 	</select>

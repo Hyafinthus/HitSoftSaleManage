@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="addProduct" parameterType="Product">
-		INSERT INTO order_prod_table(order_id, product_id, count, bonus)
-		VALUES(#{order_id}, #{product_id}, #{count}, #{bonus})
+		INSERT INTO order_prod_table(order_id, product_id, count, bonus, purchase_price)
+		VALUES(#{order_id}, #{product_id}, #{count}, #{bonus}, #{purchase_price})
 	</insert>
 	
 	<select id="countProducts" resultType="Integer">
