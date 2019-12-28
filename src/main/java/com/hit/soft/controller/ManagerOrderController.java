@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hit.soft.domain.JsonOrder;
 import com.hit.soft.domain.Order;
 import com.hit.soft.domain.OrderProduct;
+import com.hit.soft.domain.Product;
 import com.hit.soft.service.ManagerOrderService;
 
 import net.sf.json.JSONObject;
@@ -40,29 +41,38 @@ public class ManagerOrderController {
 	@RequestMapping(value="/review/detail/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public OrderProduct reviewOrder(@PathVariable String order_id) {
-		OrderProduct orderProduct = managerOrderService.showOrder(order_id);
-		orderProduct.setProducts(managerOrderService.showProducts(order_id));
+		OrderProduct orderProduct = managerOrderService.showOrder(Integer.parseInt(order_id));
+		orderProduct.setProducts(managerOrderService.showProducts(Integer.parseInt(order_id)));
 		return orderProduct;
 	}
 	
 	@RequestMapping(value="/review/approve/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String approveOrder(@PathVariable String order_id) {
-		managerOrderService.approveOrder(order_id);
+		managerOrderService.approveOrder(Integer.parseInt(order_id));
 		return "success";
 	}
 	
 	@RequestMapping(value="/review/reject/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String rejectOrder(@PathVariable String order_id) {
-		managerOrderService.rejectOrder(order_id);
+		managerOrderService.rejectOrder(Integer.parseInt(order_id));
 		return "success";
 	}
 	
 	@RequestMapping(value="/deliver/{order_id}", method=RequestMethod.GET)
 	@ResponseBody
 	public String deliverOrder(@PathVariable String order_id) {
-		managerOrderService.deliverOrder(order_id);
+		List<Product> products = managerOrderService.showProducts(Integer.parseInt(order_id));
+		for(Product product : products) {
+			if(product.getCount() > managerOrderService.checkProductDepot(product.getProduct_id())) {
+				return "fail";
+			}
+		}
+		for(Product product : products) {
+			managerOrderService.deliverProductDepot(product.getProduct_id(), product.getCount());
+		}
+		managerOrderService.deliverOrder(Integer.parseInt(order_id));
 		return "success";
 	}
 	
