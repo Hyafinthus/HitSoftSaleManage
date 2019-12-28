@@ -96,6 +96,7 @@
       var inteval = $("#date_select").val();
       var start_time = new Date(start).getTime();
       var end_time = new Date(end).getTime();
+      //console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval);
       if (start_time > end_time) {
         layer.alert("起始时间不应晚于结束时间", { icon: 7 });
       } else {
@@ -104,13 +105,16 @@
           type: "GET",
           dataType: "text",
           success: function (str) {
+            console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval);
             var sjson = eval("(" + str + ")");
+            console.log(sjson);
             var dates = sjson.dates;
             var purchase = sjson.purchase;
             var profit = sjson.profit;
             var sale = sjson.sale;
             // 基于准备好的dom，初始化echarts实例
             // 指定图表的配置项和数据
+            document.getElementById('main').removeAttribute('_echarts_instance_');
             var myChart = echarts.init(document.getElementById('main'));
             var option = {
               title: {
