@@ -28,12 +28,13 @@ CREATE TABLE `client_table` (
   `address` varchar(40) DEFAULT NULL,
   `points` int(8) unsigned NOT NULL DEFAULT '0',
   `wallet` double NOT NULL DEFAULT '0',
+  `pass` varchar(20) NOT NULL,
   PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 /*Data for the table `client_table` */
 
-insert  into `client_table`(`client_id`,`client_name`,`sex`,`phone`,`address`,`points`,`wallet`) values (1,'零售客户',NULL,NULL,NULL,0,0),(4,'皮皮虾','男','11122223333','地址000',0,0),(5,'客户2','女','11155556666','地址2',0,0),(6,'客户3','男','11133334444','地址3',0,0),(7,'客户4','男','11188886666','地址2',0,0),(8,'客户5','女','11188884444','地址2',0,0),(9,'客户6','女','11144447777','地址4',0,0),(10,'客户7','男','11133337777','地址8',0,0),(11,'客户8','男','11166662222','地址3',0,0),(12,'客户9','女','11166660000','地址9',0,0),(13,'客户10','男','11144449999','地址',0,0),(14,'客户11','男','11133336666','地址',0,0),(15,'客户12','男','11177779999','地址11',0,0),(16,'111','男','111','111',0,0);
+insert  into `client_table`(`client_id`,`client_name`,`sex`,`phone`,`address`,`points`,`wallet`,`pass`) values (1,'零售客户','','','',0,0,''),(18,'皮皮虾','男','15545460000','HIT 9-404',2841700,0,'axiashigedashagua'),(19,'白晶晶','女','18722223142','盘丝洞',0,0,'123456'),(20,'至尊宝','男','13978628765','花果山',892450,0,'123456'),(21,'敖烈','男','18167540987','西海龙宫',0,0,'123456'),(22,'叶问','男','16155251111','佛山',0,0,'123456'),(23,'悟能','男','18567862534','高老庄',672360,0,'123456098'),(24,'宫二','女','18276540987','大南戏园子',10293870,0,'123456'),(25,'范国祥','男','11188888888','HIT',1031909,0,'123456'),(26,'撒贝宁','男','13344445555','俺也不知道',0,0,'123456'),(27,'霍元甲','男','18732572109','津门精武门',0,0,'123456'),(28,'玄奘','男','13765472322','东土大唐',0,0,'123456'),(29,'奥术球','男','18145640329','加基森',0,100,'12345678');
 
 /*Table structure for table `depot_in_table` */
 
@@ -47,11 +48,11 @@ CREATE TABLE `depot_in_table` (
   `depot_name` varchar(20) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`depot_in_pri`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 /*Data for the table `depot_in_table` */
 
-insert  into `depot_in_table`(`depot_in_pri`,`product_id`,`count`,`in_price`,`depot_name`,`time`) values (1,10,10,100,'仓库','2019-12-01 00:00:00'),(2,10,20,300,'门店','2019-12-26 00:00:01'),(3,11,5,20,'门店','2019-12-26 00:00:02');
+insert  into `depot_in_table`(`depot_in_pri`,`product_id`,`count`,`in_price`,`depot_name`,`time`) values (24,21,10,7000,'仓库','2019-12-28 22:02:17'),(25,21,5,8000,'门店','2019-12-28 22:02:25'),(26,22,10,1500,'仓库','2019-12-28 22:02:32'),(27,22,10,1600,'门店','2019-12-28 22:02:40'),(28,23,10,4000,'仓库','2019-12-28 22:02:57'),(29,23,2,3000,'门店','2019-12-28 22:03:03'),(30,24,2000,20.5,'仓库','2019-12-28 22:03:21'),(31,24,1000,20,'门店','2019-12-28 22:03:29'),(32,25,20,504.5,'仓库','2019-12-28 22:04:23'),(33,26,200,120.6,'仓库','2019-12-28 22:04:41'),(34,27,10,90,'仓库','2019-12-28 22:04:51'),(35,28,11,99,'仓库','2019-12-28 22:05:06'),(36,29,60,99,'仓库','2019-12-28 22:05:18'),(37,30,200,33,'仓库','2019-12-28 22:05:29'),(38,33,600,50.6,'仓库','2019-12-28 22:05:46'),(39,32,200,1.9,'门店','2019-12-28 22:05:59'),(40,34,9,800,'仓库','2019-12-28 22:06:07'),(41,31,8,69.8,'仓库','2019-12-28 22:06:43');
 
 /*Table structure for table `depot_prod_table` */
 
@@ -63,11 +64,11 @@ CREATE TABLE `depot_prod_table` (
   `product_id` int(8) unsigned NOT NULL,
   `count` int(8) unsigned NOT NULL,
   PRIMARY KEY (`depot_prod_pri`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 /*Data for the table `depot_prod_table` */
 
-insert  into `depot_prod_table`(`depot_prod_pri`,`depot_name`,`product_id`,`count`) values (13,'仓库',8,40),(14,'门店',8,3),(15,'仓库',10,133),(16,'门店',10,45),(17,'仓库',11,3444),(18,'门店',11,43),(19,'仓库',12,23),(20,'门店',12,52),(21,'仓库',13,77),(22,'门店',13,45),(23,'仓库',14,23),(24,'门店',14,5),(25,'仓库',15,60),(26,'门店',15,9),(27,'仓库',16,688),(28,'门店',16,54),(29,'仓库',17,63),(30,'门店',17,30),(31,'仓库',18,56),(32,'门店',18,687),(33,'仓库',19,23),(34,'门店',19,22),(35,'仓库',20,0),(36,'门店',20,0);
+insert  into `depot_prod_table`(`depot_prod_pri`,`depot_name`,`product_id`,`count`) values (37,'仓库',21,10),(38,'门店',21,4),(39,'仓库',22,10),(40,'门店',22,8),(41,'仓库',23,10),(42,'门店',23,1),(43,'仓库',24,2000),(44,'门店',24,863),(45,'仓库',25,14),(46,'门店',25,2),(47,'仓库',26,200),(48,'门店',26,0),(49,'仓库',27,10),(50,'门店',27,0),(51,'仓库',28,3),(52,'门店',28,6),(53,'仓库',29,60),(54,'门店',29,0),(55,'仓库',30,200),(56,'门店',30,0),(57,'仓库',31,3),(58,'门店',31,3),(59,'仓库',32,68),(60,'门店',32,132),(61,'仓库',33,600),(62,'门店',33,0),(63,'仓库',34,5),(64,'门店',34,3);
 
 /*Table structure for table `order_prod_table` */
 
@@ -79,13 +80,13 @@ CREATE TABLE `order_prod_table` (
   `product_id` int(8) unsigned NOT NULL,
   `count` int(8) unsigned NOT NULL,
   `bonus` tinyint(1) NOT NULL DEFAULT '0',
-  `purchase_price` double NOT NULL DEFAULT '0',
+  `purchase_price` double NOT NULL,
   PRIMARY KEY (`order_prod_pri`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_prod_table` */
 
-insert  into `order_prod_table`(`order_prod_pri`,`order_id`,`product_id`,`count`,`bonus`,`purchase_price`) values (4,13,12,2,0,0),(5,13,11,2,0,0),(6,13,10,1,0,0),(10,15,9,2,0,0),(11,15,11,1,0,0),(12,15,12,1,0,0),(13,16,11,3,0,0),(14,16,12,1,0,0),(15,17,9,1,0,0),(16,17,10,1,0,0),(17,18,9,100,0,0),(18,19,9,100,0,0),(19,20,10,100,0,0),(20,20,9,100,0,0),(21,21,11,1,0,0),(22,21,12,3,0,0),(23,21,18,1,0,0),(24,21,16,4,0,0),(25,21,14,1,0,0),(26,21,13,1,0,0),(27,22,13,25,0,0),(28,23,12,1,0,0),(29,23,11,1,0,0),(30,23,13,1,0,0),(31,24,16,1,0,0),(32,24,18,1,0,0),(33,24,11,1,0,0),(34,25,9,1,0,0),(35,25,10,1,0,0),(36,25,19,1,0,0),(37,26,17,1,0,0),(38,26,18,1,0,0),(39,26,15,1,0,0),(40,26,19,166,0,0),(41,27,12,1,0,0),(42,27,11,1,0,0),(43,28,11,1,0,0),(44,28,10,1,0,0),(45,29,16,1,0,0),(46,29,9,1,0,0),(47,30,11,1,0,0),(48,30,13,1,0,0),(49,31,14,17,0,0),(50,31,15,25,0,0),(51,31,12,15,0,0),(52,32,15,1,0,0),(53,32,17,1,0,0),(62,35,9,10,0,0),(63,35,11,1,0,0),(64,35,17,1,0,0),(65,35,14,1,0,0),(66,36,9,1,0,0),(67,36,10,1,0,0);
+insert  into `order_prod_table`(`order_prod_pri`,`order_id`,`product_id`,`count`,`bonus`,`purchase_price`) values (103,48,21,1,0,7333.333333333333),(104,48,27,2,0,90),(105,48,28,2,0,99),(106,48,30,1,1,33),(107,48,32,1,0,1.9),(108,48,31,1,0,69.8),(109,48,34,1,0,800),(110,49,26,120,0,120.6),(111,49,28,6,0,99),(112,49,29,35,0,99),(113,49,32,4,0,1.9),(114,49,31,3,0,69.8),(115,49,34,1,0,800),(116,49,24,1,1,20.333333333333332),(117,50,22,10,0,1550),(118,50,21,1,0,7333.333333333333),(119,50,28,1,0,99),(120,51,22,10,0,1550),(121,51,23,12,0,3833.3333333333335),(122,52,30,100,0,33),(123,52,29,14,0,99),(124,52,27,4,0,90),(125,52,28,2,0,99),(126,53,25,5,0,504.5),(127,53,24,1,0,20.333333333333332),(128,53,29,49,0,99),(129,53,30,3,0,33),(130,53,33,1,0,50.6),(131,53,31,2,0,69.8),(132,54,23,1,0,3833.3333333333335),(133,54,24,134,0,20.333333333333332),(134,54,29,1,0,99),(135,55,24,1,0,20.333333333333332),(136,55,29,1,0,99),(137,56,25,1,0,504.5),(138,56,24,1,0,20.333333333333332),(139,56,27,1,0,90),(140,57,21,1,0,7333.333333333333),(141,58,28,1,0,99),(142,58,25,1,0,504.5),(143,58,26,1,0,120.6),(144,59,24,1,0,20.333333333333332),(145,59,25,1,0,504.5),(146,59,28,1,0,99),(147,59,22,1,0,1550),(148,60,22,1,0,1550),(149,60,25,1,0,504.5),(150,60,29,1,0,99);
 
 /*Table structure for table `order_table` */
 
@@ -103,11 +104,11 @@ CREATE TABLE `order_table` (
   `state` varchar(20) NOT NULL,
   `wholesale_order` tinyint(1) NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_table` */
 
-insert  into `order_table`(`order_id`,`create_time`,`pay_time`,`return_time`,`client_id`,`order_sale_price`,`order_purchase_price`,`order_profit`,`state`,`wholesale_order`) values (13,'2019-12-14 23:20:49',NULL,NULL,4,5038,4034,1004,'paid_delivered',0),(15,'2019-12-14 23:23:03','2019-12-14 23:28:35','2019-12-15 16:27:44',5,12019,10017,2002,'returned',1),(16,'2019-12-14 23:23:15','2019-12-14 23:28:23','2019-12-14 23:28:28',5,45,41,4,'returned',1),(17,'2019-12-15 00:14:37',NULL,NULL,4,13000,9000,4000,'unpaid_delivered',0),(18,'2019-12-15 15:53:33',NULL,NULL,6,1300000,900000,400000,'unpaid_delivered',0),(19,'2019-12-15 15:53:35',NULL,NULL,6,1300000,900000,400000,'paid_undelivered',0),(20,'2019-12-15 15:57:50','2019-12-15 16:27:35',NULL,4,1100000,900000,200000,'paid_delivered',1),(21,'2019-12-15 15:58:09',NULL,NULL,4,12332,10282,2050,'rejected',1),(22,'2019-12-15 15:58:39','2019-12-15 16:27:37',NULL,4,300000,250000,50000,'paid_undelivered',1),(23,'2019-12-15 15:59:16',NULL,NULL,12,12019,10017,2002,'approved',1),(24,'2019-12-15 15:59:42',NULL,NULL,9,128.5,112,16.5,'approved',1),(25,'2019-12-15 15:59:57',NULL,NULL,15,11300,9200,2100,'approved',1),(26,'2019-12-15 16:00:24',NULL,NULL,11,49980.5,33350,16630.5,'approved',1),(27,'2019-12-15 16:00:34',NULL,NULL,11,19,17,2,'published',1),(28,'2019-12-15 16:00:41',NULL,NULL,13,5013,4012,1001,'published',1),(29,'2019-12-15 16:00:54',NULL,NULL,12,6060,5050,1010,'published',1),(30,'2019-12-15 16:01:01',NULL,NULL,5,12013,10012,2001,'published',1),(31,'2019-12-15 16:01:19',NULL,NULL,4,1464.5,1160,304.5,'paid_delivered',0),(32,'2019-12-15 16:02:11',NULL,NULL,5,125,100,25,'published',1),(35,'2019-12-15 16:25:09',NULL,NULL,13,60098.5,10077,50021.5,'published',1),(36,'2019-12-15 16:28:36',NULL,NULL,7,13000,5000,8000,'unpaid_delivered',0);
+insert  into `order_table`(`order_id`,`create_time`,`pay_time`,`return_time`,`client_id`,`order_sale_price`,`order_purchase_price`,`order_profit`,`state`,`wholesale_order`) values (48,'2019-12-28 22:09:02','2019-12-28 22:23:49',NULL,25,10319.099999999999,8616.033333333333,1703.0666666666657,'paid_delivered',1),(49,'2019-12-28 22:09:40','2019-12-28 22:23:55',NULL,24,30633.7,19568.333333333332,11065.366666666669,'paid_delivered',1),(50,'2019-12-28 22:19:40','2019-12-28 22:23:56',NULL,18,28417,22932.333333333332,5484.666666666668,'paid_delivered',1),(51,'2019-12-28 22:20:40','2019-12-28 22:23:46',NULL,24,72305,61500,10805,'paid_delivered',1),(52,'2019-12-28 22:21:00','2019-12-28 22:23:58',NULL,23,6723.6,5244,1479.6000000000004,'paid_delivered',1),(53,'2019-12-28 22:21:08','2019-12-28 22:23:54',NULL,20,8924.5,7683.033333333335,1241.4666666666653,'paid_delivered',1),(54,'2019-12-28 22:21:18',NULL,NULL,1,10019.2,6657,3362.2000000000007,'paid_delivered',0),(55,'2019-12-28 22:21:24',NULL,NULL,1,210.20000000000002,152.33333333333331,57.8666666666667,'paid_delivered',0),(56,'2019-12-28 22:21:32',NULL,NULL,1,845.3,614.8333333333334,230.46666666666658,'paid_delivered',0),(57,'2019-12-28 22:27:10',NULL,NULL,1,9000,7333.333333333333,1666.666666666667,'paid_delivered',0),(58,'2019-12-28 22:27:36',NULL,NULL,1,5614.8,4577.766666666666,1037.0333333333338,'paid_delivered',0),(59,'2019-12-28 22:27:54',NULL,NULL,1,2864.8,2173.8333333333335,690.9666666666667,'paid_delivered',0),(60,'2019-12-28 22:28:28',NULL,NULL,1,3169.9,2343.9,826,'paid_delivered',0);
 
 /*Table structure for table `points_table` */
 
@@ -118,11 +119,11 @@ CREATE TABLE `points_table` (
   `points` int(8) unsigned NOT NULL,
   `wallet` double unsigned NOT NULL,
   PRIMARY KEY (`points_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `points_table` */
 
-insert  into `points_table`(`points_id`,`points`,`wallet`) values (1,0,100),(2,10000,10),(3,20000,25),(4,50000,70);
+insert  into `points_table`(`points_id`,`points`,`wallet`) values (1,0,100),(6,10000,10),(8,50000,70),(9,20000,25);
 
 /*Table structure for table `product_table` */
 
@@ -137,11 +138,11 @@ CREATE TABLE `product_table` (
   `wholesale_price` double NOT NULL,
   `retail_price` double NOT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_table` */
 
-insert  into `product_table`(`product_id`,`product_name`,`type`,`unit`,`purchase_price`,`wholesale_price`,`retail_price`) values (9,'IPHONEX','手机','盒',1000,6000,7000),(10,'IPHONE8','手机','盒',4000,5000,6000),(11,'货品1','衣服','件',12,13,16),(12,'货品2','食品','包',5,6,7.5),(13,'DELL电脑','电脑','盒',10000,12000,15000),(14,'薯片','食品','包',5,5.5,6),(15,'电话卡','虚拟','张',40,45,50),(16,'键盘','办公','个',50,60,80),(17,'台灯','办公','个',60,80,100),(18,'鼠标','办公','个',50,55.5,60),(19,'手柄','游戏','只',200,300,320),(20,'111','11','包',10,13,16.5);
+insert  into `product_table`(`product_id`,`product_name`,`type`,`unit`,`purchase_price`,`wholesale_price`,`retail_price`) values (21,'IPHONEX','手机','盒',7333.333333333333,8800,9000),(22,'小米9SE','手机','盒',1550,1950.5,1999.5),(23,'IPHONE4','手机','盒',3833.3333333333335,4400,4499),(24,'清风原木纯品','抽纸','包',20.333333333333332,35.5,40.3),(25,'腾讯蓝牙音箱','电子产品','件',504.5,608.9,700),(26,'飞利浦台灯','办公用品','台',120.6,206.5,250.5),(27,'JAVA核心技术-上','图书','本',90,98.9,105),(28,'JAVA核心技术-下','图书','本',99,112,125),(29,'DELL键盘','电脑耗材','件',99,111,120),(30,'小米活塞耳机','电子产品','只',33,45.5,49.9),(31,'罗技鼠标','电子产品','只',69.8,95.5,99.9),(32,'百事可乐','饮料','瓶',1.9,2.8,3),(33,'百事可乐','饮料','箱',50.6,78,86),(34,'Bose耳机','电子产品','只',800,999,1099);
 
 /*Table structure for table `staff_table` */
 
@@ -154,11 +155,11 @@ CREATE TABLE `staff_table` (
   `pass` varchar(20) NOT NULL,
   `dismiss` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `staff_table` */
 
-insert  into `staff_table`(`staff_id`,`staff_name`,`role`,`pass`,`dismiss`) values (1,'fan','boss','fan',0),(4,'xia','staff','123123',0),(5,'hang','manager','123456',0),(6,'jingli','manager','123456',0),(7,'dianyuan1','staff','123456',0),(8,'dianyuan2','staff','123456',0),(9,'经理','manager','123456',1);
+insert  into `staff_table`(`staff_id`,`staff_name`,`role`,`pass`,`dismiss`) values (1,'fan','boss','fan',0),(4,'xia','staff','123123',0),(5,'hang','manager','123123',0),(11,'jingli','manager','123123',0),(12,'dianyuan','staff','123456',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

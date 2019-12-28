@@ -14,11 +14,13 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 	private static List<String> boss = Arrays.asList(
 			"/boss/manage", "/boss/statistic", "/logout",
-			"/manager/depot/overstock", "/manager/depot/price/overstock",
 			
 			"/sk_index.html", "/sk_member_add.html", "/sk_member_edit.html", "/sk_member_list.html",
 			
-			"/boss_market.html", "/boss_profit.html", "/boss_statistics.html");
+			"/boss_market.html", "/boss_profit.html", "/boss_statistics.html",
+			
+			"/manager/depot/overstock", "/manager/depot/price/overstock",
+			"/depot-statics.html");
 	
 	private static List<String> manager = Arrays.asList(
 			"/manager/order", "/manager/profile", "/manager/depot", "/logout",
@@ -61,14 +63,14 @@ public class SessionInterceptor implements HandlerInterceptor {
 					return true;
 				} else {
 					System.err.println("拦截: boss越权");
-					response.sendRedirect("/sale/sk_index.html");
+					response.sendRedirect("/sale/sk_index.html" + path);
 					return false;
 				}
 			case "manager":
 				if(check(manager, path)) {
 					return true;
 				} else {
-					System.err.println("拦截: manager越权");
+					System.err.println("拦截: manager越权" + path);
 					response.sendRedirect("/sale/manager-index.html");
 					return false;
 				}
@@ -76,7 +78,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 				if(check(staff, path)) {
 					return true;
 				} else {
-					System.err.println("拦截: staff越权");
+					System.err.println("拦截: staff越权" + path);
 					response.sendRedirect("/sale/sf_index.html");
 					return false;
 				}

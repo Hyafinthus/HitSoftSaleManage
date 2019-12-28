@@ -48,8 +48,6 @@ public class LoginController {
 	@RequestMapping(value="/login/client/{id}/{pass}", method=RequestMethod.GET)
 	@ResponseBody
 	public Client login(@PathVariable String id, @PathVariable String pass) {
-		System.err.println(id);
-		System.err.println(pass);
 		return loginService.loginClient(Integer.parseInt(id), pass);
 	}
 	
