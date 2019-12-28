@@ -87,7 +87,7 @@ public class ClientAppController {
 		}
 		
 		//积分兑换现金
-		@RequestMapping(value="/points_for_cash/{client_id}",method=RequestMethod.POST)
+		@RequestMapping(value="/points_for_cash/{client_id}",method=RequestMethod.GET)
 		@ResponseBody
 		public String pointsForCash(@PathVariable int client_id){
 			clientAppService.pointsForCash(client_id);
