@@ -27,6 +27,7 @@ public class LoginController {
 			HttpSession session = request.getSession();
 			session.setAttribute("name", staff.getStaff_name());
 			session.setAttribute("role", role);
+			System.out.println(session.toString());
 		}
 		return role;
 	}
@@ -35,6 +36,8 @@ public class LoginController {
 	public void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
+		System.err.println("logout");
+		System.out.println(session.toString());
 	}
 	
 }
