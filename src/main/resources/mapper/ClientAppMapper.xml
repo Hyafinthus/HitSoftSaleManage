@@ -29,4 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE points != 0
 	</select>
 	
+	<select id="searchMaxPointsForCash" parameterType="Integer" resultType="Client">
+		SELECT points, wallet 
+		FROM points_table
+		WHERE points != 0 AND points &lt;= #{limit}
+		ORDER BY points DESC LIMIT 0,1
+	</select>
+	
 </mapper>
