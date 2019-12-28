@@ -129,7 +129,7 @@ public class StaffOrderController {
 		return JSONObject.fromObject(jsonOrder).toString();
 	}
 	
-	//查询已付款的订单用来退款
+	//查询已拒绝批准的订单
 	@RequestMapping(value="/search/rejectedOrder",method=RequestMethod.GET)
 	@ResponseBody
 	public String searchRejectedOrder(HttpServletRequest request){
@@ -149,12 +149,22 @@ public class StaffOrderController {
 		return orderProduct;
 	}
 	
-	//付款
-	@RequestMapping(value="/pay/{order_id}",method=RequestMethod.GET)
+	//现金付款
+	@RequestMapping(value="/pay_by_cash/{order_id}",method=RequestMethod.GET)
 	@ResponseBody
-	public String payOrder(@PathVariable int order_id){
-		staffOrderService.payOrder(order_id);
+	public String payOrderByCash(@PathVariable int order_id){
+		staffOrderService.payOrderByCash(order_id);
 		return "success";
+	}
+	
+	//预存款付款
+	@RequestMapping(value="/pay_by_wallet/{order_id}",method=RequestMethod.GET)
+	@ResponseBody
+	public String payOrderByWallet(@PathVariable int order_id){
+		if(staffOrderService.payOrderByWallet(order_id)){
+			return "success";
+		}
+		return "false";
 	}
 	
 	//退款

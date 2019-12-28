@@ -219,4 +219,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE client_id = #{clientId}
 	</update>
 	
+	<select id="getRatio" resultType="Double">
+		SELECT wallet
+		FROM points_table
+		WHERE points = 0
+	</select>
+	
 </mapper>
