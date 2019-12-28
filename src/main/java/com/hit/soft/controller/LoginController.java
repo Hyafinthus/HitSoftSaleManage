@@ -1,5 +1,8 @@
 package com.hit.soft.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,16 +14,27 @@ import com.hit.soft.domain.Staff;
 import com.hit.soft.service.LoginService;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
 	
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/login", method=RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestBody Staff staff) {
-		return loginService.login(staff);
+	public String login(@RequestBody Staff staff, HttpServletRequest request) {
+		String role = loginService.login(staff);
+		if(role != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("name", staff.getStaff_name());
+			session.setAttribute("role", role);
+		}
+		return role;
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.POST)
+	public void logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
 	}
 	
 }
