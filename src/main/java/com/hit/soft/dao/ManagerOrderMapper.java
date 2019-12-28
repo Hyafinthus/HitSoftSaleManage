@@ -17,14 +17,18 @@ public interface ManagerOrderMapper {
 	public List<Order> queryOrders(@Param("page") Integer page, @Param("limit") Integer limit,
 			@Param("state1") String state1, @Param("state2") String state2);
 	
-	public List<Product> showProducts(String order_id);
+	public List<Product> showProducts(Integer order_id);
 	
-	public OrderProduct showOrder(String order_id);
+	public OrderProduct showOrder(Integer order_id);
 	
-	public void approveOrder(String order_id);
+	public void approveOrder(Integer order_id);
 	
-	public void rejectOrder(String order_id);
+	public void rejectOrder(Integer order_id);
 	
-	public void deliverOrder(String order_id);
+	public void deliverOrder(Integer order_id);
+	
+	public void deliverProductDepot(@Param("product_id") Integer product_id, @Param("count") Integer count);
+	
+	public Integer checkProductDepot(Integer product_id);
 	
 }

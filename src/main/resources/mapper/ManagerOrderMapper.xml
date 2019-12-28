@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{page}, #{limit}
 	</select>
 	
-	<select id="showProducts" parameterType="String" resultMap="productsList">
+	<select id="showProducts" parameterType="Integer" resultMap="productsList">
 		SELECT p.product_id, p.product_name, p.type, p.unit, p.purchase_price, p.wholesale_price, op.count
 		FROM order_prod_table op, product_table p
 		WHERE op.order_id = #{order_id} AND op.product_id = p.product_id
@@ -34,30 +34,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="count" property="count"/>
 	</resultMap>
 	
-	<select id="showOrder" parameterType="String" resultType="OrderProduct">
+	<select id="showOrder" parameterType="Integer" resultType="OrderProduct">
 		SELECT o.create_time, o.state, c.client_name
 		FROM order_table o, client_table c
 		WHERE o.order_id = #{order_id} AND o.client_id = c.client_id
 	</select>
 	
-	<update id="approveOrder" parameterType="String">
+	<update id="approveOrder" parameterType="Integer">
 		UPDATE order_table
 		SET state = "approved"
 		WHERE order_id = #{order_id}
 	</update>
 	
-	<update id="rejectOrder" parameterType="String">
+	<update id="rejectOrder" parameterType="Integer">
 		UPDATE order_table
 		SET state = "rejected"
 		WHERE order_id = #{order_id}
 	</update>
 	
-	<update id="deliverOrder" parameterType="String">
+	<update id="deliverOrder" parameterType="Integer">
 		UPDATE order_table
 		SET state = IF(state = "approved", "unpaid_delivered", IF(state = "paid_undelivered", "paid_delivered", state))
 		WHERE order_id = #{order_id}
 	</update>
 	
+	<update id="deliverProductDepot">
+		UPDATE depot_prod_table
+		SET count = count - #{count}
+		WHERE product_id = #{product_id} AND depot_name = "仓库"
+	</update>
 	
+	<select id="checkProductDepot" parameterType="Integer" resultType="Integer">
+		SELECT count FROM depot_prod_table
+		WHERE product_id = #{product_id} AND depot_name = "仓库"
+	</select>
 	
 </mapper>
