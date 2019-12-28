@@ -28,12 +28,13 @@ CREATE TABLE `client_table` (
   `address` varchar(40) DEFAULT NULL,
   `points` int(8) unsigned NOT NULL DEFAULT '0',
   `wallet` double NOT NULL DEFAULT '0',
+  `pass` varchar(20) NOT NULL,
   PRIMARY KEY (`client_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `client_table` */
 
-insert  into `client_table`(`client_id`,`client_name`,`sex`,`phone`,`address`,`points`,`wallet`) values (1,'零售客户',NULL,NULL,NULL,0,0),(4,'皮皮虾','男','11122223333','地址000',0,0),(5,'客户2','女','11155556666','地址2',0,0),(6,'客户3','男','11133334444','地址3',0,0),(7,'客户4','男','11188886666','地址2',0,0),(8,'客户5','女','11188884444','地址2',0,0),(9,'客户6','女','11144447777','地址4',0,0),(10,'客户7','男','11133337777','地址8',0,0),(11,'客户8','男','11166662222','地址3',0,0),(12,'客户9','女','11166660000','地址9',0,0),(13,'客户10','男','11144449999','地址',0,0),(14,'客户11','男','11133336666','地址',0,0),(15,'客户12','男','11177779999','地址11',0,0),(16,'111','男','111','111',0,0);
+insert  into `client_table`(`client_id`,`client_name`,`sex`,`phone`,`address`,`points`,`wallet`,`pass`) values (1,'零售客户',NULL,NULL,NULL,0,0,''),(4,'皮皮虾','男','11122223333','地址000',0,0,'123'),(5,'客户2','女','11155556666','地址2',0,0,'123'),(6,'客户3','男','11133334444','地址3',0,0,'123'),(7,'客户4','男','11188886666','地址2',0,0,'123'),(8,'客户5','女','11188884444','地址2',0,0,'123'),(9,'客户6','女','11144447777','地址4',0,0,'123'),(10,'客户7','男','11133337777','地址8',0,0,'123'),(11,'客户8','男','11166662222','地址3',0,0,'123'),(12,'客户9','女','11166660000','地址9',0,0,'123'),(13,'客户10','男','11144449999','地址',0,0,'123'),(14,'客户11','男','11133336666','地址',0,0,'123'),(15,'客户12','男','11177779999','地址11',0,0,'123'),(16,'111','男','111','111',0,0,'123');
 
 /*Table structure for table `depot_in_table` */
 
@@ -51,7 +52,7 @@ CREATE TABLE `depot_in_table` (
 
 /*Data for the table `depot_in_table` */
 
-insert  into `depot_in_table`(`depot_in_pri`,`product_id`,`count`,`in_price`,`depot_name`,`time`) values (1,10,10,100,'仓库','2019-12-01 00:00:00'),(2,10,20,300,'门店','2019-12-26 00:00:01'),(3,11,5,20,'门店','2019-12-26 00:00:02');
+insert  into `depot_in_table`(`depot_in_pri`,`product_id`,`count`,`in_price`,`depot_name`,`time`) values (1,10,10,100,'仓库','2018-12-01 00:00:00'),(2,10,20,300,'门店','2019-12-26 00:00:01'),(3,11,5,20,'门店','2019-12-26 00:00:02');
 
 /*Table structure for table `depot_prod_table` */
 
@@ -106,7 +107,7 @@ CREATE TABLE `order_table` (
 
 /*Data for the table `order_table` */
 
-insert  into `order_table`(`order_id`,`create_time`,`pay_time`,`return_time`,`client_id`,`order_sale_price`,`order_purchase_price`,`order_profit`,`state`,`wholesale_order`) values (13,'2019-12-14 23:20:49',NULL,NULL,4,5038,4034,1004,'paid_delivered',0),(15,'2019-12-14 23:23:03','2019-12-14 23:28:35','2019-12-15 16:27:44',5,12019,10017,2002,'returned',1),(16,'2019-12-14 23:23:15','2019-12-14 23:28:23','2019-12-14 23:28:28',5,45,41,4,'returned',1),(17,'2019-12-15 00:14:37',NULL,NULL,4,13000,9000,4000,'unpaid_delivered',0),(18,'2019-12-15 15:53:33',NULL,NULL,6,1300000,900000,400000,'unpaid_delivered',0),(19,'2019-12-15 15:53:35',NULL,NULL,6,1300000,900000,400000,'paid_undelivered',0),(20,'2019-12-15 15:57:50','2019-12-15 16:27:35',NULL,4,1100000,900000,200000,'paid_delivered',1),(21,'2019-12-15 15:58:09',NULL,NULL,4,12332,10282,2050,'rejected',1),(22,'2019-12-15 15:58:39','2019-12-15 16:27:37',NULL,4,300000,250000,50000,'paid_undelivered',1),(23,'2019-12-15 15:59:16',NULL,NULL,12,12019,10017,2002,'approved',1),(24,'2019-12-15 15:59:42',NULL,NULL,9,128.5,112,16.5,'approved',1),(25,'2019-12-15 15:59:57',NULL,NULL,15,11300,9200,2100,'approved',1),(26,'2019-12-15 16:00:24',NULL,NULL,11,49980.5,33350,16630.5,'approved',1),(27,'2019-12-15 16:00:34',NULL,NULL,11,19,17,2,'published',1),(28,'2019-12-15 16:00:41',NULL,NULL,13,5013,4012,1001,'published',1),(29,'2019-12-15 16:00:54',NULL,NULL,12,6060,5050,1010,'published',1),(30,'2019-12-15 16:01:01',NULL,NULL,5,12013,10012,2001,'published',1),(31,'2019-12-15 16:01:19',NULL,NULL,4,1464.5,1160,304.5,'paid_delivered',0),(32,'2019-12-15 16:02:11',NULL,NULL,5,125,100,25,'published',1),(35,'2019-12-15 16:25:09',NULL,NULL,13,60098.5,10077,50021.5,'published',1),(36,'2019-12-15 16:28:36',NULL,NULL,7,13000,5000,8000,'unpaid_delivered',0);
+insert  into `order_table`(`order_id`,`create_time`,`pay_time`,`return_time`,`client_id`,`order_sale_price`,`order_purchase_price`,`order_profit`,`state`,`wholesale_order`) values (13,'2018-12-14 23:20:49',NULL,NULL,4,5038,4034,1004,'paid_delivered',0),(15,'2019-12-14 23:23:03','2019-12-14 23:28:35','2019-12-15 16:27:44',5,12019,10017,2002,'returned',1),(16,'2019-12-14 23:23:15','2019-12-14 23:28:23','2019-12-14 23:28:28',5,45,41,4,'returned',1),(17,'2019-12-15 00:14:37',NULL,NULL,4,13000,9000,4000,'unpaid_delivered',0),(18,'2019-12-15 15:53:33',NULL,NULL,6,1300000,900000,400000,'unpaid_delivered',0),(19,'2019-12-15 15:53:35',NULL,NULL,6,1300000,900000,400000,'paid_delivered',0),(20,'2019-12-15 15:57:50','2019-12-15 16:27:35',NULL,4,1100000,900000,200000,'paid_delivered',1),(21,'2019-12-15 15:58:09',NULL,NULL,4,12332,10282,2050,'rejected',1),(22,'2019-12-15 15:58:39','2019-12-15 16:27:37',NULL,4,300000,250000,50000,'paid_undelivered',1),(23,'2019-12-15 15:59:16',NULL,NULL,12,12019,10017,2002,'unpaid_delivered',1),(24,'2019-12-15 15:59:42',NULL,NULL,9,128.5,112,16.5,'approved',1),(25,'2019-12-15 15:59:57',NULL,NULL,15,11300,9200,2100,'approved',1),(26,'2019-12-15 16:00:24',NULL,NULL,11,49980.5,33350,16630.5,'approved',1),(27,'2019-12-15 16:00:34',NULL,NULL,11,19,17,2,'rejected',1),(28,'2019-12-15 16:00:41',NULL,NULL,13,5013,4012,1001,'approved',1),(29,'2019-12-15 16:00:54',NULL,NULL,12,6060,5050,1010,'approved',1),(30,'2019-12-15 16:01:01',NULL,NULL,5,12013,10012,2001,'published',1),(31,'2019-12-15 16:01:19',NULL,NULL,4,1464.5,1160,304.5,'paid_delivered',0),(32,'2019-12-15 16:02:11',NULL,NULL,5,125,100,25,'unpaid_delivered',1),(35,'2019-12-15 16:25:09',NULL,NULL,13,60098.5,10077,50021.5,'unpaid_delivered',1),(36,'2019-12-15 16:28:36',NULL,NULL,7,13000,5000,8000,'unpaid_delivered',0);
 
 /*Table structure for table `points_table` */
 
@@ -117,11 +118,11 @@ CREATE TABLE `points_table` (
   `points` int(8) unsigned NOT NULL,
   `wallet` double unsigned NOT NULL,
   PRIMARY KEY (`points_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `points_table` */
 
-insert  into `points_table`(`points_id`,`points`,`wallet`) values (1,0,100),(2,10000,10),(3,20000,25),(4,50000,70);
+insert  into `points_table`(`points_id`,`points`,`wallet`) values (1,0,200),(2,10000,10),(3,20000,25),(4,50000,70);
 
 /*Table structure for table `product_table` */
 
@@ -153,11 +154,11 @@ CREATE TABLE `staff_table` (
   `pass` varchar(20) NOT NULL,
   `dismiss` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `staff_table` */
 
-insert  into `staff_table`(`staff_id`,`staff_name`,`role`,`pass`,`dismiss`) values (1,'fan','boss','fan',0),(4,'xia','staff','123123',0),(5,'hang','manager','123456',0),(6,'jingli','manager','123456',0),(7,'dianyuan1','staff','123456',0),(8,'dianyuan2','staff','123456',0),(9,'经理','manager','123456',1);
+insert  into `staff_table`(`staff_id`,`staff_name`,`role`,`pass`,`dismiss`) values (1,'fan','boss','fan',0),(4,'xia','staff','123123',0),(5,'hang','manager','123456',0),(6,'jingli','manager','123456',0),(7,'dianyuan1','staff','123456',1),(8,'dianyuan2','staff','123456',1),(9,'经理','manager','123456',1),(10,'店员','staff','123456',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
