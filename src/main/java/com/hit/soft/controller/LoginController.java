@@ -45,7 +45,7 @@ public class LoginController {
 		response.sendRedirect("/sale/login.html");
 	}
 	
-	@RequestMapping(value="/login/client", method=RequestMethod.POST)
+	@RequestMapping(value="/login/client/{id}/{pass}", method=RequestMethod.GET)
 	@ResponseBody
 	public Client login(@PathVariable String id, @PathVariable String pass) {
 		return loginService.loginClient(Integer.parseInt(id), pass);
