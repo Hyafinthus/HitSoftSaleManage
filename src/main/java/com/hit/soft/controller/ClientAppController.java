@@ -79,6 +79,13 @@ public class ClientAppController {
 			return JSONObject.fromObject(jsonProduct).toString();
 		}
 		
+		@RequestMapping(value="/search/points_for_cash",method=RequestMethod.GET)
+		@ResponseBody
+		public List<Client> searchPointsForCash(){
+			List<Client> data = clientAppService.searchPointsForCash();
+			return data;
+		}
+		
 		//积分兑换现金
 		@RequestMapping(value="/points_for_cash/{client_id}",method=RequestMethod.POST)
 		@ResponseBody

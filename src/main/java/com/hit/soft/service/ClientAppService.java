@@ -1,5 +1,7 @@
 package com.hit.soft.service;
 
+import java.util.List;
+
 import com.hit.soft.domain.Client;
 import com.hit.soft.domain.OrderProduct;
 
@@ -11,6 +13,8 @@ public interface ClientAppService {
 
 	boolean payOrder(OrderProduct orderProduct);
 
-	void pointsForCash(int client_id);
+	void pointsForCash(int clientId);
+
+	List<Client> searchPointsForCash();
 
 }
