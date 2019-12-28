@@ -37,13 +37,13 @@
               <label class="layui-form-label">起止时间</label>
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <input type="text" class="layui-input" id="start">
+              <input type="text" class="layui-input" id="start" placeholder="yyyy-MM-dd">
             </div>
             <div class="layui-inline layui-show-xs-block">
               <span>——</span>
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <input type="text" class="layui-input" id="end">
+              <input type="text" class="layui-input" id="end" placeholder="yyyy-MM-dd">
             </div>
             <div class="layui-inline layui-show-xs-block">
               <button class="layui-btn" id="search">查询</button>
@@ -63,6 +63,7 @@
                         <option value="day" selected>天</option>
                         <option value="week">周</option>
                         <option value="month">月</option>
+                        <option value="year">年</option>
                       </select>
                     </div>
                   </div>
@@ -83,20 +84,23 @@
   $(document).ready(function () {
     $("#select_div").attr("style", "display: none")
   });
-  layui.use('table', function () {
+  layui.use(['table', 'form'], function () {
     var table = layui.table;
+    var start;
+    var end;
+    var form = layui.form;
     $(document).on('click', '#search', function () {
       $("#select_div").attr("style", "display: ")
-      var start = $("#start").val();
-      var end = $("#end").val();
+      start = $("#start").val();
+      end = $("#end").val();
+      var inteval = $("#date_select").val();
       var start_time = new Date(start).getTime();
       var end_time = new Date(end).getTime();
-      console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/day');
       if (start_time > end_time) {
         layer.alert("起始时间不应晚于结束时间", { icon: 7 });
       } else {
         $.ajax({
-          url: '/sale/boss/statistic/chart/' + start + '/' + end + '/day',
+          url: '/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval,
           type: "GET",
           dataType: "text",
           success: function (str) {
@@ -135,7 +139,12 @@
                 data: dates
               },
               yAxis: {
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                  formatter: function (value) {
+                    return "￥" + value;
+                  }
+                }
               },
               series: [
                 {
@@ -160,7 +169,91 @@
             };
             myChart.setOption(option);
           },
-          error: function () { 
+          error: function () {
+            console.log("未访问到后端");
+          }
+        });
+      }
+    });
+    form.on('select(date_select)', function (data) {
+      var inteval = $("#date_select").val();
+      var start_time = new Date(start).getTime();
+      var end_time = new Date(end).getTime();
+      //console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval);
+      if (start_time > end_time) {
+        layer.alert("起始时间不应晚于结束时间", { icon: 7 });
+      } else {
+        $.ajax({
+          url: '/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval,
+          type: "GET",
+          dataType: "text",
+          success: function (str) {
+            var sjson = eval("(" + str + ")");
+            var dates = sjson.dates;
+            var purchase = sjson.purchase;
+            var profit = sjson.profit;
+            var sale = sjson.sale;
+            // 基于准备好的dom，初始化echarts实例
+            // 指定图表的配置项和数据
+            var myChart = echarts.init(document.getElementById('main'));
+            var option = {
+              title: {
+                text: '折线图堆叠'
+              },
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                data: ['销售金额', '利润金额', '进货金额']
+              },
+              grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+              },
+              toolbox: {
+                feature: {
+                  saveAsImage: {}
+                }
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: dates
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: function (value) {
+                    return "￥" + value;
+                  }
+                }
+              },
+              series: [
+                {
+                  name: '销售金额',
+                  type: 'line',
+                  stack: '总量',
+                  data: sale
+                },
+                {
+                  name: '利润金额',
+                  type: 'line',
+                  stack: '总量',
+                  data: profit
+                },
+                {
+                  name: '进货金额',
+                  type: 'line',
+                  stack: '总量',
+                  data: purchase
+                }
+              ]
+            };
+            myChart.setOption(option);
+          },
+          error: function () {
             console.log("未访问到后端");
           }
         });
@@ -174,8 +267,6 @@
   layui.use(['laydate', 'form'], function () {
     var laydate = layui.laydate;
     var form = layui.form;
-
-
     // 监听全选
     form.on('checkbox(checkall)', function (data) {
 
