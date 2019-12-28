@@ -81,6 +81,8 @@ public interface StaffOrderMapper {
 
 	void changePoints(@Param("points") Integer points, @Param("clientId")Integer clientId);
 
+	double getRatio();
+
 	
 
 

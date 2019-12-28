@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hit.soft.dao.ClientAppMapper;
 import com.hit.soft.dao.ManagerDepotMapper;
 import com.hit.soft.dao.StaffOrderMapper;
 import com.hit.soft.domain.Client;
@@ -24,6 +25,8 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	private StaffOrderMapper staffOrderMapper;
 	@Autowired
 	private ManagerDepotMapper managerDepotMapper;
+	@Autowired
+	private ClientAppMapper clientAppMapper;
 
 	//保存草稿
 	@Override
@@ -170,7 +173,7 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 	}
 
 	@Override
-	public void payOrder(int orderId) {
+	public void payOrderByCash(int orderId) {
 		Order order = searchOrder(orderId);
 		if(order.getState().equals("approved")){
 			order.setState("paid_undelivered");
@@ -178,12 +181,48 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 			order.setState("paid_delivered");
 		}
 		
-		int addPoints = (int)(order.getOrder_sale_price()*1.0);
+		//获得积分比率
+        double ratio = staffOrderMapper.getRatio();
+		
+        //增加积分
+		int addPoints = (int)(order.getOrder_sale_price()*ratio);
 		staffOrderMapper.changePoints(addPoints,order.getClient_id());
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
 		staffOrderMapper.updateOrder(order);
+	}
+	
+	@Override
+	public boolean payOrderByWallet(int orderId) {
+		Order order = searchOrder(orderId);
+		if(order.getState().equals("approved")){
+			order.setState("paid_undelivered");
+		}else{
+			order.setState("paid_delivered");
+		}
+		
+		//判断钱包是否足够支付
+        Client client = clientAppMapper.searchClient(order.getClient_id());
+        double money = order.getOrder_sale_price();
+        if(client.getWallet()>=money){
+        	clientAppMapper.payment(money);
+        }else{
+        	return false;
+        }
+        
+        //获得积分比率
+        double ratio = staffOrderMapper.getRatio();
+        
+		//增加积分
+		int addPoints = (int)(order.getOrder_sale_price()*ratio);
+		staffOrderMapper.changePoints(addPoints,order.getClient_id());
+		
+		//修改订单状态
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        order.setPay_time(df.format(new Date()));// new Date()为获取当前系统时间
+		staffOrderMapper.updateOrder(order);
+		return true;
 	}
 
 	//退货时不仅修改状态，还要更改仓库物品的成本价

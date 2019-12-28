@@ -39,7 +39,9 @@ public interface StaffOrderService {
 
 	OrderProduct searchOrderProduct(int orderId);
 
-	void payOrder(int orderId);
+	void payOrderByCash(int orderId);
+	
+	boolean payOrderByWallet(int orderId);
 
 	void returnOrder(int orderId);
 

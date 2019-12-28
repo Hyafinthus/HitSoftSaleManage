@@ -149,12 +149,22 @@ public class StaffOrderController {
 		return orderProduct;
 	}
 	
-	//付款
-	@RequestMapping(value="/pay/{order_id}",method=RequestMethod.GET)
+	//现金付款
+	@RequestMapping(value="/pay_by_Cash/{order_id}",method=RequestMethod.GET)
 	@ResponseBody
-	public String payOrder(@PathVariable int order_id){
-		staffOrderService.payOrder(order_id);
+	public String payOrderByCash(@PathVariable int order_id){
+		staffOrderService.payOrderByCash(order_id);
 		return "success";
+	}
+	
+	//预存款付款
+	@RequestMapping(value="/pay_by_Wallet/{order_id}",method=RequestMethod.GET)
+	@ResponseBody
+	public String payOrderByWallet(@PathVariable int order_id){
+		if(staffOrderService.payOrderByWallet(order_id)){
+			return "success";
+		}
+		return "false";
 	}
 	
 	//退款
