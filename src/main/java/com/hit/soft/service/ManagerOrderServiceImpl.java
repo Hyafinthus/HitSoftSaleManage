@@ -41,28 +41,38 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 	}
 
 	@Override
-	public List<Product> showProducts(String order_id) {
+	public List<Product> showProducts(Integer order_id) {
 		return managerOrderMapper.showProducts(order_id);
 	}
 
 	@Override
-	public OrderProduct showOrder(String order_id) {
+	public OrderProduct showOrder(Integer order_id) {
 		return managerOrderMapper.showOrder(order_id);
 	}
 
 	@Override
-	public void approveOrder(String order_id) {
+	public void approveOrder(Integer order_id) {
 		managerOrderMapper.approveOrder(order_id);
 	}
 
 	@Override
-	public void rejectOrder(String order_id) {
+	public void rejectOrder(Integer order_id) {
 		managerOrderMapper.rejectOrder(order_id);
 	}
 
 	@Override
-	public void deliverOrder(String order_id) {
+	public void deliverOrder(Integer order_id) {
 		managerOrderMapper.deliverOrder(order_id);
+	}
+
+	@Override
+	public void deliverProductDepot(Integer product_id, Integer count) {
+		managerOrderMapper.deliverProductDepot(product_id, count);
+	}
+
+	@Override
+	public Integer checkProductDepot(Integer product_id) {
+		return managerOrderMapper.checkProductDepot(product_id);
 	}
 	
 }
