@@ -96,11 +96,11 @@
 							minWidth: 100,
 							templet: function(d) {
 								var role = d.role
-								if(role=="boss"){
+								if (role == "boss") {
 									return "店长";
-								}else if(role == "manager"){
+								} else if (role == "manager") {
 									return "经理"
-								}else{
+								} else {
 									return "店员"
 								}
 							}
@@ -115,16 +115,17 @@
 							width: 200,
 							templet: function(d) {
 								var sid = d.staff_id
-								if(d.role!="boss"){
+								if (d.role != "boss") {
 									return '<div><a title="编辑"' +
 										'onclick="clickxadmin(' + sid + ')">' +
 										'<i class="layui-icon">&#xe642;</i></a><a title="删除" onclick="del(' + sid + ')">' +
 										'<i class="layui-icon">&#xe640;</i>' +
 										'</a></div>'
-								}else{
-									return "--"
+								} else {
+									return '<div><a title="编辑"' +
+										'onclick="clickxadmin(' + sid + ')">' +
+										'<i class="layui-icon">&#xe642;</i></a></div>'
 								}
-								
 							}
 						}
 					]
@@ -174,14 +175,17 @@
 								width: 200,
 								templet: function(d) {
 									var sid = d.staff_id
-									if(d.role!="boss"){
+									console.log(d.role)
+									if (d.role != "boss") {
 										return '<div><a title="编辑"' +
 											'onclick="clickxadmin(' + sid + ')">' +
 											'<i class="layui-icon">&#xe642;</i></a><a title="删除" onclick="del(' + sid + ')">' +
 											'<i class="layui-icon">&#xe640;</i>' +
 											'</a></div>'
-									}else{
-										return "--"
+									} else {
+										return '<div><a title="编辑"' +
+											'onclick="clickxadmin(' + sid + ')">' +
+											'<i class="layui-icon">&#xe642;</i></a></div>'
 									}
 								}
 							}
