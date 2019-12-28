@@ -13,8 +13,8 @@ import com.hit.soft.interceptor.SessionInterceptor;
 public class SessionInterceptorConfig implements WebMvcConfigurer {
 
 	private static List<String> include = Arrays.asList("/**");
-	private static List<String> exclude = Arrays.asList("/js/**", "/css/**", "/fonts/**", "/img/**", "/lib/**", 
-														"/*login.html", "/login/**");
+	private static List<String> exclude = Arrays.asList("/js/**", "/css/**", "/fonts/**", "/images/**", "/lib/**", 
+														"/login.html", "/login/**");
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
