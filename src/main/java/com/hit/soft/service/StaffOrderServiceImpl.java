@@ -239,7 +239,6 @@ public class StaffOrderServiceImpl implements StaffOrderService{
 		List<Product> products = orderProduct.getProducts();
 		for (int i=0; i<products.size(); i++){
 			Product product = products.get(i);
-			System.err.println(product);
 			Integer prodCount = managerDepotMapper.countProductDepot(product.getProduct_id());
 			Double prodOldPurch = managerDepotMapper.queryProductPurchase(product.getProduct_id());
 			Double prodNewPurch = (prodCount * prodOldPurch + product.getPurchase_price() * product.getCount()) / (prodCount + product.getCount());
