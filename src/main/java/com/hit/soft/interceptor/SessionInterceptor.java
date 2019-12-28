@@ -14,6 +14,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 	private static List<String> boss = Arrays.asList(
 			"/boss/manage", "/boss/statistic", "/logout",
+			"/manager/depot/overstock", "/manager/depot/price/overstock",
 			
 			"/sk_index.html", "/sk_member_add.html", "/sk_member_edit.html", "/sk_member_list.html",
 			
