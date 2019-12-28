@@ -138,7 +138,7 @@ public class ClientAppServiceImpl implements ClientAppService {
 		    order.setCreate_time(df.format(new Date()));// new Date()为获取当前系统时间
 			order.setState("published");//提交审核
 		}
-		order.setWholesale_order(1);//0表示非批发单
+		order.setWholesale_order(1);//1表示批发单
 		order.setOrder_purchase_price(orderProduct.getOrder_purchase_price());
 		order.setOrder_sale_price(orderProduct.getOrder_sale_price());
 		order.setOrder_profit(orderProduct.getOrder_profit());
