@@ -1,6 +1,9 @@
 package com.hit.soft.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +30,17 @@ public class LoginController {
 			HttpSession session = request.getSession();
 			session.setAttribute("name", staff.getStaff_name());
 			session.setAttribute("role", role);
-			System.out.println(session.toString());
 		}
+		System.err.println("登陆: " + staff.getStaff_name());
 		return role;
 	}
 	
-	@RequestMapping(value="/logout", method=RequestMethod.POST)
-	public void logout(HttpServletRequest request) {
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		System.err.println("logout");
-		System.out.println(session.toString());
+		System.err.println("登出");
+		response.sendRedirect("/sale/login.html");
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.hit.soft.interceptor;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 			"/sf_order_modify1.html", "/sf_order_rejected_list.html", "/sf_order_retail.html");
 	
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		System.out.println("进入PreHandle: " + request.getRequestURI());
 		String path = request.getServletPath();
 		if(path.contains("session")) {
@@ -47,7 +48,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 		
 		HttpSession session = request.getSession();
 		String role = (String) session.getAttribute("role");
-		if(role == null) {
+		if(role == null || role.equals("")) {
 			System.err.println("拦截: 未登录");
 			response.sendRedirect("/sale/login.html");
 			return false;
