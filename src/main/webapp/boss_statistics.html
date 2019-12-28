@@ -105,9 +105,9 @@
           type: "GET",
           dataType: "text",
           success: function (str) {
-            console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval);
+            //console.log('/sale/boss/statistic/chart/' + start + '/' + end + '/' + inteval);
             var sjson = eval("(" + str + ")");
-            console.log(sjson);
+            //console.log(sjson);
             var dates = sjson.dates;
             var purchase = sjson.purchase;
             var profit = sjson.profit;
