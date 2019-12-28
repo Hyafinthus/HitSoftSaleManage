@@ -31,13 +31,33 @@ public class BossStatisticServiceImpl implements BossStatisticService {
 	}
 
 	@Override
-	public List<Product> pricePurchaseDay(String start_time, String end_time, String start_date, String end_date) {
-		return bossStatisticMapper.pricePurchaseDay(start_time, end_time, start_date, end_date);
+	public List<Product> pricePurchase(String start_time, String end_time, String start_date, String end_date, String type) {
+		if(type.equals("day")) {
+			return bossStatisticMapper.pricePurchaseDay(start_time, end_time, start_date, end_date);
+		} else if (type.equals("week")) {
+			return bossStatisticMapper.pricePurchaseWeek(start_time, end_time, start_date, end_date);
+		} else if (type.equals("month")) {
+			return bossStatisticMapper.pricePurchaseMonth(start_time, end_time, start_date, end_date);
+		} else if (type.equals("year")) {
+			return bossStatisticMapper.pricePurchaseYear(start_time, end_time, start_date, end_date);			
+		} else {
+			return null;
+		}
 	}
 
 	@Override
-	public List<Order> priceTradeProfitDay(String start_time, String end_time, String start_date, String end_date) {
-		return bossStatisticMapper.priceTradeProfitDay(start_time, end_time, start_date, end_date);
+	public List<Order> priceTradeProfit(String start_time, String end_time, String start_date, String end_date, String type) {
+		if(type.equals("day")) {
+			return bossStatisticMapper.priceTradeProfitDay(start_time, end_time, start_date, end_date);
+		} else if (type.equals("week")) {
+			return bossStatisticMapper.priceTradeProfitWeek(start_time, end_time, start_date, end_date);
+		} else if (type.equals("month")) {
+			return bossStatisticMapper.priceTradeProfitMonth(start_time, end_time, start_date, end_date);
+		} else if (type.equals("year")) {
+			return bossStatisticMapper.priceTradeProfitYear(start_time, end_time, start_date, end_date);			
+		} else {
+			return null;
+		}
 	}
 
 }

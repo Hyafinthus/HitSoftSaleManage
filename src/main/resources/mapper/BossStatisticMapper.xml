@@ -96,4 +96,160 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	]]>
 	</select>
 	
+	<!-- 进货表 按周 -->
+	<select id="pricePurchaseWeek" resultType="Product">
+	<![CDATA[
+		SELECT week_list.week_time AS product_name, IFNULL(data_t.purchase_price, 0) AS purchase_price FROM
+		(
+			SELECT DATE_FORMAT(d.time, "%Y-%U") AS week_time, SUM(d.count * d.in_price) AS purchase_price
+			FROM product_table p, depot_in_table d
+			WHERE d.time >= #{start_time} AND d.time <= #{end_time}
+			AND p.product_id = d.product_id
+			GROUP BY DATE_FORMAT(d.time, "%Y-%U")
+		) data_t
+		RIGHT JOIN
+		(	
+			SELECT DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10 + c.i*100) WEEK), "%Y-%U") AS week_time
+			FROM (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+			CROSS JOIN (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+			CROSS JOIN (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+			WHERE
+			DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10 + c.i*100) WEEK), "%Y-%U")
+			<=
+			DATE_FORMAT(#{end_date}, "%Y-%U")
+		) week_list
+		ON
+		week_list.week_time = data_t.week_time
+	]]>
+	</select>
+	
+	<!-- 销售单表 按周 -->
+	<select id="priceTradeProfitWeek" resultType="Order">
+	<![CDATA[
+		SELECT week_list.week_time AS create_time, IFNULL(order_sale_price, 0) AS order_sale_price, IFNULL(order_profit, 0) AS order_profit FROM
+		(
+			SELECT DATE_FORMAT(create_time, "%Y-%U") AS week_time, SUM(order_sale_price) AS order_sale_price, SUM(order_profit) AS order_profit
+			FROM order_table
+			WHERE create_time >= #{start_time} AND create_time <= #{end_time}
+			AND (state = "approved" OR state LIKE "%paid%")
+			GROUP BY DATE_FORMAT(create_time, "%Y-%U")
+		) data_t
+		RIGHT JOIN
+		(	
+			SELECT DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10 + c.i*100) WEEK), "%Y-%U") AS week_time
+			FROM (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+			CROSS JOIN (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+			CROSS JOIN (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+			WHERE
+			DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10 + c.i*100) WEEK), "%Y-%U")
+			<=
+			DATE_FORMAT(#{end_date}, "%Y-%U")
+		) week_list
+		ON
+		week_list.week_time = data_t.week_time
+	]]>
+	</select>
+	
+	<!-- 进货表 按月 -->
+	<select id="pricePurchaseMonth" resultType="Product">
+	<![CDATA[
+		SELECT month_list.month_time AS product_name, IFNULL(data_t.purchase_price, 0) AS purchase_price FROM
+		(
+			SELECT DATE_FORMAT(d.time, "%Y-%m") AS month_time, SUM(d.count * d.in_price) AS purchase_price
+			FROM product_table p, depot_in_table d
+			WHERE d.time >= #{start_time} AND d.time <= #{end_time}
+			AND p.product_id = d.product_id
+			GROUP BY DATE_FORMAT(d.time, "%Y-%m")
+		) data_t
+		RIGHT JOIN
+		(	
+			SELECT DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10) MONTH), "%Y-%m") AS month_time
+			FROM (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+			CROSS JOIN (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+			WHERE
+			DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10) MONTH), "%Y-%m")
+			<=
+			DATE_FORMAT(#{end_date}, "%Y-%U")
+		) month_list
+		ON
+		month_list.month_time = data_t.month_time
+	]]>
+	</select>
+	
+	<!-- 销售单表 按月 -->
+	<select id="priceTradeProfitMonth" resultType="Order">
+	<![CDATA[
+		SELECT month_list.month_time AS create_time, IFNULL(order_sale_price, 0) AS order_sale_price, IFNULL(order_profit, 0) AS order_profit FROM
+		(
+			SELECT DATE_FORMAT(create_time, "%Y-%m") AS month_time, SUM(order_sale_price) AS order_sale_price, SUM(order_profit) AS order_profit
+			FROM order_table
+			WHERE create_time >= #{start_time} AND create_time <= #{end_time}
+			AND (state = "approved" OR state LIKE "%paid%")
+			GROUP BY DATE_FORMAT(create_time, "%Y-%m")
+		) data_t
+		RIGHT JOIN
+		(	
+			SELECT DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10) MONTH), "%Y-%m") AS month_time
+			FROM (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+			CROSS JOIN (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+			WHERE
+			DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i + b.i*10) MONTH), "%Y-%m")
+			<=
+			DATE_FORMAT(#{end_date}, "%Y-%U")
+		) month_list
+		ON
+		month_list.month_time = data_t.month_time
+	]]>
+	</select>
+	
+	<!-- 进货表 按年 -->
+	<select id="pricePurchaseYear" resultType="Product">
+	<![CDATA[
+		SELECT year_list.year_time AS product_name, IFNULL(data_t.purchase_price, 0) AS purchase_price FROM
+		(
+			SELECT DATE_FORMAT(d.time, "%Y") AS year_time, SUM(d.count * d.in_price) AS purchase_price
+			FROM product_table p, depot_in_table d
+			WHERE d.time >= #{start_time} AND d.time <= #{end_time}
+			AND p.product_id = d.product_id
+			GROUP BY DATE_FORMAT(d.time, "%Y")
+		) data_t
+		RIGHT JOIN
+		(	
+			SELECT DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i) YEAR), "%Y") AS year_time
+			FROM (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+			WHERE
+			DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i) YEAR), "%Y")
+			<=
+			DATE_FORMAT(#{end_date}, "%Y")
+		) year_list
+		ON
+		year_list.year_time = data_t.year_time
+	]]>
+	</select>
+	
+	<!-- 销售单表 按年 -->
+	<select id="priceTradeProfitYear" resultType="Order">
+	<![CDATA[
+		SELECT year_list.year_time AS create_time, IFNULL(order_sale_price, 0) AS order_sale_price, IFNULL(order_profit, 0) AS order_profit FROM
+		(
+			SELECT DATE_FORMAT(create_time, "%Y") AS year_time, SUM(order_sale_price) AS order_sale_price, SUM(order_profit) AS order_profit
+			FROM order_table
+			WHERE create_time >= #{start_time} AND create_time <= #{end_time}
+			AND (state = "approved" OR state LIKE "%paid%")
+			GROUP BY DATE_FORMAT(create_time, "%Y-%m")
+		) data_t
+		RIGHT JOIN
+		(	
+			SELECT DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i) YEAR), "%Y") AS year_time
+			FROM (SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+			WHERE
+			DATE_FORMAT(DATE_ADD(#{start_date}, INTERVAL (a.i) YEAR), "%Y")
+			<=
+			DATE_FORMAT(#{end_date}, "%Y")
+		) year_list
+		ON
+		year_list.year_time = data_t.year_time
+	]]>
+	</select>
+	
 </mapper>

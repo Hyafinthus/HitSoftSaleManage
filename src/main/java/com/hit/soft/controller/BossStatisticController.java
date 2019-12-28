@@ -1,7 +1,9 @@
 package com.hit.soft.controller;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,16 +115,23 @@ public class BossStatisticController {
 	@RequestMapping(value="/chart/{start_time}/{end_time}/{type}", method=RequestMethod.GET)
 	@ResponseBody
 	public String chartStatistic(@PathVariable String start_time, @PathVariable String end_time, @PathVariable String type) throws ParseException {	
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date nowDate = new Date();
+		Date endDate = df.parse(end_time);
+		if(endDate.after(nowDate)) {
+			end_time = df.format(nowDate);
+		}
+		
 		List<String> date = new ArrayList<>();
 		List<Double> pricePurchase = new ArrayList<>(), priceTrade = new ArrayList<>(), priceProfit = new ArrayList<>();
 		
-		List<Product> purchaseDay = bossStatisticService.pricePurchaseDay(start_time + " 00:00:00", end_time + " 23:59:59", start_time, end_time);
+		List<Product> purchaseDay = bossStatisticService.pricePurchase(start_time + " 00:00:00", end_time + " 23:59:59", start_time, end_time, type);
 		for(Product product : purchaseDay) {
 			date.add("\"" + product.getProduct_name() + "\"");
 			pricePurchase.add(product.getPurchase_price());
 		}
 		
-		List<Order> purchaseTradeProfit = bossStatisticService.priceTradeProfitDay(start_time + " 00:00:00", end_time + " 23:59:59", start_time, end_time);
+		List<Order> purchaseTradeProfit = bossStatisticService.priceTradeProfit(start_time + " 00:00:00", end_time + " 23:59:59", start_time, end_time, type);
 		for(Order order : purchaseTradeProfit) {
 			priceTrade.add(order.getOrder_sale_price());
 			priceProfit.add(order.getOrder_profit());

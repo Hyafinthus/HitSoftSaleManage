@@ -13,8 +13,8 @@ public interface BossStatisticService {
 	
 	public List<Order> queryTradeOrder(String start_time, String end_time);
 	
-	public List<Product> pricePurchaseDay(String start_time, String end_time, String start_date, String end_date);
+	public List<Product> pricePurchase(String start_time, String end_time, String start_date, String end_date, String type);
 	
-	public List<Order> priceTradeProfitDay(String start_time, String end_time, String start_date, String end_date);
+	public List<Order> priceTradeProfit(String start_time, String end_time, String start_date, String end_date, String type);
 	
 }

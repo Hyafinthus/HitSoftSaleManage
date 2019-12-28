@@ -23,4 +23,21 @@ public interface BossStatisticMapper {
 	public List<Order> priceTradeProfitDay(@Param("start_time") String start_time, @Param("end_time") String end_time,
 			@Param("start_date") String start_date, @Param("end_date") String end_date);
 	
+	public List<Product> pricePurchaseWeek(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
+	public List<Order> priceTradeProfitWeek(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
+	public List<Product> pricePurchaseMonth(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
+	public List<Order> priceTradeProfitMonth(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
+	public List<Product> pricePurchaseYear(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
+	
+	public List<Order> priceTradeProfitYear(@Param("start_time") String start_time, @Param("end_time") String end_time,
+			@Param("start_date") String start_date, @Param("end_date") String end_date);
 }
