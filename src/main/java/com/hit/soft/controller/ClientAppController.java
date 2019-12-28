@@ -79,7 +79,7 @@ public class ClientAppController {
 			return JSONObject.fromObject(jsonProduct).toString();
 		}
 		
-		@RequestMapping(value="/search/points_for_cash/{condition}",method=RequestMethod.GET)
+		@RequestMapping(value="/search/points_for_cash",method=RequestMethod.GET)
 		@ResponseBody
 		public List<Client> searchPointsForCash(){
 			List<Client> data = clientAppService.searchPointsForCash();
