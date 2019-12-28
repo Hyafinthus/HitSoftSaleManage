@@ -28,7 +28,7 @@
 						<label for="role" class="layui-form-label">
 							<span class="x-red">*</span>职位</label>
 						<div class="layui-input-inline" class="layui-input">
-							<select name="role">
+							<select id = "role" name="role">
 								<option value="manager">经理</option>
 								<option value="staff" selected="selected">店员</option>
 							</select>
@@ -83,10 +83,15 @@
 					form.on('submit(add)',
 						function(data) {
 							// console.log(data.field.role)
-
-							var staff_data = '{"staff_id": "' + data.field.staff_id +
-								'","role": "' + data.field.role +
-								'","pass": "' + data.field.pass + '"}';
+							if(data.field.staff_id == "1"){
+								var staff_data = '{"staff_id": "' + data.field.staff_id +
+									'","role": "boss","pass": "' + data.field.pass + '"}';
+							} else{
+								var staff_data = '{"staff_id": "' + data.field.staff_id +
+									'","role": "' + data.field.role +
+									'","pass": "' + data.field.pass + '"}';
+							}
+							
 							// var params=JSON.stringify(staff_data);
 							console.log(staff_data)
 							$.ajax({
@@ -128,6 +133,11 @@
 			var result = url.split("?")[1];
 			var info = result.split("=")[1]
 			staff_id.value = info
+			
+			var select_role = document.getElementById("role")
+			if(info == "1"){
+				select_role.disabled = true
+			}
 		}
 	</script>
 </html>

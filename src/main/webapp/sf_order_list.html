@@ -40,7 +40,6 @@
         </div > 
     </script>
 	<script>
-		
 		layui.use('table',
 			function() {
 				var table = layui.table;
@@ -101,7 +100,16 @@
 							width: 200,
 							templet: function(d) {
 								var sid = d.order_id
-								return '<div><a title="付款" class="layui-btn" onclick="pay(' + sid + ')">付款</a></div>'
+								return '<div><a title="付款" class="layui-btn" onclick="pay1(' + sid + ')">现金付款</a></div>'
+							}
+						},
+						{
+							field: 'order_id',
+							title: '操作',
+							width: 200,
+							templet: function(d) {
+								var sid = d.order_id
+								return '<div><a title="付款" class="layui-btn" onclick="pay2(' + sid + ')">预存款付款</a></div>'
 							}
 						}
 					]
@@ -151,7 +159,16 @@
 								width: 200,
 								templet: function(d) {
 									var sid = d.order_id
-									return '<div><a title="付款" class="layui-btn" onclick="pay(' + sid + ')">付款</a></div>'
+									return '<div><a title="付款" class="layui-btn" onclick="pay1(' + sid + ')">付款</a></div>'
+								}
+							},
+							{
+								field: 'order_id',
+								title: '操作',
+								width: 200,
+								templet: function(d) {
+									var sid = d.order_id
+									return '<div><a title="付款" class="layui-btn" onclick="pay2(' + sid + ')">预存款付款</a></div>'
 								}
 							}
 						]
@@ -160,10 +177,10 @@
 			});
 		}
 
-		function pay(id) {
+		function pay1(id) {
 			layer.confirm('确认要付款吗？', function(index) {
 				$.ajax({
-					url: "/sale/staff/order/pay/" + id,
+					url: "/sale/staff/order/pay_by_cash/" + id,
 					datatype: "text",
 					type: "get",
 					data: {},
@@ -172,6 +189,33 @@
 						if (data == "success") {
 							layer.msg('已付款!', {
 								icon: 1,
+								time: 1000
+							});
+						}
+					},
+				});
+				load_table()
+			});
+
+		}
+
+		function pay2(id) {
+			layer.confirm('确认要付款吗？', function(index) {
+				$.ajax({
+					url: "/sale/staff/order/pay_by_wallet/" + id,
+					datatype: "text",
+					type: "get",
+					data: {},
+					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+					success: function(data) {
+						if (data == "success") {
+							layer.msg('已付款!', {
+								icon: 1,
+								time: 1000
+							});
+						} else {
+							layer.msg('余额不足!', {
+								icon: 2,
 								time: 1000
 							});
 						}
