@@ -8,11 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hit.soft.domain.Client;
 import com.hit.soft.domain.Staff;
 import com.hit.soft.service.LoginService;
 
@@ -41,6 +43,12 @@ public class LoginController {
 		session.invalidate();
 		System.err.println("登出");
 		response.sendRedirect("/sale/login.html");
+	}
+	
+	@RequestMapping(value="/login/client", method=RequestMethod.POST)
+	@ResponseBody
+	public Client login(@PathVariable String id, @PathVariable String pass) {
+		return loginService.loginClient(Integer.parseInt(id), pass);
 	}
 	
 }
