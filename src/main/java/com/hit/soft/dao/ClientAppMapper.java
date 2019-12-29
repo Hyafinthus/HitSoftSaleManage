@@ -16,5 +16,7 @@ public interface ClientAppMapper {
 	void payment(Client client);
 
 	List<Client> searchPointsForCash();
+	
+	Client searchMaxPointsForCash(int limit);
 
 }

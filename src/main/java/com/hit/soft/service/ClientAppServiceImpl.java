@@ -81,16 +81,9 @@ public class ClientAppServiceImpl implements ClientAppService {
 	
 	@Override
 	public void pointsForCash(int clientId) {
-		List<Client> data = clientAppMapper.searchPointsForCash();
 		Client client = searchClient(clientId);
 		int limit = client.getPoints();
-		Client exchange = data.get(0);
-		
-		//得到最大能兑换的积分数以及可兑换得到的现金
-		for(int i=1; i>data.size(); i++){
-			if(data.get(i).getPoints()>exchange.getPoints() && data.get(i).getPoints()<=limit)
-				exchange = data.get(i);
-		}
+		Client exchange = clientAppMapper.searchMaxPointsForCash(limit);
 		
 		//积分减少，现金增加
 		exchange.setClient_id(clientId);
