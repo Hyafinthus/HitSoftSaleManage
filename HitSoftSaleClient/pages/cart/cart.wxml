@@ -1,0 +1,38 @@
+<view>
+  <view class="item-name1" wx:if="{{testtrue}}">您还没有购买商品</view>
+  <view wx:else>
+    <view class='main' wx:for='{{list}}' wx:for-item='item' wx:key='item{{index}}'>
+      <view class='sub-content'>
+        <view class='content'>
+          <view class='item-row1'>
+            <text class='item-name'>{{item.product_name}}</text>
+            <text class='item-price'>{{item.retail_price}}￥</text>
+          </view>
+          <view class='item-row2'>
+            <text class='item-count'>库存:{{item.num}}</text>
+            <text class='item-count'>已选中:{{item.count}}</text>
+          </view>
+          <view class='item-row3'>
+            <text class='item-count'></text>
+            <button id='-{{item.product_id}}' class="item-button-reduce" bindtap="reduceProduct" hover-stay-time="200" hover-class="item-hover">移除</button>
+            <button id='{{item.product_id}}' class="item-button" bindtap="addProduct" hover-stay-time="200" hover-class="item-hover">增加</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class='main'>
+      <view class='sub-content'>
+        <view class='item-row4'>
+          <text class='item-sum'>总价:{{sumup}}</text>
+          
+        </view>
+        <view class='item-row4'>
+          <button id='submit' class="item-button" bindtap="submit" hover-stay-time="200" hover-class="item-hover" size="mini">购买</button>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+</view>

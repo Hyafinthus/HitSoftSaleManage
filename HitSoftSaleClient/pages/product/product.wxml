@@ -1,0 +1,17 @@
+<view class='main' wx:for='{{list}}' wx:for-item='item' wx:key='item{{index}}'>
+  <view class='sub-content'>
+    <view class='content'>
+      <view class='item-row1'>
+        <text class='item-name'>{{item.product_name}}</text>
+        <text class='item-price'>{{item.retail_price}}￥</text>
+      </view>
+      <view class='item-row2'>
+        <text class='item-type'>{{item.type}}</text>
+      </view>
+      <view class='item-row3'>
+        <text class='item-count'>库存:{{item.count}}</text>
+        <button id='{{item.product_id}}' class="item-button" bindtap="addProduct" hover-stay-time="200" hover-class="item-hover">购买</button>
+      </view>
+    </view>
+  </view>
+</view>

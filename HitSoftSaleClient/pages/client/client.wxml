@@ -1,0 +1,18 @@
+<view class='main'>
+  <view class='sub-content'>
+    <view class='content'>
+      <view class='item-row1'>
+        <text class='item-name'>{{client_name}}</text>
+        <text class='item-price'>{{client_wallet}}￥</text>
+      </view>
+      <view class='item-row2'>
+        <text class='item-type'>积分：{{client_point}}</text>
+        <input id='client_pass' type='number' bindinput='moneyInput' class='item-input' value='{{inpuv}}'></input>
+      </view>
+      <view class='item-row3'>
+        <button class="item-button-reduce" bindtap="save_money" hover-stay-time="200" hover-class="item-hover">充值</button>
+        <button class="item-button" bindtap="p2m" hover-stay-time="200" hover-class="item-hover">积分提现</button>
+      </view>
+    </view>
+  </view>
+</view>

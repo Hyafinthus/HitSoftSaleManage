@@ -1,0 +1,19 @@
+<view class='main'>
+  <view class='sub-content'>
+    <view class='content'>
+      <view class='item-row'>
+      </view>
+      <view class='item-row1'>
+        <text class='item-name'>用户名</text>
+        <input id='client_id' bindinput='usernameInput' class='item-input'></input>
+      </view>
+      <view class='item-row1'>
+        <text class='item-name'>密码</text>
+        <input id='client_pass' bindinput='passwordInput' type='password' class='item-input'></input>
+      </view>
+      <view class='item-row1'>
+        <button id='login' class="item-button" bindtap="login" hover-stay-time="200" hover-class="item-hover">登录</button>
+      </view>
+    </view>
+  </view>
+</view>

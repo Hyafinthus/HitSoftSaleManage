@@ -1,0 +1,16 @@
+<view class='main'>
+  <view class='content'>
+      <view class='item-row1'>
+        <text class='item-name'>name</text>
+        <text class='item-price'>price￥</text>
+      </view>
+      <view class='item-row2'>
+        <text class='item-type'>type</text>
+      </view>
+      <view class='item-row3'>
+        <text class='item-count'>count</text>
+        <text class='item-number'>number</text>
+        <button class="item-button">增加</button>
+      </view>
+  </view>
+</view>
