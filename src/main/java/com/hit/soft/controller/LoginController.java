@@ -47,8 +47,10 @@ public class LoginController {
 	
 	@RequestMapping(value="/login/client/{id}/{pass}", method=RequestMethod.GET)
 	@ResponseBody
-	public Client login(@PathVariable String id, @PathVariable String pass) {
-		return loginService.loginClient(Integer.parseInt(id), pass);
+	public Client login(@PathVariable String id, @PathVariable String pass, HttpServletRequest request) {
+		Client client = loginService.loginClient(Integer.parseInt(id), pass);
+		System.err.println("登陆: " + client.getClient_name());
+		return client;
 	}
 	
 }

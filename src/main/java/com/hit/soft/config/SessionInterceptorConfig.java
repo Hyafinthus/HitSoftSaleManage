@@ -14,11 +14,11 @@ public class SessionInterceptorConfig implements WebMvcConfigurer {
 
 	private static List<String> include = Arrays.asList("/**");
 	private static List<String> exclude = Arrays.asList("/js/**", "/css/**", "/fonts/**", "/images/**", "/lib/**", 
-														"/login.html", "/login/**");
+														"/login.html", "/login/**", "/client/**");
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		//registry.addInterceptor(new SessionInterceptor()).addPathPatterns(include).excludePathPatterns(exclude);
+		registry.addInterceptor(new SessionInterceptor()).addPathPatterns(include).excludePathPatterns(exclude);
 	}
 	
 }
